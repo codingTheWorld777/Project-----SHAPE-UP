@@ -56,28 +56,28 @@ public class Carte {
 	}
 	
 	/*
-	 * get card's form
+	 * get card's color
 	 */
 	public String getCouleur() {
 		return this.couleur;
 	}
 	
 	/*
-	 * Set card's form
+	 * Set card's color
 	 */
 	public void setCouleur(String couleur) {
 		this.couleur = couleur;
 	}
 	
 	/*
-	 * get card's form
+	 * get card's nature
 	 */
 	public String getNature() {
 		return this.nature;
 	}
 	
 	/*
-	 * Set card's form
+	 * Set card's nature
 	 */
 	public void setNature(String nature) {
 		this.nature = nature;
