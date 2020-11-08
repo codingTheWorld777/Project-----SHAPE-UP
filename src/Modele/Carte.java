@@ -6,17 +6,20 @@ public class Carte {
 	/*
 	 * There are 3 possible shapes for a card: circle, triangle, square.
 	 */
-	private String forme;
+	public enum formePossible {cercle, triangle, carré}
+	private formePossible forme;
 	
 	/*
 	 * There are 3 possible colors for a card: red, blue or green
 	 */
-	private String couleur;
+	public enum couleurPossible {rouge, vert, bleu};
+	private couleurPossible couleur;
 	
 	/*
 	 * There are only 2 main states of card: hollow and solid
 	 */
-	private String nature;
+	public enum naturePossible {vide, plein};
+	private naturedPossible nature;
 	
 	/*
 	 * Face of card: UP or DOWN
@@ -33,7 +36,7 @@ public class Carte {
 	/*
 	 * Constructor of card
 	 */
-	public Carte(String forme, String couleur, String nature) { //+ BufferedImage carteImage
+	public Carte(formePossible forme, couleurPossible couleur, naturePossible nature) { //+ BufferedImage carteImage
 		this.forme = forme;
 		this.couleur = couleur;
 		this.nature = nature;
