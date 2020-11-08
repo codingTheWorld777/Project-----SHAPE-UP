@@ -12,14 +12,17 @@ public class PiocheCartes {
 	 * Create an array that contains all of the card
 	 */
 	public void creerCartes() {
+		
 		naturePossible[] natures = {naturePossible.plein, naturePossible.vide};
 		formePossible[] formes = {formePossible.cercle, formePossible.carré, formePossible.triangle};
 		couleurPossible[] couleurs = {couleurPossible.bleu, couleurPossible.vert, couleurPossible.rouge};
 		
 		int compteur = 0;
-		
 		int ind;
 		
+		/*
+		 * Create and shuffle card
+		 */
 		for (int i = 0; i < formes.length; i++) {
 			for (int j = 0; j < natures.length; j++) {
 				for (int k = 0; k < couleurs.length; k++) {
