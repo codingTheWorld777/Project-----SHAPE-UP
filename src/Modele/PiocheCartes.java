@@ -16,7 +16,7 @@ public class PiocheCartes {
 		formePossible[] formes = {formePossible.cercle, formePossible.carré, formePossible.triangle};
 		couleurPossible[] couleurs = {couleurPossible.bleu, couleurPossible.vert, couleurPossible.rouge};
 		
-		int compteur = 0, c = 0;
+		int compteur = 0;
 		
 		int ind;
 		
