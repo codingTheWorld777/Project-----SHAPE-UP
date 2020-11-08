@@ -49,66 +49,30 @@ public class InstallerTour {
 	}
 	
 	/*
-	 * Distribute card to each player (in the case for 2 players and 1 virtuel players)
+	 * Distribute card to each player (in the case for 2 players and 1 virtul players)
 	 */
 	public void distribuerCarteVictoire(ArrayList<Carte> piocheCartes, Joueur joueur1, Joueur joueur2, Joueur joueur3) {
-		int pos1 = 0, pos2 = 0, pos3 = 0;
+		int pos = (int) (Math.random() * 18);
+		int x = (int) (Math.random() * 18);
 		
-		while (pos1 == pos2) {
-			pos1 = (int) (Math.random() * 18);
-			pos2 = (int) (Math.random() * 18);
-		}
-		
-		
-		while (pos3 == pos1 && pos3 == pos2) {
-			pos3 = (int) (Math.random() * 18);			
+		while (pos + 2 * x >= 18) {
+			pos = (int) (Math.random() * 18);
+			x = (int) (Math.random() * 18);
 		}
 		
 		/*
-		 * Distribute victory card
+		 * Distribute victory card to player
 		 */
-		joueur1.setCarteVictoire(piocheCartes.get(pos1));
-		joueur2.setCarteVictoire(piocheCartes.get(pos2));
-		joueur3.setCarteVictoire(piocheCartes.get(pos3));
+		joueur1.setCarteVictoire(piocheCartes.get(pos));
+		joueur2.setCarteVictoire(piocheCartes.get(pos + x));
+		joueur3.setCarteVictoire(piocheCartes.get(pos + 2 * x));
 		
 		/*
-		 * Remove victory cards out of the game
+		 * Update and get ready for the game 
 		 */
-		if (pos1 < pos2 && pos2 < pos3) {
-			piocheCartes.remove(pos3);
-			piocheCartes.remove(pos2);
-			piocheCartes.remove(pos1);
-		} else if (pos2 < pos3 && pos3 < pos1) {
-			piocheCartes.remove(pos1);
-			piocheCartes.remove(pos3);
-			piocheCartes.remove(pos2);
-		} else if (pos3 < pos1 && pos1 < pos2) {
-			piocheCartes.remove(pos2);
-			piocheCartes.remove(pos1);
-			piocheCartes.remove(pos3);
-		}
-		
-//		int pos = (int) (Math.random() * 18);
-//		int x = (int) (Math.random() * 18);
-//		
-//		while (pos + 2 * x >= 18) {
-//			pos = (int) (Math.random() * 18);
-//			x = (int) (Math.random() * 18);
-//		}
-//		
-//		/*
-//		 * Distribute victory card to player
-//		 */
-//		joueur1.setCarteVictoire(piocheCartes.get(pos));
-//		joueur2.setCarteVictoire(piocheCartes.get(pos + x));
-//		joueur3.setCarteVictoire(piocheCartes.get(pos + 2 * x));
-//		
-//		/*
-//		 * Update and get ready for the game 
-//		 */
-//		piocheCartes.remove(pos + 2 * x);
-//		piocheCartes.remove(pos + x);
-//		piocheCartes.remove(pos);
+		piocheCartes.remove(pos + 2 * x);
+		piocheCartes.remove(pos + x);
+		piocheCartes.remove(pos);
 	}
 	
 }
