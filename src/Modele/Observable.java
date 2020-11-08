@@ -4,14 +4,14 @@ import java.util.ArrayList;
 
 public class Observable {
 	private ArrayList<Observer> observers = new ArrayList<Observer>();
-	private String news;
+	protected String news;
 	
-	public void addObserver(Observer o) {
-		observers.add(o);
+	public void addObserver(Observer obsv) {
+		observers.add(obsv);
 	}
 	
-	public void removeObserver(Observer o) {
-		observers.remove(o);
+	public void removeObserver(Observer obsv) {
+		observers.remove(obsv);
 	}
 	
 	public void notifyObserver(String news) {

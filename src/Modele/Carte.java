@@ -19,26 +19,25 @@ public class Carte {
 	private String nature;
 	
 	/*
+	 * Face of card: UP or DOWN
+	 */
+	private boolean recto;
+	
+	/*
 	 * This is card's image in the game.
 	 * Each card has a different image
+	 * Each card can be up or down (recto vs verso)
 	 */
 	private BufferedImage carteImage;
 	
 	/*
 	 * Constructor of card
 	 */
-	public Carte(String forme, String couleur, String nature, BufferedImage carteImage) {
+	public Carte(String forme, String couleur, String nature) { //+ BufferedImage carteImage
 		this.forme = forme;
 		this.couleur = couleur;
 		this.nature = nature;
-		this.carteImage = carteImage;
-	}
-	
-	/*
-	 * Get card's Image
-	 */
-	public BufferedImage getCarteImage() {
-		return this.carteImage;
+//		this.carteImage = carteImage;
 	}
 	
 	/*
@@ -56,30 +55,59 @@ public class Carte {
 	}
 	
 	/*
-	 * get card's form
+	 * get card's color
 	 */
 	public String getCouleur() {
 		return this.couleur;
 	}
 	
 	/*
-	 * Set card's form
+	 * Set card's color
 	 */
 	public void setCouleur(String couleur) {
 		this.couleur = couleur;
 	}
 	
 	/*
-	 * get card's form
+	 * get card's nature
 	 */
 	public String getNature() {
 		return this.nature;
 	}
 	
 	/*
-	 * Set card's form
+	 * Set card's nature
 	 */
 	public void setNature(String nature) {
 		this.nature = nature;
 	}
+	
+	/*
+	 * Change the face of card
+	 */
+	public void toRecto() {
+		this.recto = true;
+	}
+	
+	public void toVerso() {
+		this.recto = false;
+	}
+	
+	public boolean getFace() {
+		return this.recto;
+	}
+	
+	/*
+	 * Set image to card: Face up OR Face down
+	 */
+	public void setCarteImage(boolean recto) {
+		if (recto) {
+			System.out.println("Recto");
+		} else {
+			System.out.println("Verso");
+		}
+	}
+	
+	
 }
+
