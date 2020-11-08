@@ -1,22 +1,23 @@
 package Modele;
 
-import java.awt.image.BufferedImage;
-
 public class Carte {
 	/*
 	 * There are 3 possible shapes for a card: circle, triangle, square.
 	 */
-	private String forme;
-	
-	/*
-	 * There are 3 possible colors for a card: red, blue or green
-	 */
-	private String couleur;
+	protected enum formePossible {cercle, carré, triangle};
+	private formePossible forme;
 	
 	/*
 	 * There are only 2 main states of card: hollow and solid
 	 */
-	private String nature;
+	protected enum naturePossible {plein, vide};
+	private naturePossible nature;
+	
+	/*
+	 * There are 3 possible colors for a card: red, blue or green
+	 */
+	protected enum couleurPossible {bleu, vert, rouge};
+	private couleurPossible couleur;
 	
 	/*
 	 * Face of card: UP or DOWN
@@ -28,57 +29,58 @@ public class Carte {
 	 * Each card has a different image
 	 * Each card can be up or down (recto vs verso)
 	 */
-	private BufferedImage carteImage;
+//	private BufferedImage carteImage;
 	
+
 	/*
 	 * Constructor of card
 	 */
-	public Carte(String forme, String couleur, String nature) { //+ BufferedImage carteImage
+	public Carte(formePossible forme, naturePossible nature, couleurPossible couleur) { //+ BufferedImage carteImage
 		this.forme = forme;
-		this.couleur = couleur;
 		this.nature = nature;
+		this.couleur = couleur;
 //		this.carteImage = carteImage;
 	}
 	
 	/*
 	 * get card's form
 	 */
-	public String getForme() {
+	public formePossible getForme() {
 		return this.forme;
 	}
 	
 	/*
 	 * Set card's form
 	 */
-	public void setForme(String forme) {
+	public void setForme(formePossible forme) {
 		this.forme = forme;
 	}
 	
 	/*
 	 * get card's color
 	 */
-	public String getCouleur() {
+	public couleurPossible getCouleur() {
 		return this.couleur;
 	}
 	
 	/*
 	 * Set card's color
 	 */
-	public void setCouleur(String couleur) {
+	public void setCouleur(couleurPossible couleur) {
 		this.couleur = couleur;
 	}
 	
 	/*
 	 * get card's nature
 	 */
-	public String getNature() {
+	public naturePossible getNature() {
 		return this.nature;
 	}
 	
 	/*
 	 * Set card's nature
 	 */
-	public void setNature(String nature) {
+	public void setNature(naturePossible nature) {
 		this.nature = nature;
 	}
 	
@@ -107,7 +109,4 @@ public class Carte {
 			System.out.println("Verso");
 		}
 	}
-	
-	
 }
-
