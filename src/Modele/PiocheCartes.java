@@ -12,7 +12,7 @@ public class PiocheCartes {
 	public void creerCartes() {
 		String[] natures = {"solid", "hollow"};
 		String[] formes = {"circle", "square", "triangle"};
-		String[] couleurs = {couleurPossible.rouge, couleurPossible.vert, couleurPossible.bleu};
+		CouleurPossible[] couleurs = {couleurPossible.rouge, couleurPossible.vert, couleurPossible.bleu};
 		
 		int compteur = 0;
 		
