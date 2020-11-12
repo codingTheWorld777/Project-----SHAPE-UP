@@ -4,6 +4,40 @@ import java.util.ArrayList;
 
 public class InstallerTour {
 	
+	public InstallerTour(int nombreDeJoueurs, boolean activerJoueurVir) {
+		PiocheCartes piocheCartes = new PiocheCartes();
+		Carte carteCachee = this.retirerCarteCachee(piocheCartes.getPiocheCartes());
+		
+		if (nombreDeJoueurs == 2 && activerJoueurVir == false) {
+			JoueurPhy joueur1 = new JoueurPhy("Joueur 1", 1);
+			Partie.joueur1 = joueur1;
+			Partie.joueur1 = (JoueurPhy) joueur1;
+			
+			JoueurPhy joueur2 = new JoueurPhy("Joueur 2", 2);
+			Partie.joueur2 = joueur2;
+			Partie.joueur2 = (JoueurPhy) joueur2;
+			
+			this.distribuerCarteVictoire(piocheCartes.getPiocheCartes(), Partie.joueur1, Partie.joueur2);
+			
+			Partie.joueursEnJeu[0] = joueur1;
+			Partie.joueursEnJeu[1] = joueur2;
+			
+		} else if (nombreDeJoueurs == 2 && activerJoueurVir == true) {
+			JoueurPhy joueur1 = new JoueurPhy("Joueur 1", 1);
+			Partie.joueur1 = joueur1;
+			Partie.joueur1 = (JoueurPhy) joueur1;
+			
+			JoueurVir joueur2 = new JoueurVir("Virtuel Joueur", 2);
+			Partie.joueur2 = joueur2;
+			Partie.joueur2 = (JoueurVir) joueur2;
+			
+			this.distribuerCarteVictoire(piocheCartes.getPiocheCartes(), Partie.joueur1, Partie.joueur2);
+			
+			Partie.joueursEnJeu[0] = joueur1;
+			Partie.joueursEnJeu[1] = joueur2;
+		}
+	} 
+	
 	/*
 	 * Choose one random card from 18 cards in order to set a "hidden card"
 	 * Remove this card out of the game
@@ -49,7 +83,7 @@ public class InstallerTour {
 	}
 	
 	/*
-	 * Distribute card to each player (in the case for 2 players and 1 virtul players)
+	 * Distribute card to each player (in the case for 2 players and 1 virtual player)
 	 */
 	public void distribuerCarteVictoire(ArrayList<Carte> piocheCartes, Joueur joueur1, Joueur joueur2, Joueur joueur3) {
 		int pos = (int) (Math.random() * 18);
