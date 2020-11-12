@@ -1,16 +1,32 @@
 package Modele;
 
-public class JoueurPhy extends Joueur implements Strategie {
+import java.util.Scanner;
+
+public class JoueurPhy extends Joueur implements Strategie{
 	public JoueurPhy(String name, int id) {
 		super(name, id);
 	}
 	
-	public void piocherCarte() {
-		System.out.println("Hello");
+	public void piocherCarte(Carte[][] tableDuJeu) {
+		System.out.println("Choisir l'abscisse x de carte sur le table du jeu: ");
+		Scanner src = new Scanner(System.in);
+		int x = src.nextInt();
+		
+		System.out.println("Choisir l'ordonnée y de carte sur le table du jeu: ");
+		int y = src.nextInt();
+		
+		System.out.println(x + ", " + y);
+		tableDuJeu[y][x] = PiocheCartes.getPiocheCartes().get(Partie.nombreDeCartesJouables - 1);
+		PiocheCartes.getPiocheCartes().remove(Partie.nombreDeCartesJouables - 1);
+		Partie.nombreDeCartesJouables--;
+		
+		Partie.updateTableDuJeu();
+	
 	}
 	
 	public void deplacerCarte() {
-		System.out.println("Bye");
+		System.out.println("Choisir  (x, y) de carte déplacée: ");
+	
 	}
 	
 	/*
@@ -24,4 +40,5 @@ public class JoueurPhy extends Joueur implements Strategie {
 	public void setStrategie(String niveau) {
 		
 	}
+	
 }

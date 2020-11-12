@@ -24,7 +24,7 @@ public abstract class Joueur extends Observable implements Observer{
 	/*
 	 * To check if player is in turn or not.
 	 */
-	public boolean estEnTour;
+	protected boolean estEnTour;
 	
 	/*
 	 * Be used by GUI to show score of each player at the end of a round
@@ -43,7 +43,7 @@ public abstract class Joueur extends Observable implements Observer{
 	/*
 	 * Draw a card
 	 */
-	public abstract void piocherCarte();
+	public abstract void piocherCarte(Carte[][] tableDuJeu);
 	
 	/*
 	 * Move a card
@@ -76,5 +76,19 @@ public abstract class Joueur extends Observable implements Observer{
 	 */
 	public int getScore() {
 		return this.score;
+	}
+	
+	/*
+	 * Set player's status (in turn or not)
+	 */
+	public void setEnTour(boolean estEnTour) {
+		this.estEnTour = estEnTour;
+	}
+	
+	/*
+	 * Check if player is in turn or not
+	 */
+	public boolean getEnTour() {
+		return this.estEnTour;
 	}
 }

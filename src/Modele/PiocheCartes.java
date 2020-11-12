@@ -5,8 +5,12 @@ import java.util.ArrayList;
 import Modele.Carte.*;
 
 public class PiocheCartes {
-	private ArrayList<Carte> piocheCartes = new ArrayList<Carte>();
-	private Carte[] cartesOrg = new Carte[18];
+	private static ArrayList<Carte> piocheCartes = new ArrayList<Carte>();
+	private static Carte[] cartesOrg = new Carte[18];
+	
+	public PiocheCartes() {
+		this.creerCartes();
+	}
 	
 	/*
 	 * Create an array that contains all of the card
@@ -58,7 +62,7 @@ public class PiocheCartes {
 	/*
 	 * Get the set of cards that we have just created
 	 */
-	public ArrayList<Carte> getPiocheCartes() {
-		return this.piocheCartes;
+	public static ArrayList<Carte> getPiocheCartes() {
+		return PiocheCartes.piocheCartes;
 	}
 }
