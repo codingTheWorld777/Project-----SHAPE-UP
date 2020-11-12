@@ -49,8 +49,14 @@ public class JoueurPhy extends Joueur {
 				Plateau.misAJourListe(tableDuJeu[y][x], x, y);
 				Plateau.supprimerCoordonnee(x, y);
 				Plateau.ajouterCoordonneePossible(x, y);
+				Plateau.determinerRec(Plateau.cartesJouees);
 				PiocheCartes.getPiocheCartes().remove(Partie.nombreDeCartesJouables - 1);
 				Partie.nombreDeCartesJouables--;
+				
+				for (int t = 0; t < Plateau.possibilites.size(); t++) {
+					System.out.print("(" + Plateau.possibilites.get(t).x + ", " + Plateau.possibilites.get(t).y + "), ");
+				}
+				System.out.println();
 				
 				Plateau.updateTableDuJeu();
 				

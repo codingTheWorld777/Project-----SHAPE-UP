@@ -21,7 +21,7 @@ public class Partie {
 	/*
 	 * Turn
 	 */
-	public static int turn = 0;
+	public static int tour = 0;
 	
 	/*
 	 * Board of game
@@ -59,9 +59,8 @@ public class Partie {
 
 			for (int i = 0; i < InstallerJeu.getNombreDeJoueurs() && Partie.nombreDeCartesJouables > 0; i++) {
 				System.out.println("Joueur " + joueursEnJeu[i].id);
-				jouerSonTour(joueursEnJeu[i], joueursEnJeu[i].estEnTour, Partie.turn);
-				Partie.turn++;
-	
+				jouerSonTour(joueursEnJeu[i], joueursEnJeu[i].estEnTour, Partie.tour);
+				Partie.tour++;
 			}
 		}
 		

@@ -6,12 +6,12 @@ public class Plateau {
 	/*
 	 * Add and save all cards that were played
 	 */
-	private static ArrayList<Carte> cartesJouees = new ArrayList<Carte>();
+	protected static ArrayList<Carte> cartesJouees = new ArrayList<Carte>();
 	
 	/*
 	 * Save all possibilities of the position that player can put a card in it
 	 */
-	private static ArrayList<Coordonnees> possibilites = new ArrayList<Coordonnees>();
+	protected static ArrayList<Coordonnees> possibilites = new ArrayList<Coordonnees>();
 	
 	
 	/*
@@ -53,10 +53,11 @@ public class Plateau {
 			
 			compteur++;
 		}
-		
-		for (int k = 0; k < possibilites.size(); k++) {
-			System.out.println("(" + possibilites.get(k).x + ", " + possibilites.get(k).y + ")");
-		}
+		 
+//		for (int k = 0; k < possibilites.size(); k++) {
+//			System.out.print("(" + possibilites.get(k).x + ", " + possibilites.get(k).y + "), ");
+//		}
+//		System.out.println();
 	}
 	
 	
@@ -73,6 +74,7 @@ public class Plateau {
 	
 	
 	/*
+	 * 
 	 * Check with all possibilities defined if the position is available
 	 */
 	public static boolean verifierPos(int x, int y) {	
@@ -80,7 +82,7 @@ public class Plateau {
 			if (possibilites.get(i).x == x && possibilites.get(i).y == y) return true;
 		}
 		
-		System.out.print(false + " ");
+//		System.out.print(false + " ");
 		return false;
 	}
 	
@@ -95,6 +97,61 @@ public class Plateau {
 		}
 		
 		return false;
+	}
+	
+	/*
+	 * Reduce the selection of the card's table once you have determined the edge of the rectangle
+	 * Determine the shape of the final rectangle 5x3 base on cards played 
+	 	* We determine this rectangle by its coordinates (x, y)
+	 	* Minimize zone of cards that can be put into table, Check with all possibilities defined 
+	 	 	if the position is available
+	 */
+	public static void determinerRec(ArrayList<Carte> cartesJouees) {
+		int xMin = (int) Double.POSITIVE_INFINITY, xMax = -1;
+		int yMin = (int) Double.POSITIVE_INFINITY, yMax = -1;
+		
+		for (int i = 0; i < cartesJouees.size(); i++) {
+			 if (cartesJouees.get(i).getCoordonnees().x < xMin) xMin = cartesJouees.get(i).getCoordonnees().x;
+			 
+			 if (cartesJouees.get(i).getCoordonnees().x > xMax) xMax = cartesJouees.get(i).getCoordonnees().x;
+			 
+			 if (cartesJouees.get(i).getCoordonnees().y < yMin) yMin = cartesJouees.get(i).getCoordonnees().y;
+			 
+			 if (cartesJouees.get(i).getCoordonnees().y > yMax) yMax = cartesJouees.get(i).getCoordonnees().y;
+		}
+		System.out.println("xMin = " + xMin + ", xMax = " + xMax);
+		
+		if (xMax - xMin + 1 == 5) {
+			for (int j = 0; j < possibilites.size(); j++) {
+				if (possibilites.get(j).x < xMin || possibilites.get(j).x > xMax) {
+					possibilites.remove(j);
+				}
+			}
+			
+			if (yMax - yMin + 1 == 3) {
+				for (int k = 0; k < possibilites.size(); k++) {
+					if (possibilites.get(k).y < yMin || possibilites.get(k).y > yMax) {
+						possibilites.remove(k);
+					}
+				}
+			}
+			
+		} else if (yMax - yMin + 1 == 5) {
+			for (int j = 0; j < possibilites.size(); j++) {
+				if (possibilites.get(j).y < yMin || possibilites.get(j).y > yMax) {
+					possibilites.remove(j);
+				}
+			}
+			
+			if (xMax - xMin + 1 == 3) {
+				for (int k = 0; k < possibilites.size(); k++) {
+					if (possibilites.get(k).x < xMin || possibilites.get(k).x > xMax) {
+						possibilites.remove(k);
+					}
+				}
+			}
+		}
+		
 	}
 	
 	
