@@ -31,6 +31,11 @@ public class Carte {
 	 */
 //	private BufferedImage carteImage;
 	
+	/*
+	 * coordinates of card (of card played) 
+	 */
+	Coordonnees coordonnesDeCarte;
+	
 
 	/*
 	 * Constructor of card
@@ -108,5 +113,19 @@ public class Carte {
 		} else {
 			System.out.println("Verso");
 		}
+	}
+	
+	/*
+	 * Set coordinates for card
+	 */
+	public void setCoordonnees(int x, int y) {
+		this.coordonnesDeCarte = new Coordonnees(x, y);
+	}
+	
+	/*
+	 * Get coordinates for card
+	 */
+	public Coordonnees getCoordonnees() {
+		return this.coordonnesDeCarte;
 	}
 }

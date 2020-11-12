@@ -43,7 +43,7 @@ public abstract class Joueur extends Observable implements Observer{
 	/*
 	 * Draw a card
 	 */
-	public abstract void piocherCarte(Carte[][] tableDuJeu);
+	public abstract void piocherCarte(Carte[][] tableDuJeu, int tour);
 	
 	/*
 	 * Move a card

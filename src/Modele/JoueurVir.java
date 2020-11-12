@@ -5,7 +5,7 @@ public class JoueurVir extends Joueur implements Strategie {
 		super(name, id);
 	}
 	
-	public void piocherCarte(Carte[][] tableDuJeu) {
+	public void piocherCarte(Carte[][] tableDuJeu, int tour) {
 		System.out.println("Hello");
 	}
 	

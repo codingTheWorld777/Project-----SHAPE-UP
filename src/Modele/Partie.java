@@ -14,9 +14,14 @@ public class Partie {
 	public static Joueur[] joueursEnJeu = new Joueur[2];
 	
 	/*
-	 * Number of playable cards
+	 * Number of playable cards 
 	 */
 	public static int nombreDeCartesJouables;
+	
+	/*
+	 * Turn
+	 */
+	public static int turn = 0;
 	
 	/*
 	 * Board of game
@@ -25,15 +30,16 @@ public class Partie {
 	
 	//Constructor
 	public Partie() {
-		int compteur = 0;
 		boolean deplacerUneCarte;
 		
 		/*
+		 * Step 1:
 		 * Install game: choose number of players, activer virtual player(Yes or No) and choose its level
 		 */
 		InstallerJeu installerJeu = new InstallerJeu();
 		
 		/*
+		 * Step 2:
 		 * Install a round:
 		 * 	+ Eliminate a card
 		 * 	+ Draw victory card to each player
@@ -42,19 +48,23 @@ public class Partie {
 		
 		
 		/*
+		 * Step 3:
 		 * All player in turn of game and play their turn:
 		 * + Move a card
 		 * + Draw ad put that card in a possible position 
 		 */
 		joueursEnJeu[0].setEnTour(true);  //Choosing Player 1 for the first turn
 		
-		while (compteur < 15) {    //15 just for this case: 2 players and no virtual player
+		while (Partie.nombreDeCartesJouables > 0) {    //15 just for this case: 2 players and no virtual player, 
 
-			for (int i = 0; i < InstallerJeu.getNombreDeJoueurs() && compteur < 15; i++) {
-				jouerSonTour(joueursEnJeu[i], joueursEnJeu[i].estEnTour);
-				compteur++;
+			for (int i = 0; i < InstallerJeu.getNombreDeJoueurs() && Partie.nombreDeCartesJouables > 0; i++) {
+				System.out.println("Joueur " + joueursEnJeu[i].id);
+				jouerSonTour(joueursEnJeu[i], joueursEnJeu[i].estEnTour, Partie.turn);
+				Partie.turn++;
+	
 			}
 		}
+		
 	}
 	
 	/*
@@ -62,17 +72,17 @@ public class Partie {
 	 * 	+ Move a card
 	 * 	+ Draw ad put that card in a possible position
 	 */
-	public void jouerSonTour(Joueur joueur, boolean estEnTour) {
+	public void jouerSonTour(Joueur joueur, boolean estEnTour, int tour) {
 		if (estEnTour) {
 			if (InstallerJeu.getActiverJoueurVir() == false && InstallerJeu.getNombreDeJoueurs() == 2) {
 				joueur = (JoueurPhy) joueur;
 				if (joueur.id == 1) {
-					joueur.piocherCarte(this.tableDuJeu);
+					joueur.piocherCarte(this.tableDuJeu, tour);
 					
 					joueur.setEnTour(false);
 					joueursEnJeu[joueur.id].setEnTour(true);
 				} else if (joueur.id == 2) {
-					joueur.piocherCarte(this.tableDuJeu);
+					joueur.piocherCarte(this.tableDuJeu, tour);
 					
 					joueur.setEnTour(false);
 					joueursEnJeu[0].setEnTour(true);
@@ -81,17 +91,10 @@ public class Partie {
 		}
 	}
 	
-	public static void updateTableDuJeu() {
-		for (int i = 0; i < 5; i++) {
-			for (int j = 0; j < 7; j++) {
-				if (Partie.tableDuJeu[i][j] != null) {
-					System.out.print("|X|");
-				} else {
-					System.out.print("| |");
-				}
-			}
-			System.out.println();
-		}
+	/*
+	 * Get table of game "tableDuJeu"
+	 */
+	public static Carte[][] getTableDuJeu() {
+		return Partie.tableDuJeu;
 	}
-	
 }

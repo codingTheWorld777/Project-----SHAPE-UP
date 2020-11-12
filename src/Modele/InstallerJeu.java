@@ -36,11 +36,11 @@ public class InstallerJeu {
 		this.activerJoueurVir = src.nextBoolean();		
 		
 		//Set level 
-		System.out.println("Choisir niveau du joueur virtuel (D/F): ");
-		this.niveau = src.nextLine();
+//		System.out.println("Choisir niveau du joueur virtuel (D/F): ");
+
 		
 		Partie.nombreDeCartesJouables = 17 - this.nombreDeJoueurs;
-		System.out.println(this.nombreDeJoueurs + " " + this.activerJoueurVir + " " + this.niveau + " Niveau");
+//		System.out.println(this.nombreDeJoueurs + " " + this.activerJoueurVir + " " + this.niveau + " Niveau");
 	}
 	
 	/*

@@ -2,7 +2,9 @@ package Modele;
 
 import java.util.ArrayList;
 
-import Modele.Carte.*;
+import Modele.Carte.couleurPossible;
+import Modele.Carte.formePossible;
+import Modele.Carte.naturePossible;
 
 public class PiocheCartes {
 	private static ArrayList<Carte> piocheCartes = new ArrayList<Carte>();
