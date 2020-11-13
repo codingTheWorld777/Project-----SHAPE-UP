@@ -11,7 +11,7 @@ public class Partie {
 	public static Joueur joueur3;
 	
 	//Sets of players 
-	public static Joueur[] joueursEnJeu = new Joueur[2];
+	public static Joueur[] joueursEnJeu;;
 	
 	/*
 	 * Number of playable cards 
@@ -54,16 +54,19 @@ public class Partie {
 		 * + Draw ad put that card in a possible position 
 		 */
 		joueursEnJeu[0].setEnTour(true);  //Choosing Player 1 for the first turn
-		
 		while (Partie.nombreDeCartesJouables > 0) {    //15 just for this case: 2 players and no virtual player, 
 
 			for (int i = 0; i < InstallerJeu.getNombreDeJoueurs() && Partie.nombreDeCartesJouables > 0; i++) {
 				System.out.println("Joueur " + joueursEnJeu[i].id);
-				jouerSonTour(joueursEnJeu[i], joueursEnJeu[i].estEnTour, Partie.tour);
+				this.jouerSonTour(joueursEnJeu[i], joueursEnJeu[i].estEnTour, Partie.tour);
 				Partie.tour++;
 			}
 		}
-		
+		//In case there are 3 players, we must play the last card of the game
+		if (Plateau.possibilites.size() != 0) {
+			System.out.println("Joueur " + joueursEnJeu[2].id);
+			this.jouerSonTour(joueursEnJeu[2], joueursEnJeu[2].estEnTour, Partie.tour);
+		}
 	}
 	
 	/*
@@ -81,6 +84,26 @@ public class Partie {
 					joueur.setEnTour(false);
 					joueursEnJeu[joueur.id].setEnTour(true);
 				} else if (joueur.id == 2) {
+					joueur.piocherCarte(this.tableDuJeu, tour);
+					
+					joueur.setEnTour(false);
+					joueursEnJeu[0].setEnTour(true);
+				}
+			} else if (InstallerJeu.getActiverJoueurVir() == false && InstallerJeu.getNombreDeJoueurs() == 3) {
+				joueur = (JoueurPhy) joueur;
+				if (joueur.id == 1) {
+					joueur.piocherCarte(this.tableDuJeu, tour);
+					
+					joueur.setEnTour(false);
+					joueursEnJeu[1].setEnTour(true);
+					
+				} else if (joueur.id == 2) {
+					joueur.piocherCarte(this.tableDuJeu, tour);
+					
+					joueur.setEnTour(false);
+					joueursEnJeu[2].setEnTour(true);
+					
+				} else if (joueur.id == 3) {
 					joueur.piocherCarte(this.tableDuJeu, tour);
 					
 					joueur.setEnTour(false);

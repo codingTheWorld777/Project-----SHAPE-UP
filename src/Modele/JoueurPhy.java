@@ -31,6 +31,11 @@ public class JoueurPhy extends Joueur {
 			PiocheCartes.getPiocheCartes().remove(Partie.nombreDeCartesJouables - 1);
 			Partie.nombreDeCartesJouables--;
 			
+			for (int t = 0; t < Plateau.possibilites.size(); t++) {
+				System.out.print("(" + Plateau.possibilites.get(t).x + ", " + Plateau.possibilites.get(t).y + "), ");
+			}
+			System.out.println();
+			
 			Plateau.updateTableDuJeu();
 		} 
 		

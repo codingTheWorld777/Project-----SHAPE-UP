@@ -32,7 +32,7 @@ public class InstallerJeu {
 		this.nombreDeJoueurs = Integer.parseInt(src.nextLine());
 		
 		//Activate virtual player: Yes or No
-		System.out.println("Activer le joueur virtuel (Y/N): ");
+		System.out.println("Activer le joueur virtuel (true/false): ");
 		this.activerJoueurVir = src.nextBoolean();		
 		
 		//Set level 
@@ -40,6 +40,7 @@ public class InstallerJeu {
 
 		
 		Partie.nombreDeCartesJouables = 17 - this.nombreDeJoueurs;
+		Partie.joueursEnJeu = new Joueur[this.nombreDeJoueurs];
 //		System.out.println(this.nombreDeJoueurs + " " + this.activerJoueurVir + " " + this.niveau + " Niveau");
 	}
 	

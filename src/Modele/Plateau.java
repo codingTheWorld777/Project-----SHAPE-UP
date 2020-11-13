@@ -119,12 +119,14 @@ public class Plateau {
 			 
 			 if (cartesJouees.get(i).getCoordonnees().y > yMax) yMax = cartesJouees.get(i).getCoordonnees().y;
 		}
-		System.out.println("xMin = " + xMin + ", xMax = " + xMax);
+//		System.out.println("xMin = " + xMin + ", xMax = " + xMax);
 		
-		if (xMax - xMin + 1 == 5) {
-			for (int j = 0; j < possibilites.size(); j++) {
-				if (possibilites.get(j).x < xMin || possibilites.get(j).x > xMax) {
-					possibilites.remove(j);
+		if (xMax - xMin + 1 >= 4) {
+			if (xMax - xMin + 1 == 5) {
+				for (int j = 0; j < possibilites.size(); j++) {
+					if (possibilites.get(j).x < xMin || possibilites.get(j).x > xMax) {
+						possibilites.remove(j);
+					}
 				}
 			}
 			
@@ -136,10 +138,12 @@ public class Plateau {
 				}
 			}
 			
-		} else if (yMax - yMin + 1 == 5) {
-			for (int j = 0; j < possibilites.size(); j++) {
-				if (possibilites.get(j).y < yMin || possibilites.get(j).y > yMax) {
-					possibilites.remove(j);
+		} else if (yMax - yMin + 1 >= 4) {
+			if (yMax - yMin + 1 == 5) {
+				for (int j = 0; j < possibilites.size(); j++) {
+					if (possibilites.get(j).y < yMin || possibilites.get(j).y > yMax) {
+						possibilites.remove(j);
+					}
 				}
 			}
 			
@@ -178,6 +182,7 @@ public class Plateau {
 			}
 			System.out.println();
 		}
+		System.out.println();
 	}
 	
 }
