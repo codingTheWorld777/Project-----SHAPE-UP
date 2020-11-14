@@ -62,11 +62,6 @@ public class Partie {
 				Partie.tour++;
 			}
 		}
-		//In case there are 3 players, we must play the last card of the game
-		if (Plateau.possibilites.size() != 0) {
-			System.out.println("Joueur " + joueursEnJeu[2].id);
-			this.jouerSonTour(joueursEnJeu[2], joueursEnJeu[2].estEnTour, Partie.tour);
-		}
 	}
 	
 	/*

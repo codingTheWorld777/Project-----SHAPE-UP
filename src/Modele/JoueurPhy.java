@@ -52,6 +52,7 @@ public class JoueurPhy extends Joueur {
 			if (Plateau.verifierPos(x, y) && !Plateau.verifierAvecCartesJouees(x, y)) {
 				tableDuJeu[y][x] = PiocheCartes.getPiocheCartes().get(Partie.nombreDeCartesJouables - 1);
 				Plateau.misAJourListe(tableDuJeu[y][x], x, y);
+				Plateau.determinerRec(Plateau.cartesJouees);
 				Plateau.supprimerCoordonnee(x, y);
 				Plateau.ajouterCoordonneePossible(x, y);
 				Plateau.determinerRec(Plateau.cartesJouees);
