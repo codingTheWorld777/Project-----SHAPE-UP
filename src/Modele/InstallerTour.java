@@ -78,8 +78,8 @@ public class InstallerTour {
 		int pos1 = 0, pos2 = 0;
 		
 		while (pos1 == pos2) {
-			pos1 = (int) (Math.random() * 18);
-			pos2 = (int) (Math.random() * 18);
+			pos1 = (int) (Math.random() * 17);	//multiple by 17 (because we eliminate a card (hidden card) first
+			pos2 = (int) (Math.random() * 17);
 		}
 		
 		/*
@@ -105,12 +105,12 @@ public class InstallerTour {
 	 * Distribute card to each player (in the case for 2 players and 1 virtual player)
 	 */
 	public void distribuerCarteVictoire(ArrayList<Carte> piocheCartes, Joueur joueur1, Joueur joueur2, Joueur joueur3) {
-		int pos = (int) (Math.random() * 18);
-		int x = (int) (Math.random() * 18);
+		int pos = (int) (Math.random() * 17);
+		int x = (int) (Math.random() * 17);
 		
-		while (pos + 2 * x >= 18) {
-			pos = (int) (Math.random() * 18);
-			x = (int) (Math.random() * 18);
+		while (pos + 2 * x >= 17) {
+			pos = (int) (Math.random() * 17);
+			x = (int) (Math.random() * 17);
 		}
 		
 		/*
