@@ -46,7 +46,6 @@ public class Partie {
 		 */
 		InstallerTour installerTour = new InstallerTour(installerJeu.getNombreDeJoueurs(), installerJeu.getActiverJoueurVir());
 		
-		
 		/*
 		 * Step 3:
 		 * All player in turn of game and play their turn:
@@ -62,6 +61,8 @@ public class Partie {
 				Partie.tour++;
 			}
 		}
+		System.out.println("\n \n");
+		this.imprimerResult();
 	}
 	
 	/*
@@ -113,5 +114,30 @@ public class Partie {
 	 */
 	public static Carte[][] getTableDuJeu() {
 		return Partie.tableDuJeu;
+	}
+	
+	/*
+	 * Show the table of game with all features of cards
+	 */
+	public void imprimerResult() {
+		for (int i = 0; i < Partie.joueursEnJeu.length; i++) {
+			System.out.println("Carte victoire de " + joueursEnJeu[i].nom + " est: " 
+					+ " " + joueursEnJeu[i].getCarteVictoire().getForme()
+					+ " " + joueursEnJeu[i].getCarteVictoire().getCouleur()
+					+ " " + joueursEnJeu[i].getCarteVictoire().getNature());
+		}
+		
+		for (int i = 0; i < 5; i++) {
+			for (int j = 0; j < 7; j++) {
+				if (Partie.getTableDuJeu()[i][j] != null) {
+					System.out.print("|" + Partie.getTableDuJeu()[i][j].getForme() + " "
+									+ Partie.getTableDuJeu()[i][j].getCouleur() + " "
+									+ Partie.getTableDuJeu()[i][j].getNature()
+									+ "|");
+				}
+			}
+			System.out.println();
+		}
+		System.out.println();
 	}
 }

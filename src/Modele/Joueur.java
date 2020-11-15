@@ -19,7 +19,7 @@ public abstract class Joueur extends Observable implements Observer{
 	 * Victory card of player after distributing, is used by GUI after finishing a round
 	 * and is used to calculate score for each player.
 	 */
-	protected Carte carteVictoire;  //Il faut la distribuer avant de jouer le jeu
+	private Carte carteVictoire;  //Il faut la distribuer avant de jouer le jeu
 	
 	/*
 	 * To check if player is in turn or not.
