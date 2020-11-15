@@ -10,7 +10,7 @@ public class Compteur {
 		this.pointsJoueurs = new int [partie.joueursEnJeu.length];
 		
 		Carte[][] tableDuJeu = partie.getTableDuJeu();
-		for (int k = 0; k<partie.joueursEnJeu.length; k++) {
+		for (int k = 0; k<partie.joueursEnJeu.length; k++) {//k parcours les joueurs en jeu
 			
 			for (int i=0; i<tableDuJeu.length; i++) { //i parcours les lignes
 				
