@@ -10,6 +10,7 @@ public class Compteur {
 		this.pointsJoueurs = new int [Partie.joueursEnJeu.length];
 		
 
+
 		for (int k = 0; k<Partie.joueursEnJeu.length; k++) {//k parcours les joueurs en jeu
 			
 			for (int i=0; i<tableDuJeu.length; i++) { //i parcours les lignes
@@ -78,6 +79,9 @@ public class Compteur {
 		}
 	}	
 
+
+	
+
 	
 	/*
 	 * Get scores of players
@@ -92,7 +96,6 @@ public class Compteur {
 	public int getPointsJoueurs(int joueur_id) {
 		return this.pointsJoueurs[joueur_id - 1];
 	}
-	
 }
 			
 
