@@ -18,218 +18,189 @@ public class Compteur {
 			//1.
 			//on compte les points obtenus du joueur k sur les formes
 			for (int i=0; i<tableDuJeu.length; i++) { //i parcours les lignes
-				
-				for (int j=0; j<tableDuJeu[i].length; j++) {//j parcours les colonnes
+				int j = 0;
+				while ( j<tableDuJeu[i].length) {//j parcours les colonnes
 					
 					if (tableDuJeu[i][j] != null) {
 					
-						while ( tableDuJeu[i][j] != null && Partie.joueursEnJeu[k].getCarteVictoire().getForme() != tableDuJeu[i][j].getForme() ) {
-							if (j != 6) {
-								j++;
-							}
+						if ( Partie.joueursEnJeu[k].getCarteVictoire().getForme() != tableDuJeu[i][j].getForme() ) {
+							j++;
 							
-						} /*la boucle s'arrête dès que la  forme de la carte victoire est égale
-							à la forme de la carte de coordonné (i, j) */
-						int n = j;
-						int l= 1;
-						
-						while ( tableDuJeu[i][n+l] != null && Partie.joueursEnJeu[k].getCarteVictoire().getForme() == tableDuJeu[i][n+l].getForme() ) {
-							l++;
-							if (j + l >= 6) {
-								j = 6;
-							} else { j += l; }
+						} else if (j+1<tableDuJeu[i].length && tableDuJeu[i][j+1] != null && Partie.joueursEnJeu[k].getCarteVictoire().getForme() == tableDuJeu[i][j+1].getForme()) {
 							this.pointsJoueurs[k]++;
-						} /* la boucle s'arrête quand la forme de la carte sur le plateau ne correspond plus à celle
-						de la carte victoire */
+							j++;
+						} else {
+							j++;
+						}
 						
+					} else { 
+						j++;
 					}
 				}
 			}
+	
+		/******************************************************************************************************************************************/
 			
 			//on compte les points obtenus du joueur k sur les natures
 			for (int i=0; i<tableDuJeu.length; i++) { //i parcours les lignes
+				int j = 0;
 				int compteur = 0;
-						
-				for (int j=0; j<tableDuJeu[i].length; j++) {//j parcours les colonnes
-					
+				while ( j<tableDuJeu[i].length) {//j parcours les colonnes
+			
 					if (tableDuJeu[i][j] != null) {
-						while ( tableDuJeu[i][j] != null && Partie.joueursEnJeu[k].getCarteVictoire().getNature() != tableDuJeu[i][j].getNature() ) {
-							if (j != 6) {
-								j++;
-							}
-							
-						} /*la boucle s'arrête dès que la  nature de la carte victoire est égale
-							à celle de la carte de coordonné (i, j) */
-						int n = j;
-						int l= 1;
-						while ( tableDuJeu[i][n+l] != null && Partie.joueursEnJeu[k].getCarteVictoire().getNature() == tableDuJeu[i][n+l].getNature() ) {
-							l++;
-							if (j + l >= 6) {
-								j = 6;
-							} else { j += l; }
-							compteur++;
-						} /* la boucle s'arrête quand la nature de la carte sur le plateau ne correspond plus à celle
-							de la carte victoire */
+			
+						if ( Partie.joueursEnJeu[k].getCarteVictoire().getNature() != tableDuJeu[i][j].getNature() ) {
+							j++;
 					
-						if (compteur > 1) {
+						} else if (j+1<tableDuJeu[i].length && tableDuJeu[i][j+1] != null && Partie.joueursEnJeu[k].getCarteVictoire().getNature() == tableDuJeu[i][j+1].getNature()) {
 							compteur++;
-							this.pointsJoueurs[k]+=compteur; 
-						} //on doit respecter la distribution des points définie dans la règle du jeu
-						
+							j++;
+						} else {
+							j++;
+						}
+				
+					} else { 
+						j++;
 					}
 				}
+					
+				if (compteur>1) {
+					compteur++;
+					this.pointsJoueurs[k] += compteur;
+				}
 			}
-	
 			
-	
-			//on compte les points obtenus du joueur k sur les couleurs	
+		/******************************************************************************************************************************************/
+			
+			//on compte les points obtenus du joueur k sur les couleurs
 			for (int i=0; i<tableDuJeu.length; i++) { //i parcours les lignes
+				int j = 0;
 				int compteur = 0;
-			
-				for (int j=0; j<tableDuJeu[i].length; j++) {//j parcours les colonnes
-					
+				while ( j<tableDuJeu[i].length) {//j parcours les colonnes
+		
 					if (tableDuJeu[i][j] != null) {
-
-						while ( tableDuJeu[i][j] != null && Partie.joueursEnJeu[k].getCarteVictoire().getCouleur() != tableDuJeu[i][j].getCouleur() ) {
-							if (j != 6) {
-								j++;
-							}
-							
-								
-						} /*la boucle s'arrête dès que la couleur de la carte victoire est égale
-						à celle de la carte de coordonné (i, j) */
-						int n = j;
-						int l= 1;
-						while ( tableDuJeu[i][n+l] != null && Partie.joueursEnJeu[k].getCarteVictoire().getCouleur() == tableDuJeu[i][n+l].getCouleur() ) {
-							l++;
-							if (j + l >= 6) {
-								j = 6;
-							} else { j += l; }
+		
+						if ( Partie.joueursEnJeu[k].getCarteVictoire().getCouleur() != tableDuJeu[i][j].getCouleur() ) {
+							j++;
+				
+						} else if (j+1<tableDuJeu[i].length && tableDuJeu[i][j+1] != null && Partie.joueursEnJeu[k].getCarteVictoire().getCouleur() == tableDuJeu[i][j+1].getCouleur()) {
 							compteur++;
-						} /* la boucle s'arrête quand la couleur de la carte sur le plateau ne correspond plus à celle
-						de la carte victoire */
-					
-						if (compteur > 1) {
-							compteur += 2;
-							this.pointsJoueurs[k] += compteur; 
-						} //on doit respecter la distribution des points définie sur la règle du jeu
+							j++;
+						} else {
+							j++;
+						}
+			
+					} else { 
+						j++;
 					}
 				}
+				
+				if (compteur>1) {
+					compteur += 2;
+					this.pointsJoueurs[k] += compteur;
+				}
 			}
+		
+	
 			
-			/******************************************************************************************************************************************/
+		/******************************************************************************************************************************************/
+			
+		/******************************************************************************************************************************************/
 			
 			//2.
 			//on compte les points obtenus du joueur k sur les formes
 			for (int j=0; j<tableDuJeu[0].length; j++) { //j parcours les colonnes
-				
-				for (int i=0; i<tableDuJeu.length; i++) {//i parcours les lignes
-					
+				int i = 0;
+				while ( i<tableDuJeu.length) {//i parcours les lignes
+			
 					if (tableDuJeu[i][j] != null) {
+			
+						if ( Partie.joueursEnJeu[k].getCarteVictoire().getForme() != tableDuJeu[i][j].getForme() ) {
+							i++;
 					
-						while ( tableDuJeu[i][j] != null && Partie.joueursEnJeu[k].getCarteVictoire().getForme() != tableDuJeu[i][j].getForme() ) {
-						if ( i != 4) {
+						} else if (i+1<tableDuJeu.length && tableDuJeu[i+1][j] != null && Partie.joueursEnJeu[k].getCarteVictoire().getForme() == tableDuJeu[i+1][j].getForme()) {
+							this.pointsJoueurs[k]++;
+							i++;
+						} else {
 							i++;
 						}
-						
-						} /*la boucle s'arrête dès que la  forme de la carte victoire est égale
-							à la forme de la carte de coordonné (i, j) */
-						int n = i;
-						int l= 1;
-						
-						while ( tableDuJeu[n+l][j] != null && Partie.joueursEnJeu[k].getCarteVictoire().getForme() == tableDuJeu[n+l][j].getForme() ) {
-							l++;
-							if (i + l >= 4) {
-								i = 4;
-							} else { i += l; }
-							this.pointsJoueurs[k]++;
-						} /* la boucle s'arrête quand la forme de la carte sur le plateau ne correspond plus à celle
-						de la carte victoire */
+				
+					} else { 
+						i++;
 					}
 				}
 			}
-			
-			
+		
+		/******************************************************************************************************************************************/
+	
 			//on compte les points obtenus du joueur k sur les natures
 			for (int j=0; j<tableDuJeu[0].length; j++) { //j parcours les colonnes
+				int i = 0;
 				int compteur = 0;
-						
-				for (int i=0; i<tableDuJeu.length; i++) {//i parcours les lignes
-					
+				while ( i<tableDuJeu.length) {//i parcours les lignes
+	
 					if (tableDuJeu[i][j] != null) {
-						while ( tableDuJeu[i][j] != null && Partie.joueursEnJeu[k].getCarteVictoire().getNature() != tableDuJeu[i][j].getNature() ) {
-							if ( i != 4) {
-								i++;
-							}
-							
-						} /*la boucle s'arrête dès que la  nature de la carte victoire est égale
-							à celle de la carte de coordonné (i, j) */
-						int n = i;
-						int l= 1;
-						while ( tableDuJeu[n+l][j] != null && Partie.joueursEnJeu[k].getCarteVictoire().getNature() == tableDuJeu[n+l][j].getNature() ) {
-							l++;
-							if (i + l >= 4) {
-								i = 4;
-							} else { i += l; }
+	
+						if ( Partie.joueursEnJeu[k].getCarteVictoire().getNature() != tableDuJeu[i][j].getNature() ) {
+							i++;
+			
+						} else if (i+1<tableDuJeu.length && tableDuJeu[i+1][j] != null && Partie.joueursEnJeu[k].getCarteVictoire().getNature() == tableDuJeu[i+1][j].getNature()) {
 							compteur++;
-						} /* la boucle s'arrête quand la nature de la carte sur le plateau ne correspond plus à celle
-							de la carte victoire */
-					
-						if (compteur > 1) {
-							compteur++;
-							this.pointsJoueurs[k] += compteur; 
-						} //on doit respecter la distribution des points définie dans la règle du jeu
+							i++;
+						} else {
+							i++;
+						}
+		
+					} else { 
+						i++;
 					}
 				}
+				
+				if (compteur > 1) {
+					compteur++;
+					this.pointsJoueurs[k] += compteur;
+				}
 			}
-	
+		
+		/******************************************************************************************************************************************/
 			
-	
-			//on compte les points obtenus du joueur k sur les couleurs	
+			//on compte les points obtenus du joueur k sur les couleurs
 			for (int j=0; j<tableDuJeu[0].length; j++) { //j parcours les colonnes
+				int i = 0;
 				int compteur = 0;
-			
-				for (int i=0; i<tableDuJeu.length; i++) {//i parcours les lignes
-					
+				while ( i<tableDuJeu.length) {//i parcours les lignes
+	
 					if (tableDuJeu[i][j] != null) {
-
-						while ( tableDuJeu[i][j] != null && Partie.joueursEnJeu[k].getCarteVictoire().getCouleur() != tableDuJeu[i][j].getCouleur() ) {
-							if ( i != 4) {
-								i++;
-							}
-							
-						} /*la boucle s'arrête dès que la couleur de la carte victoire est égale
-						à celle de la carte de coordonné (i, j) */
-						int n = i;
-						int l = 1;
-						while ( tableDuJeu[n+l][j] != null && Partie.joueursEnJeu[k].getCarteVictoire().getCouleur() == tableDuJeu[n+l][j].getCouleur() ) {
-							l++;
-							if (i + l >= 4) {
-								i = 4;
-							} else { i += l; }
+	
+						if ( Partie.joueursEnJeu[k].getCarteVictoire().getCouleur() != tableDuJeu[i][j].getCouleur() ) {
+							i++;
+			
+						} else if (i+1<tableDuJeu.length && tableDuJeu[i+1][j] != null && Partie.joueursEnJeu[k].getCarteVictoire().getCouleur() == tableDuJeu[i+1][j].getCouleur()) {
 							compteur++;
-						} /* la boucle s'arrête quand la couleur de la carte sur le plateau ne correspond plus à celle
-						de la carte victoire */
-					
-						if (compteur > 1) {
-							compteur += 2;
-							this.pointsJoueurs[k] += compteur; 
-						} //on doit respecter la distribution des points définie sur la règle du jeu
+							i++;
+						} else {
+							i++;
+						}
+		
+					} else { 
+						i++;
 					}
+				}
+				
+				if (compteur > 1) {
+					compteur += 2;
+					this.pointsJoueurs[k] += compteur;
 				}
 			}
 		}
-	}
+	}//end of constructor
 	
-
-
-	
-
 	
 	/*
 	 * Get scores of players
 	 */
 	public int[] getPointsJoueurs() {
+		
 		return this.pointsJoueurs;
 	}
 	
@@ -237,6 +208,7 @@ public class Compteur {
 	 * Get score of a player
 	 */
 	public int getPointsJoueurs(int joueur_id) {
+
 		return this.pointsJoueurs[joueur_id - 1];
 	}
 }
