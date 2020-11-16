@@ -13,6 +13,11 @@ public class Plateau {
 	 */
 	protected static ArrayList<Coordonnees> possibilites = new ArrayList<Coordonnees>();
 	
+	/*
+	 * Coordinates of 4 vertex of rectangle 5x3 final
+	 */
+	protected static int xMinDuRec, xMaxDuRec, yMinDuRec, yMaxDuRec;
+	
 	
 	/*
 	 * If player can add card to one position, add new possible position that player can choose for next turn
@@ -128,6 +133,9 @@ public class Plateau {
 						possibilites.remove(j);
 					}
 				}
+				
+				Plateau.xMinDuRec = xMin;
+				Plateau.xMaxDuRec = xMax;
 			}
 			
 			if (yMax - yMin + 1 == 3) {
@@ -136,6 +144,9 @@ public class Plateau {
 						possibilites.remove(k);
 					}
 				}
+				
+				Plateau.yMinDuRec = yMin;
+				Plateau.yMaxDuRec = yMax;
 			}
 			
 		} else if (yMax - yMin + 1 >= 4) {
@@ -145,6 +156,9 @@ public class Plateau {
 						possibilites.remove(j);
 					}
 				}
+				
+				Plateau.xMinDuRec = xMin;
+				Plateau.xMaxDuRec = xMax;
 			}
 			
 			if (xMax - xMin + 1 == 3) {
@@ -153,6 +167,9 @@ public class Plateau {
 						possibilites.remove(k);
 					}
 				}
+				
+				Plateau.yMinDuRec = yMin;
+				Plateau.yMaxDuRec = yMax;
 			}
 		}
 		
