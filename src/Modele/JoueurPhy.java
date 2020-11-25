@@ -75,9 +75,51 @@ public class JoueurPhy extends Joueur {
 	
 	}
 	
+	/*
+	 * Choose and move a card to a new position (if it's possible) by respecting the rule of mouvement
+	 */
 	public void deplacerCarte() {
-		System.out.println("Déplacer la carte à la position (x, y) = ");
-	
+		System.out.println("Voulez-vous déplacer une carte?: (0/1): ");
+		Scanner src = new Scanner(System.in);
+		int deplacer = src.nextInt();
+		
+		if (deplacer == 1) {
+			System.out.println("Choisir l'abscisse x de carte que vous voulez déplacer: ");
+			int x = src.nextInt();
+			
+			System.out.println("Choisir l'ordonnée y de carte que vous voulez déplacer: ");
+			int y = src.nextInt();
+			boolean check = Plateau.estDeplacable(x, y);
+			System.out.println(check);
+			if (check) {
+				System.out.println("Choisir l'abscisse x de position que vous voulez déplacer carte à: ");
+				int x1 = src.nextInt();
+				
+				System.out.println("Choisir l'ordonnée y de position que vous voulez déplacer carte à: ");
+				int y1 = src.nextInt();
+				
+				for (Coordonnees positionDeDeplacer: Plateau.positionDeDeplacer) {
+					if (positionDeDeplacer.x == x && positionDeDeplacer.y == y) {
+						/*
+						 * if all conditions of mouvement are satisfied: 
+						 * 	+ Remove card (for example card X) out of the table of game
+						 * 	+ Delete its position out of Plateau.possibilites
+						 * 	+ Move card X to new position
+						 * 	+ Update Plateau.possibilities by using Plateau.ajouterCoordonneePossible
+						 * 	+ Release Plateau.positionDeDeplacer to save memory
+						 */
+						Carte carte = Partie.getTableDuJeu()[y][x];
+						Partie.getTableDuJeu()[y][x] = null;
+						Plateau.supprimerCoordonnee(x, y);
+						Partie.getTableDuJeu()[y1][x1] = carte;
+						Plateau.ajouterCoordonneePossible(x1, y1);
+						Plateau.positionDeDeplacer.clear();
+					}
+				}
+				
+			} else deplacerCarte();
+		}
 	}
+
 	
 }
