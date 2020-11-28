@@ -61,12 +61,19 @@ public class Partie {
 					this.jouerSonTour(joueursEnJeu[i], joueursEnJeu[i].estEnTour, Partie.tour);
 					Partie.tour++;
 				} else if (Partie.tour >= 1) {
-					joueursEnJeu[i].deplacerCarte();	//move a card
+					//move a card: Yes/No. From turn 3 (there were already 3 card on the table)
+					if (Partie.tour >= 3) joueursEnJeu[i].deplacerCarte();
+					
 					this.jouerSonTour(joueursEnJeu[i], joueursEnJeu[i].estEnTour, Partie.tour);		//draw and play a card
 					Partie.tour++;
 				}
 			}
 		}
+		
+		/* Step 4:
+		 * The game is now finish: 
+		 * 	+ Compter points of each player and print it on the screen
+		 */
 		System.out.println("\n \n");
 		this.imprimerResult();
 	}
