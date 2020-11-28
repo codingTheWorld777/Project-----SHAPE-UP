@@ -8,7 +8,7 @@ public class JouerJeu {
 		
 		for (int i = 0; i < Partie.joueursEnJeu.length; i++) {
 			System.out.print(Partie.joueursEnJeu[i].nom 
-					+ " à " + compteurPoint.getPointsJoueurs()[i] + " points." + "\t");
+					+ ": " + compteurPoint.getPointsJoueurs()[i] + " points." + "\t");
 		}
 	}
 }

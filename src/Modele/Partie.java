@@ -139,14 +139,22 @@ public class Partie {
 					+ " " + joueursEnJeu[i].getCarteVictoire().getCouleur()
 					+ " " + joueursEnJeu[i].getCarteVictoire().getNature());
 		}
+		System.out.println();
 		
+		String result;
 		for (int i = 0; i < 5; i++) {
 			for (int j = 0; j < 7; j++) {
 				if (Partie.getTableDuJeu()[i][j] != null) {
-					System.out.print("|" + Partie.getTableDuJeu()[i][j].getForme() + " "
+					result = "|" + Partie.getTableDuJeu()[i][j].getForme() + " "
 									+ Partie.getTableDuJeu()[i][j].getCouleur() + " "
-									+ Partie.getTableDuJeu()[i][j].getNature()
-									+ "|");
+									+ Partie.getTableDuJeu()[i][j].getNature();
+					
+					while (result.length() < 22) {
+						if (result.length() == 21) result += "|";
+						else result += " ";;
+					}
+					
+					System.out.print(result);
 				}
 			}
 			System.out.println();
