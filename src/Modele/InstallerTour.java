@@ -3,6 +3,9 @@ package Modele;
 import java.util.ArrayList;
 
 public class InstallerTour {
+	/**
+	 * @author Huu Khai NGUYEN (Alec)
+	 */
 	
 	public InstallerTour(int nombreDeJoueurs, boolean activerJoueurVir) {
 		PiocheCartes piocheCartes = new PiocheCartes();

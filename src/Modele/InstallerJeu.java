@@ -4,6 +4,10 @@ import java.util.Scanner;
 
 public class InstallerJeu {
 	/**
+	 * @author Huu Khai NGUYEN (Alec)
+	 */
+	
+	/**
 	 * We divide this function into 3 main phases:
 	 * 	- Choose the number of player (2 or 3)
 	 * 	- Activate virtual player (yes or no)
