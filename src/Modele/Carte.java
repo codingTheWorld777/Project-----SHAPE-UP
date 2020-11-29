@@ -1,44 +1,44 @@
 package Modele;
 
 public class Carte {
-	/*
+	/**
 	 * There are 3 possible shapes for a card: circle, triangle, square.
 	 */
 	protected enum formePossible {cercle, carré, triangle};
 	private formePossible forme;
 	
-	/*
+	/**
 	 * There are only 2 main states of card: hollow and solid
 	 */
 	protected enum naturePossible {plein, vide};
 	private naturePossible nature;
 	
-	/*
+	/**
 	 * There are 3 possible colors for a card: red, blue or green
 	 */
 	protected enum couleurPossible {bleu, vert, rouge};
 	private couleurPossible couleur;
 	
-	/*
+	/**
 	 * Face of card: UP or DOWN
 	 */
 	private boolean recto;
 	
-	/*
+	/**
 	 * This is card's image in the game.
 	 * Each card has a different image
 	 * Each card can be up or down (recto vs verso)
 	 */
 //	private BufferedImage carteImage;
 	
-	/*
+	/**
 	 * coordinates of card (of card played) 
 	 */
 	Coordonnees coordonnesDeCarte;
 	
 
 	/**
-	 *
+	 * 
 	 * @param forme
 	 * @param nature
 	 * @param couleur

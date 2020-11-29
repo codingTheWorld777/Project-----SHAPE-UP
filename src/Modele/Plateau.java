@@ -3,6 +3,11 @@ package Modele;
 import java.util.ArrayList;
 
 public class Plateau {
+	/**
+	 * @author Huu Khai NGUYEN (Alec)
+	 */
+	
+	//1) Check a position if it can be chosen to place a card
 	/*
 	 * Add and save all cards that were played
 	 */
@@ -19,7 +24,11 @@ public class Plateau {
 	protected static int xMinDuRec, xMaxDuRec, yMinDuRec, yMaxDuRec;
 	
 	
-	/*
+	//2) Check if a card can move to another position and choose the position that player want to move the card to...
+	protected static ArrayList<Coordonnees> positionDeDeplacer = new ArrayList<Coordonnees>();
+	
+	
+	/* (1)
 	 * If player can add card to one position, add new possible position that player can choose for next turn
 	 	 * Compare with list before (in possibilities[])
 		 * Compare with position of each card (in cartesJouees[])
@@ -66,19 +75,20 @@ public class Plateau {
 	}
 	
 	
-	/*
+	/* (2)
 	 * Remove coordinates that is similar in the list
 	 */
 	public static void supprimerCoordonnee(int x, int y) {
 		for (int i = 0; i < Plateau.possibilites.size(); i++) {
 			if (Plateau.possibilites.get(i).x == x && Plateau.possibilites.get(i).y == y) {
 				Plateau.possibilites.remove(i);
+				break;
 			}
 		}
 	}
 	
 	
-	/*
+	/* (3) 
 	 * 
 	 * Check with all possibilities defined if the position is available
 	 */
@@ -92,7 +102,7 @@ public class Plateau {
 	}
 	
 	
-	/*
+	/* (4)
 	 * Check position chosen with position of card played
 	 */
 	public static boolean verifierAvecCartesJouees(int x, int y) {
@@ -104,7 +114,7 @@ public class Plateau {
 		return false;
 	}
 	
-	/*
+	/* (5)
 	 * Reduce the selection of the card's table once you have determined the edge of the rectangle
 	 * Determine the shape of the final rectangle 5x3 base on cards played 
 	 	* We determine this rectangle by its coordinates (x, y)
@@ -175,17 +185,110 @@ public class Plateau {
 		
 	}
 	
+	/* (6)
+	 * Check a position (x, y) of a card if it is moveable
+	 */
+	public static boolean estDeplacable(int x, int y) {
+		int X, Y;
+		boolean estDeplacable = false;
+		
+		
+		if (Partie.getTableDuJeu()[y][x] != null) {
+			
+			if (x + 1 <= 6) {
+				if (Partie.getTableDuJeu()[y][x + 1] == null) {
+					Y = y;
+					X = x + 1;
+					
+					if ((X + 1 <= 6 && Partie.getTableDuJeu()[Y][X + 1] != null)
+						|| (Y - 1 >= 0 && Partie.getTableDuJeu()[Y - 1][X] != null)
+						|| (Y + 1 <= 4 && Partie.getTableDuJeu()[Y + 1][X] != null)) {
+						
+						Coordonnees position = new Coordonnees(X, Y);
+						Plateau.positionDeDeplacer.add(position);
+					}
+				}
+			}
+			
+			if (x - 1 >= 0) {
+				if (Partie.getTableDuJeu()[y][x - 1] == null) {
+					Y = y;
+					X = x - 1;
+					
+					if ((X - 1 >= 0 && Partie.getTableDuJeu()[Y][X - 1] != null)
+						|| (Y - 1 >= 0 && Partie.getTableDuJeu()[Y - 1][X] != null)
+						|| (Y + 1 <= 4 && Partie.getTableDuJeu()[Y + 1][X] != null)) {
+						
+						Coordonnees position = new Coordonnees(X, Y);
+						Plateau.positionDeDeplacer.add(position);
+					}
+				}
+			}
+			
+			if (y + 1 <= 4) {  
+				if (Partie.getTableDuJeu()[y + 1][x] == null) {
+					Y = y + 1;
+					X = x;
+					
+					if ((Y + 1 <= 4 && Partie.getTableDuJeu()[Y + 1][X] != null)
+						|| (X - 1 >= 0 && Partie.getTableDuJeu()[Y][X - 1] != null) 
+						|| (X + 1 <= 6 && Partie.getTableDuJeu()[Y][X + 1] != null)) {
+						
+						Coordonnees position = new Coordonnees(X, Y);
+						Plateau.positionDeDeplacer.add(position);
+					}
+					
+				}
+			}
+			
+			if (y - 1 >= 0) {
+				if (Partie.getTableDuJeu()[y - 1][x] == null) {
+					Y = y - 1;
+					X = x;
+					
+					if ((Y - 1 >= 0 && Partie.getTableDuJeu()[Y - 1][X] != null)
+						|| (X - 1 >= 0 && Partie.getTableDuJeu()[Y][X - 1] != null)
+						|| (X + 1 <= 6 && Partie.getTableDuJeu()[Y][X + 1] != null)) {
+						
+						Coordonnees position = new Coordonnees(X, Y);
+						Plateau.positionDeDeplacer.add(position);
+					}
+					
+				}
+			}
+				
+			
+			if (!Plateau.positionDeDeplacer.isEmpty()) estDeplacable = true;
+		}
+		
+		return estDeplacable;
+	}
 	
-	/*
+	
+	/* (7)
 	 * Update list of cards played 
 	 */
-	public static void misAJourListe(Carte carte, int x, int y) {
+	public static void misAJourListeCartesJouees(Carte carte, int x, int y) {
 		Plateau.cartesJouees.add(carte);
 		carte.setCoordonnees(x, y);
 	}
 	
+	/* (8)
+	 * Update list of possible positions for drawing a card to a position
+	 * -> (this method is used after moving (déplacer) a card in order to eliminate some possible position
+	 * 	that is related to this card's position)
+	 */
+	public static void misAJourListePossibilites(int x, int y) {
+		Plateau.supprimerCoordonnee(x, y);
+		
+		if (x - 1 >= 0 && Partie.getTableDuJeu()[y][x - 1] == null) Plateau.supprimerCoordonnee(x - 1, y);
+		if (x + 1 <= 6 && Partie.getTableDuJeu()[y][x + 1] == null) Plateau.supprimerCoordonnee(x + 1, y);
+		if (y - 1 >= 0 && Partie.getTableDuJeu()[y - 1][x] == null) Plateau.supprimerCoordonnee(x, y - 1);
+		if (y + 1 <= 4 && Partie.getTableDuJeu()[y + 1][x] == null) Plateau.supprimerCoordonnee(x, y + 1);
+		
+	}
 	
-	/*
+	/* (9)
 	 * Print table of game to screen
 	 */
 	public static void updateTableDuJeu() {

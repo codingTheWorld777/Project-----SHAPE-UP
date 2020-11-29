@@ -159,7 +159,6 @@ public class Compteur {
 	 * Get scores of players
 	 */
 	public int[] getPointsJoueurs() {
-		
 		return this.pointsJoueurs;
 	}
 	
@@ -167,7 +166,6 @@ public class Compteur {
 	 * Get score of a player
 	 */
 	public int getPointsJoueurs(int joueur_id) {
-
 		return this.pointsJoueurs[joueur_id - 1];
 	}
 }
