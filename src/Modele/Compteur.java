@@ -74,19 +74,19 @@ public class Compteur {
 				int compteur = 1;
 				
 				while (j <= Plateau.xMaxDuRec) {//j parcours les colonnes
-						if (tableDuJeu[i][j] != null) {
-							if (Partie.joueursEnJeu[k].getCarteVictoire().getCouleur() != tableDuJeu[i][j].getCouleur() ) {
-								j++;
-					
-							} else if (j + 1 <= Plateau.xMaxDuRec && tableDuJeu[i][j + 1] != null && Partie.joueursEnJeu[k].getCarteVictoire().getCouleur() == tableDuJeu[i][j + 1].getCouleur()) {
-								compteur++;
-								j++;
-								
-							} else {
-								j++;
-							}
+					if (tableDuJeu[i][j] != null) {
+						if (Partie.joueursEnJeu[k].getCarteVictoire().getCouleur() != tableDuJeu[i][j].getCouleur() ) {
+							j++;
+				
+						} else if (j + 1 <= Plateau.xMaxDuRec && tableDuJeu[i][j + 1] != null && Partie.joueursEnJeu[k].getCarteVictoire().getCouleur() == tableDuJeu[i][j + 1].getCouleur()) {
+							compteur++;
+							j++;
 							
-						} else j++;
+						} else {
+							j++;
+						}
+						
+					} else j++;
 				}
 				
 				if (compteur > 2) {
