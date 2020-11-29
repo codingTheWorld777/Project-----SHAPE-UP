@@ -20,7 +20,7 @@ public class PiocheCartes {
 	public void creerCartes() {
 		
 		naturePossible[] natures = {naturePossible.plein, naturePossible.vide};
-		formePossible[] formes = {formePossible.cercle, formePossible.carrÃ©, formePossible.triangle};
+		formePossible[] formes = {formePossible.cercle, formePossible.carré, formePossible.triangle};
 		couleurPossible[] couleurs = {couleurPossible.bleu, couleurPossible.vert, couleurPossible.rouge};
 		
 		int compteur = 0;
