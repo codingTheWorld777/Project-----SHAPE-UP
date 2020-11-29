@@ -2,6 +2,10 @@ package Modele;
 
 public class Carte {
 	/**
+	 * @author Huu Khai NGUYEN (Alec), Pierre-Louis DAMBRAINE
+	 */
+	
+	/**
 	 * There are 3 possible shapes for a card: circle, triangle, square.
 	 */
 	protected enum formePossible {cercle, carré, triangle};

@@ -3,6 +3,10 @@ package Modele;
 import java.util.Scanner;
 
 public class Partie {
+	/**
+	 * @author Huu Khai NGUYEN (Alec)
+	 */
+	
 	/*
 	 * Player of game (from 2-3 players)
 	 */

@@ -1,6 +1,10 @@
 package Modele;
 
 public class Compteur {
+	/**
+	 * @author Pierre-Louis DAMBRAINE, Huu Khai NGUYEN (Alec)
+	 */
+	
 	
 	private int[] pointsJoueurs;
 	

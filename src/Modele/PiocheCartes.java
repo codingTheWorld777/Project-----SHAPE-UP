@@ -7,6 +7,10 @@ import Modele.Carte.formePossible;
 import Modele.Carte.naturePossible;
 
 public class PiocheCartes {
+	/**
+	 * @author Huu Khai NGUYEN (Alec), Pierre-Louis DAMBRAINE
+	 */
+	
 	private static ArrayList<Carte> piocheCartes = new ArrayList<Carte>();
 	private static Carte[] cartesOrg = new Carte[18];
 	
