@@ -25,14 +25,17 @@ public class Compteur {
 				int j = Plateau.xMinDuRec;
 				
 				while (j <= Plateau.xMaxDuRec) {	//j parcours les colonnes
-					if (Partie.joueursEnJeu[k].getCarteVictoire().getForme() != tableDuJeu[i][j].getForme()) {
-						j++;
+					if (tableDuJeu[i][j] != null) {
+						if (Partie.joueursEnJeu[k].getCarteVictoire().getForme() != tableDuJeu[i][j].getForme()) {
+							j++;
+							
+						} else if (j + 1 <= Plateau.xMaxDuRec && tableDuJeu[i][j + 1] != null && Partie.joueursEnJeu[k].getCarteVictoire().getForme() == tableDuJeu[i][j + 1].getForme()) {
+							this.pointsJoueurs[k]++;
+							j++;
+							
+						} else j++;	
 						
-					} else if (j + 1 <= Plateau.xMaxDuRec && Partie.joueursEnJeu[k].getCarteVictoire().getForme() == tableDuJeu[i][j + 1].getForme()) {
-						this.pointsJoueurs[k]++;
-						j++;
-						
-					} else j++;	
+					} else j++;
 				}
 				
 			}
@@ -45,12 +48,15 @@ public class Compteur {
 				int compteur = 1;
 				
 				while (j <= Plateau.xMaxDuRec) {	//j parcours les colonnes
-					if (Partie.joueursEnJeu[k].getCarteVictoire().getNature() != tableDuJeu[i][j].getNature()) {
-						j++;
-				
-					} else if (j + 1 <= Plateau.xMaxDuRec && Partie.joueursEnJeu[k].getCarteVictoire().getNature() == tableDuJeu[i][j + 1].getNature()) {
-						compteur++;
-						j++;
+					if (tableDuJeu[i][j] != null) {
+						if (Partie.joueursEnJeu[k].getCarteVictoire().getNature() != tableDuJeu[i][j].getNature()) {
+							j++;
+					
+						} else if (j + 1 <= Plateau.xMaxDuRec && tableDuJeu[i][j + 1] != null && Partie.joueursEnJeu[k].getCarteVictoire().getNature() == tableDuJeu[i][j + 1].getNature()) {
+							compteur++;
+							j++;
+							
+						} else j++;
 						
 					} else j++;
 				}
@@ -68,15 +74,19 @@ public class Compteur {
 				int compteur = 1;
 				
 				while (j <= Plateau.xMaxDuRec) {//j parcours les colonnes
-						if ( Partie.joueursEnJeu[k].getCarteVictoire().getCouleur() != tableDuJeu[i][j].getCouleur() ) {
+					if (tableDuJeu[i][j] != null) {
+						if (Partie.joueursEnJeu[k].getCarteVictoire().getCouleur() != tableDuJeu[i][j].getCouleur() ) {
 							j++;
 				
-						} else if (j + 1 <= Plateau.xMaxDuRec && Partie.joueursEnJeu[k].getCarteVictoire().getCouleur() == tableDuJeu[i][j + 1].getCouleur()) {
+						} else if (j + 1 <= Plateau.xMaxDuRec && tableDuJeu[i][j + 1] != null && Partie.joueursEnJeu[k].getCarteVictoire().getCouleur() == tableDuJeu[i][j + 1].getCouleur()) {
 							compteur++;
 							j++;
+							
 						} else {
 							j++;
 						}
+						
+					} else j++;
 				}
 				
 				if (compteur > 2) {
@@ -97,12 +107,15 @@ public class Compteur {
 				int i = Plateau.yMinDuRec;
 				
 				while (i <= Plateau.yMaxDuRec) {//i parcours les lignes
-					if (Partie.joueursEnJeu[k].getCarteVictoire().getForme() != tableDuJeu[i][j].getForme() ) {
-						i++;
-				
-					} else if (i + 1 <= Plateau.yMaxDuRec && Partie.joueursEnJeu[k].getCarteVictoire().getForme() == tableDuJeu[i+1][j].getForme()) {
-						this.pointsJoueurs[k]++;
-						i++;
+					if (tableDuJeu[i][j] != null) {
+						if (Partie.joueursEnJeu[k].getCarteVictoire().getForme() != tableDuJeu[i][j].getForme() ) {
+							i++;
+					
+						} else if (i + 1 <= Plateau.yMaxDuRec && tableDuJeu[i + 1][j] != null && Partie.joueursEnJeu[k].getCarteVictoire().getForme() == tableDuJeu[i+1][j].getForme()) {
+							this.pointsJoueurs[k]++;
+							i++;
+							
+						} else i++;
 						
 					} else i++;
 				}
@@ -117,12 +130,15 @@ public class Compteur {
 				int compteur = 1;
 				
 				while (i <= Plateau.yMaxDuRec) {//i parcours les lignes
-					if (Partie.joueursEnJeu[k].getCarteVictoire().getNature() != tableDuJeu[i][j].getNature() ) {
-						i++;
-				
-					} else if (i + 1 <= Plateau.yMaxDuRec && Partie.joueursEnJeu[k].getCarteVictoire().getNature() == tableDuJeu[i+1][j].getNature()) {
-						compteur++;
-						i++;
+					if (tableDuJeu[i][j] != null) {
+						if (Partie.joueursEnJeu[k].getCarteVictoire().getNature() != tableDuJeu[i][j].getNature() ) {
+							i++;
+					
+						} else if (i + 1 <= Plateau.yMaxDuRec && tableDuJeu[i + 1][j] != null && Partie.joueursEnJeu[k].getCarteVictoire().getNature() == tableDuJeu[i+1][j].getNature()) {
+							compteur++;
+							i++;
+							
+						} else i++;
 						
 					} else i++;
 				}
@@ -140,12 +156,15 @@ public class Compteur {
 				int compteur = 1;
 				
 				while (i <= Plateau.yMaxDuRec) {//i parcours les lignes
-					if (Partie.joueursEnJeu[k].getCarteVictoire().getCouleur() != tableDuJeu[i][j].getCouleur() ) {
-						i++;
-				
-					} else if (i + 1 <= Plateau.yMaxDuRec && Partie.joueursEnJeu[k].getCarteVictoire().getCouleur() == tableDuJeu[i+1][j].getCouleur()) {
-						compteur++;
-						i++;
+					if (tableDuJeu[i][j] != null) {
+						if (Partie.joueursEnJeu[k].getCarteVictoire().getCouleur() != tableDuJeu[i][j].getCouleur() ) {
+							i++;
+					
+						} else if (i + 1 <= Plateau.yMaxDuRec && tableDuJeu[i + 1][j] != null && Partie.joueursEnJeu[k].getCarteVictoire().getCouleur() == tableDuJeu[i+1][j].getCouleur()) {
+							compteur++;
+							i++;
+							
+						} else i++;
 						
 					} else i++;
 				}
