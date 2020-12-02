@@ -212,14 +212,8 @@ public class Plateau {
 		
 	}
 	
-	/* (6): If the variation of game is a square 4x4
-	 * Each step is similar as the variation rectangle 5x3
-	 */
-	public static void determineCarre(ArrayList<Carte> cartesJouees) {
-		
-	}
-	
-	/* (7)
+
+	/* (6)
 	 * Check a position (x, y) of a card if it is moveable
 	 */
 	public static boolean estDeplacable(int x, int y) {
@@ -299,7 +293,7 @@ public class Plateau {
 	}
 	
 	
-	/* (8)
+	/* (7)
 	 * Update list of cards played 
 	 */
 	public static void misAJourListeCartesJouees(Carte carte, int x, int y) {
@@ -322,7 +316,7 @@ public class Plateau {
 		
 	}
 	
-	/* (9)
+	/* (8)
 	 * Print table of game to screen
 	 */
 	public static void updateTableDuJeu() {
