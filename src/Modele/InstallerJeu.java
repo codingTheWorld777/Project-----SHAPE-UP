@@ -9,10 +9,14 @@ public class InstallerJeu {
 	
 	/**
 	 * We divide this function into 3 main phases:
+	 * 	- Choose the variation for game (Rectangle 5x3 / Square 4x4 /Pyramid)
 	 * 	- Choose the number of player (2 or 3)
 	 * 	- Activate virtual player (yes or no)
 	 * 	- Choose level of virtual player (easy ot difficult)
 	 */
+	
+	//Form of game
+	private static String varianteDuTapis;
 	
 	//Number of player
 	private static int nombreDeJoueurs;
@@ -31,6 +35,10 @@ public class InstallerJeu {
 		
 		Scanner src = new Scanner(System.in);
 		
+		//Set form for game (Rectangle 5x3 / Square 4x4 /Pyramid)
+		System.out.println("Entrer la forme du tapis de jeu (R/C/P): ");
+		this.varianteDuTapis = src.nextLine();
+		
 		//Set number of players
 		System.out.println("Entrer le nombre de joueurs (2-3): ");
 		this.nombreDeJoueurs = Integer.parseInt(src.nextLine());
@@ -46,6 +54,13 @@ public class InstallerJeu {
 		Partie.nombreDeCartesJouables = 17 - this.nombreDeJoueurs;
 		Partie.joueursEnJeu = new Joueur[this.nombreDeJoueurs];
 //		System.out.println(this.nombreDeJoueurs + " " + this.activerJoueurVir + " " + this.niveau + " Niveau");
+	}
+	
+	/*
+	 * Get variation of game
+	 */
+	public static String getVarianteDuTapis() {
+		return varianteDuTapis;
 	}
 	
 	/*
