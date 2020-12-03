@@ -248,7 +248,7 @@ public class Plateau {
 						|| (Y + 1 <= 4 && Partie.getTableDuJeu()[Y + 1][X] != null)) {
 						
 						Coordonnees position = new Coordonnees(X, Y);
-//						Plateau.positionDeDeplacer.add(position);
+						Plateau.positionDeDeplacer.add(position);
 					}
 				}
 			}
