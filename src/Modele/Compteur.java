@@ -21,15 +21,15 @@ public class Compteur {
 			
 			//1.
 			//on compte les points obtenus du joueur k sur les formes
-			for (int i = Plateau.yMinDuRec; i <= Plateau.yMaxDuRec; i++) {	//i parcours les lignes
-				int j = Plateau.xMinDuRec;
+			for (int i = Plateau.yMinDuTapis; i <= Plateau.yMaxDuTapis; i++) {	//i parcours les lignes
+				int j = Plateau.xMinDuTapis;
 				
-				while (j <= Plateau.xMaxDuRec) {	//j parcours les colonnes
+				while (j <= Plateau.xMaxDuTapis) {	//j parcours les colonnes
 					if (tableDuJeu[i][j] != null) {
 						if (Partie.joueursEnJeu[k].getCarteVictoire().getForme() != tableDuJeu[i][j].getForme()) {
 							j++;
 							
-						} else if (j + 1 <= Plateau.xMaxDuRec && tableDuJeu[i][j + 1] != null && Partie.joueursEnJeu[k].getCarteVictoire().getForme() == tableDuJeu[i][j + 1].getForme()) {
+						} else if (j + 1 <= Plateau.xMaxDuTapis && tableDuJeu[i][j + 1] != null && Partie.joueursEnJeu[k].getCarteVictoire().getForme() == tableDuJeu[i][j + 1].getForme()) {
 							this.pointsJoueurs[k]++;
 							j++;
 							
@@ -43,16 +43,16 @@ public class Compteur {
 		/******************************************************************************************************************************************/
 			
 			//on compte les points obtenus du joueur k sur les natures
-			for (int i = Plateau.yMinDuRec; i <= Plateau.yMaxDuRec; i++) {	//i parcours les lignes
-				int j = Plateau.xMinDuRec;
+			for (int i = Plateau.yMinDuTapis; i <= Plateau.yMaxDuTapis; i++) {	//i parcours les lignes
+				int j = Plateau.xMinDuTapis;
 				int compteur = 1;
 				
-				while (j <= Plateau.xMaxDuRec) {	//j parcours les colonnes
+				while (j <= Plateau.xMaxDuTapis) {	//j parcours les colonnes
 					if (tableDuJeu[i][j] != null) {
 						if (Partie.joueursEnJeu[k].getCarteVictoire().getNature() != tableDuJeu[i][j].getNature()) {
 							j++;
 					
-						} else if (j + 1 <= Plateau.xMaxDuRec && tableDuJeu[i][j + 1] != null && Partie.joueursEnJeu[k].getCarteVictoire().getNature() == tableDuJeu[i][j + 1].getNature()) {
+						} else if (j + 1 <= Plateau.xMaxDuTapis && tableDuJeu[i][j + 1] != null && Partie.joueursEnJeu[k].getCarteVictoire().getNature() == tableDuJeu[i][j + 1].getNature()) {
 							compteur++;
 							j++;
 							
@@ -69,16 +69,16 @@ public class Compteur {
 		/******************************************************************************************************************************************/
 			
 			//on compte les points obtenus du joueur k sur les couleurs
-			for (int i = Plateau.yMinDuRec; i <= Plateau.yMaxDuRec; i++) { //i parcours les lignes
-				int j = Plateau.xMinDuRec;
+			for (int i = Plateau.yMinDuTapis; i <= Plateau.yMaxDuTapis; i++) { //i parcours les lignes
+				int j = Plateau.xMinDuTapis;
 				int compteur = 1;
 				
-				while (j <= Plateau.xMaxDuRec) {//j parcours les colonnes
+				while (j <= Plateau.xMaxDuTapis) {//j parcours les colonnes
 					if (tableDuJeu[i][j] != null) {
 						if (Partie.joueursEnJeu[k].getCarteVictoire().getCouleur() != tableDuJeu[i][j].getCouleur() ) {
 							j++;
 				
-						} else if (j + 1 <= Plateau.xMaxDuRec && tableDuJeu[i][j + 1] != null && Partie.joueursEnJeu[k].getCarteVictoire().getCouleur() == tableDuJeu[i][j + 1].getCouleur()) {
+						} else if (j + 1 <= Plateau.xMaxDuTapis && tableDuJeu[i][j + 1] != null && Partie.joueursEnJeu[k].getCarteVictoire().getCouleur() == tableDuJeu[i][j + 1].getCouleur()) {
 							compteur++;
 							j++;
 							
@@ -101,15 +101,15 @@ public class Compteur {
 			
 			//2.
 			//on compte les points obtenus du joueur k sur les formes
-			for (int j = Plateau.xMinDuRec; j <= Plateau.xMaxDuRec; j++) { //j parcours les colonnes
-				int i = Plateau.yMinDuRec;
+			for (int j = Plateau.xMinDuTapis; j <= Plateau.xMaxDuTapis; j++) { //j parcours les colonnes
+				int i = Plateau.yMinDuTapis;
 				
-				while (i <= Plateau.yMaxDuRec) {//i parcours les lignes
+				while (i <= Plateau.yMaxDuTapis) {//i parcours les lignes
 					if (tableDuJeu[i][j] != null) {
 						if (Partie.joueursEnJeu[k].getCarteVictoire().getForme() != tableDuJeu[i][j].getForme() ) {
 							i++;
 					
-						} else if (i + 1 <= Plateau.yMaxDuRec && tableDuJeu[i + 1][j] != null && Partie.joueursEnJeu[k].getCarteVictoire().getForme() == tableDuJeu[i+1][j].getForme()) {
+						} else if (i + 1 <= Plateau.yMaxDuTapis && tableDuJeu[i + 1][j] != null && Partie.joueursEnJeu[k].getCarteVictoire().getForme() == tableDuJeu[i+1][j].getForme()) {
 							this.pointsJoueurs[k]++;
 							i++;
 							
@@ -123,16 +123,16 @@ public class Compteur {
 		/******************************************************************************************************************************************/
 	
 			//on compte les points obtenus du joueur k sur les natures
-			for (int j = Plateau.xMinDuRec; j <= Plateau.xMaxDuRec; j++) { //j parcours les colonnes
-				int i = Plateau.yMinDuRec;
+			for (int j = Plateau.xMinDuTapis; j <= Plateau.xMaxDuTapis; j++) { //j parcours les colonnes
+				int i = Plateau.yMinDuTapis;
 				int compteur = 1;
 				
-				while (i <= Plateau.yMaxDuRec) {//i parcours les lignes
+				while (i <= Plateau.yMaxDuTapis) {//i parcours les lignes
 					if (tableDuJeu[i][j] != null) {
 						if (Partie.joueursEnJeu[k].getCarteVictoire().getNature() != tableDuJeu[i][j].getNature() ) {
 							i++;
 					
-						} else if (i + 1 <= Plateau.yMaxDuRec && tableDuJeu[i + 1][j] != null && Partie.joueursEnJeu[k].getCarteVictoire().getNature() == tableDuJeu[i+1][j].getNature()) {
+						} else if (i + 1 <= Plateau.yMaxDuTapis && tableDuJeu[i + 1][j] != null && Partie.joueursEnJeu[k].getCarteVictoire().getNature() == tableDuJeu[i+1][j].getNature()) {
 							compteur++;
 							i++;
 							
@@ -149,16 +149,16 @@ public class Compteur {
 		/******************************************************************************************************************************************/
 			
 			//on compte les points obtenus du joueur k sur les couleurs
-			for (int j = Plateau.xMinDuRec; j <= Plateau.xMaxDuRec; j++) { //j parcours les colonnes
-				int i = Plateau.yMinDuRec;
+			for (int j = Plateau.xMinDuTapis; j <= Plateau.xMaxDuTapis; j++) { //j parcours les colonnes
+				int i = Plateau.yMinDuTapis;
 				int compteur = 1;
 				
-				while (i <= Plateau.yMaxDuRec) {//i parcours les lignes
+				while (i <= Plateau.yMaxDuTapis) {//i parcours les lignes
 					if (tableDuJeu[i][j] != null) {
 						if (Partie.joueursEnJeu[k].getCarteVictoire().getCouleur() != tableDuJeu[i][j].getCouleur() ) {
 							i++;
 					
-						} else if (i + 1 <= Plateau.yMaxDuRec && tableDuJeu[i + 1][j] != null && Partie.joueursEnJeu[k].getCarteVictoire().getCouleur() == tableDuJeu[i+1][j].getCouleur()) {
+						} else if (i + 1 <= Plateau.yMaxDuTapis && tableDuJeu[i + 1][j] != null && Partie.joueursEnJeu[k].getCarteVictoire().getCouleur() == tableDuJeu[i+1][j].getCouleur()) {
 							compteur++;
 							i++;
 							

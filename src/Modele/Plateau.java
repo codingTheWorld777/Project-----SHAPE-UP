@@ -21,7 +21,7 @@ public class Plateau {
 	/*
 	 * Coordinates of 4 vertex of rectangle 5x3 final
 	 */
-	protected static int xMinDuRec, xMaxDuRec, yMinDuRec, yMaxDuRec;
+	protected static int xMinDuTapis, xMaxDuTapis, yMinDuTapis, yMaxDuTapis;
 	
 	
 	//2) Check if a card can move to another position and choose the position that player want to move the card to...
@@ -147,8 +147,8 @@ public class Plateau {
 						}
 					}
 					
-					Plateau.xMinDuRec = xMin;
-					Plateau.xMaxDuRec = xMax;
+					Plateau.xMinDuTapis = xMin;
+					Plateau.xMaxDuTapis = xMax;
 				}
 				
 				if (yMax - yMin + 1 == 3) {
@@ -158,8 +158,8 @@ public class Plateau {
 						}
 					}
 					
-					Plateau.yMinDuRec = yMin;
-					Plateau.yMaxDuRec = yMax;
+					Plateau.yMinDuTapis = yMin;
+					Plateau.yMaxDuTapis = yMax;
 				}
 				
 			} else if (yMax - yMin + 1 >= 4) {
@@ -170,8 +170,8 @@ public class Plateau {
 						}
 					}
 					
-					Plateau.yMinDuRec = yMin;
-					Plateau.yMaxDuRec = yMax;
+					Plateau.yMinDuTapis = yMin;
+					Plateau.yMaxDuTapis = yMax;
 				}
 				
 				if (xMax - xMin + 1 == 3) {
@@ -181,8 +181,8 @@ public class Plateau {
 						}
 					}
 					
-					Plateau.xMinDuRec = xMin;
-					Plateau.xMaxDuRec = xMax;
+					Plateau.xMinDuTapis = xMin;
+					Plateau.xMaxDuTapis = xMax;
 				}
 			}
 			
@@ -194,8 +194,8 @@ public class Plateau {
 					}
 				}
 				
-				Plateau.xMinDuRec = xMin;
-				Plateau.xMaxDuRec = xMax;
+				Plateau.xMinDuTapis = xMin;
+				Plateau.xMaxDuTapis = xMax;
 			}
 			
 			if (yMax - yMin + 1 == 4) {
@@ -205,8 +205,8 @@ public class Plateau {
 					}
 				}
 				
-				Plateau.yMinDuRec = yMin;
-				Plateau.yMaxDuRec = yMax;
+				Plateau.yMinDuTapis = yMin;
+				Plateau.yMaxDuTapis = yMax;
 			}
 		}
 		
@@ -306,8 +306,6 @@ public class Plateau {
 	 * 	that is related to this card's position)
 	 */
 	public static void misAJourListePossibilites(int x, int y) {
-		Plateau.supprimerCoordonnee(x, y);
-		
 		if (x - 1 >= 0 && Partie.getTableDuJeu()[y][x - 1] == null) Plateau.supprimerCoordonnee(x - 1, y);
 		if (x + 1 <= 6 && Partie.getTableDuJeu()[y][x + 1] == null) Plateau.supprimerCoordonnee(x + 1, y);
 		if (y - 1 >= 0 && Partie.getTableDuJeu()[y - 1][x] == null) Plateau.supprimerCoordonnee(x, y - 1);
