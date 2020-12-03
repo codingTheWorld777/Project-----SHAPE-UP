@@ -34,6 +34,8 @@ public class InstallerTour {
 			Partie.joueur2 = joueur2;
 			Partie.joueur2 = (JoueurVir) joueur2;
 			
+			joueur2.setStrategie(InstallerJeu.getNiveau());
+			
 			this.distribuerCarteVictoire(piocheCartes.getPiocheCartes(), Partie.joueur1, Partie.joueur2);
 			
 			Partie.joueursEnJeu[0] = joueur1;

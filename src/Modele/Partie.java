@@ -102,6 +102,21 @@ public class Partie {
 					joueur.setEnTour(false);
 					joueursEnJeu[0].setEnTour(true);
 				}
+				
+			} else if (InstallerJeu.getActiverJoueurVir() == true && InstallerJeu.getNombreDeJoueurs() == 2) {
+				if (joueur.id == 1) {
+					joueur.piocherCarte(this.tableDuJeu, tour);
+					
+					joueur.setEnTour(false);
+					joueursEnJeu[joueur.id].setEnTour(true);
+				} else if (joueur.id == 2) {
+					joueur.piocherCarte(this.tableDuJeu, tour);
+					
+					joueur.setEnTour(false);
+					joueursEnJeu[0].setEnTour(true);
+				}
+				
+			
 			} else if (InstallerJeu.getActiverJoueurVir() == false && InstallerJeu.getNombreDeJoueurs() == 3) {
 				joueur = (JoueurPhy) joueur;
 				if (joueur.id == 1) {
