@@ -1,5 +1,11 @@
 package Modele;
 
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.net.URL;
+
+import javax.imageio.ImageIO;
+
 public class Carte {
 	/**
 	 * @author Huu Khai NGUYEN (Alec), Pierre-Louis DAMBRAINE
@@ -8,7 +14,7 @@ public class Carte {
 	/**
 	 * There are 3 possible shapes for a card: circle, triangle, square.
 	 */
-	protected enum formePossible {cercle, carré, triangle};
+	protected enum formePossible {cercle, carre, triangle};
 	private formePossible forme;
 	
 	/**
@@ -32,8 +38,11 @@ public class Carte {
 	 * This is card's image in the game.
 	 * Each card has a different image
 	 * Each card can be up or down (recto vs verso)
+	 * Each card has a index in order to get image
 	 */
-//	private BufferedImage carteImage;
+	private BufferedImage carteImageRecto;
+	private BufferedImage carteImageVerso;
+	private static int nombreDeCarte;
 	
 	/**
 	 * coordinates of card (of card played) 
@@ -42,7 +51,7 @@ public class Carte {
 	
 
 	/**
-	 * 
+	 * Constructor
 	 * @param forme
 	 * @param nature
 	 * @param couleur
@@ -51,7 +60,23 @@ public class Carte {
 		this.forme = forme;
 		this.nature = nature;
 		this.couleur = couleur;
-//		this.carteImage = carteImage;
+
+		this.toVerso();
+
+		try {
+			//Load the image for the current file to render "face up" of card
+			URL url = getClass().getResource("../images/" + Carte.nombreDeCarte + ".png");
+			this.carteImageRecto = ImageIO.read(url);
+			
+			//Load the backup of card
+			url = getClass().getResource("../images/dos.png");
+			this.carteImageVerso = ImageIO.read(url);
+			
+//			this.setBounds(0, 0, 100, 50);
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	/**
@@ -120,6 +145,20 @@ public class Carte {
 		} else {
 			System.out.println("Verso");
 		}
+	}
+	
+	/**
+	 * Set number for card
+	 */
+	public static void setNombreDeCarte(int nombreDeCarte) {
+		Carte.nombreDeCarte = nombreDeCarte;
+	}
+	
+	/**
+	 * Get number of card to render image 
+	 */
+	public static int getNombreDeCarte() {
+		return Carte.nombreDeCarte;
 	}
 	
 	/**

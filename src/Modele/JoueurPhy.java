@@ -119,6 +119,7 @@ public class JoueurPhy extends Joueur {
 						Plateau.misAJourListePossibilites(x, y);
 						Partie.getTableDuJeu()[y1][x1] = carte;
 						Plateau.ajouterCoordonneePossible(x1, y1);
+						Plateau.determinerFormeDuTapis(Plateau.cartesJouees);
 						
 						/*
 						 * Check if there are some possible position of mouvement card that has the same possible position
@@ -139,6 +140,11 @@ public class JoueurPhy extends Joueur {
 						
 						break;
 					}
+					
+					for (int t = 0; t < Plateau.possibilites.size(); t++) {
+						System.out.print("(" + Plateau.possibilites.get(t).x + ", " + Plateau.possibilites.get(t).y + "), ");
+					}
+					System.out.println();
 				}
 				
 			} else {

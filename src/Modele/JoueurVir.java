@@ -45,14 +45,14 @@ public class JoueurVir extends Joueur implements Strategie {
 			int y = (int) (Math.random() * Partie.getTableDuJeu().length);
 			int x = (int) (Math.random() * Partie.getTableDuJeu()[y].length);
 			boolean check = Plateau.estDeplacable(x, y);
-			System.out.println(x + ", " + y);
+			
 			while (Partie.getTableDuJeu()[y][x] == null && check == false) {
 				y = (int) (Math.random() * Partie.getTableDuJeu().length);
 				x = (int) (Math.random() * Partie.getTableDuJeu()[y].length);
-				System.out.println(x + ", " + y);
+			
 				check = Plateau.estDeplacable(x, y);
-				
 			} // thus Plateau.tableDuJeu[x][y] is moveable
+			
 			Plateau.estDeplacable(x, y);
 			if (Plateau.positionDeDeplacer.size() != 0) {
 				int i = (int) (Math.random() * Plateau.positionDeDeplacer.size());
@@ -65,6 +65,7 @@ public class JoueurVir extends Joueur implements Strategie {
 				Plateau.misAJourListePossibilites(x, y);
 				Partie.getTableDuJeu()[y1][x1] = carte;
 				Plateau.ajouterCoordonneePossible(x1, y1);
+				Plateau.determinerFormeDuTapis(Plateau.cartesJouees);
 				
 				/*
 				 * Check if there are some possible position of mouvement card that has the same possible position
@@ -82,13 +83,14 @@ public class JoueurVir extends Joueur implements Strategie {
 				
 				Plateau.positionDeDeplacer.clear();
 				Plateau.updateTableDuJeu();
-				System.out.println("Le joueur virtuel à fini de déplacer une carte");
+				System.out.println("Le joueur virtuel fini de deplacer une carte");
 			}
 			
 			
-		} else if (this.niveau.compareTo("D") == 0 ) {
+		} else if (this.niveau.compareTo("D") == 0) {
 			
 		}
+		
 	}
 	
 	/*

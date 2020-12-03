@@ -24,7 +24,7 @@ public class PiocheCartes {
 	public void creerCartes() {
 		
 		naturePossible[] natures = {naturePossible.plein, naturePossible.vide};
-		formePossible[] formes = {formePossible.cercle, formePossible.carré, formePossible.triangle};
+		formePossible[] formes = {formePossible.cercle, formePossible.carre, formePossible.triangle};
 		couleurPossible[] couleurs = {couleurPossible.bleu, couleurPossible.vert, couleurPossible.rouge};
 		
 		int compteur = 0;
@@ -36,8 +36,10 @@ public class PiocheCartes {
 		for (int i = 0; i < formes.length; i++) {
 			for (int j = 0; j < natures.length; j++) {
 				for (int k = 0; k < couleurs.length; k++) {
+					Carte.setNombreDeCarte(compteur + 1);
 					Carte carte = new Carte(formes[i], natures[j], couleurs[k]);  //need to add BufferedImage carteImage
 					
+					//Shuffle cards
 					while (compteur < cartesOrg.length) {
 						ind = (int) (Math.random() * cartesOrg.length);
 						
