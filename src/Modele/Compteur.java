@@ -82,9 +82,7 @@ public class Compteur {
 							compteur++;
 							j++;
 							
-						} else {
-							j++;
-						}
+						} else j++;
 						
 					} else j++;
 				}

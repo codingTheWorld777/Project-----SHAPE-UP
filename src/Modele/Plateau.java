@@ -97,7 +97,6 @@ public class Plateau {
 			if (possibilites.get(i).x == x && possibilites.get(i).y == y) return true;
 		}
 		
-//		System.out.print(false + " ");
 		return false;
 	}
 	
@@ -114,14 +113,14 @@ public class Plateau {
 		return false;
 	}
 	
-	/* (5)
+	/* (5) : If the variation of game is classic (Rectangle 5x3)
 	 * Reduce the selection of the card's table once you have determined the edge of the rectangle
 	 * Determine the shape of the final rectangle 5x3 base on cards played 
 	 	* We determine this rectangle by its coordinates (x, y)
 	 	* Minimize zone of cards that can be put into table, Check with all possibilities defined 
 	 	 	if the position is available
 	 */
-	public static void determinerRec(ArrayList<Carte> cartesJouees) {
+	public static void determinerFormeDuTapis(ArrayList<Carte> cartesJouees) {
 		int xMin = (int) Double.POSITIVE_INFINITY, xMax = -1;
 		int yMin = (int) Double.POSITIVE_INFINITY, yMax = -1;
 		
@@ -136,8 +135,59 @@ public class Plateau {
 		}
 //		System.out.println("xMin = " + xMin + ", xMax = " + xMax);
 		
-		if (xMax - xMin + 1 >= 4) {
-			if (xMax - xMin + 1 == 5) {
+		/*
+		 * Determination of the form of game based on the variation which was chosen by player from the beginning of game
+		 */
+		if (InstallerJeu.getVarianteDuTapis().equals("R")) {	// *forme du tapis est rectangle 5x3*
+			if (xMax - xMin + 1 >= 4) {
+				if (xMax - xMin + 1 == 5) {
+					for (int j = 0; j < possibilites.size(); j++) {
+						if (possibilites.get(j).x < xMin || possibilites.get(j).x > xMax) {
+							possibilites.remove(j);
+						}
+					}
+					
+					Plateau.xMinDuRec = xMin;
+					Plateau.xMaxDuRec = xMax;
+				}
+				
+				if (yMax - yMin + 1 == 3) {
+					for (int k = 0; k < possibilites.size(); k++) {
+						if (possibilites.get(k).y < yMin || possibilites.get(k).y > yMax) {
+							possibilites.remove(k);
+						}
+					}
+					
+					Plateau.yMinDuRec = yMin;
+					Plateau.yMaxDuRec = yMax;
+				}
+				
+			} else if (yMax - yMin + 1 >= 4) {
+				if (yMax - yMin + 1 == 5) {
+					for (int j = 0; j < possibilites.size(); j++) {
+						if (possibilites.get(j).y < yMin || possibilites.get(j).y > yMax) {
+							possibilites.remove(j);
+						}
+					}
+					
+					Plateau.yMinDuRec = yMin;
+					Plateau.yMaxDuRec = yMax;
+				}
+				
+				if (xMax - xMin + 1 == 3) {
+					for (int k = 0; k < possibilites.size(); k++) {
+						if (possibilites.get(k).x < xMin || possibilites.get(k).x > xMax) {
+							possibilites.remove(k);
+						}
+					}
+					
+					Plateau.xMinDuRec = xMin;
+					Plateau.xMaxDuRec = xMax;
+				}
+			}
+			
+		} else if (InstallerJeu.getVarianteDuTapis().equals("C")) {	// *forme du tapis est un carre 4x4*
+			if (xMax - xMin + 1 == 4) {
 				for (int j = 0; j < possibilites.size(); j++) {
 					if (possibilites.get(j).x < xMin || possibilites.get(j).x > xMax) {
 						possibilites.remove(j);
@@ -148,33 +198,10 @@ public class Plateau {
 				Plateau.xMaxDuRec = xMax;
 			}
 			
-			if (yMax - yMin + 1 == 3) {
-				for (int k = 0; k < possibilites.size(); k++) {
-					if (possibilites.get(k).y < yMin || possibilites.get(k).y > yMax) {
-						possibilites.remove(k);
-					}
-				}
-				
-				Plateau.yMinDuRec = yMin;
-				Plateau.yMaxDuRec = yMax;
-			}
-			
-		} else if (yMax - yMin + 1 >= 4) {
-			if (yMax - yMin + 1 == 5) {
+			if (yMax - yMin + 1 == 4) {
 				for (int j = 0; j < possibilites.size(); j++) {
 					if (possibilites.get(j).y < yMin || possibilites.get(j).y > yMax) {
 						possibilites.remove(j);
-					}
-				}
-				
-				Plateau.xMinDuRec = xMin;
-				Plateau.xMaxDuRec = xMax;
-			}
-			
-			if (xMax - xMin + 1 == 3) {
-				for (int k = 0; k < possibilites.size(); k++) {
-					if (possibilites.get(k).x < xMin || possibilites.get(k).x > xMax) {
-						possibilites.remove(k);
 					}
 				}
 				
@@ -185,6 +212,7 @@ public class Plateau {
 		
 	}
 	
+
 	/* (6)
 	 * Check a position (x, y) of a card if it is moveable
 	 */
@@ -273,7 +301,7 @@ public class Plateau {
 		carte.setCoordonnees(x, y);
 	}
 	
-	/* (8)
+	/* (9)
 	 * Update list of possible positions for drawing a card to a position
 	 * -> (this method is used after moving (déplacer) a card in order to eliminate some possible position
 	 * 	that is related to this card's position)
@@ -288,7 +316,7 @@ public class Plateau {
 		
 	}
 	
-	/* (9)
+	/* (8)
 	 * Print table of game to screen
 	 */
 	public static void updateTableDuJeu() {
