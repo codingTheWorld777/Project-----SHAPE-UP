@@ -27,8 +27,37 @@ public class JoueurVir extends Joueur implements Strategie {
 			PiocheCartes.getPiocheCartes().remove(Partie.nombreDeCartesJouables - 1);
 			Partie.nombreDeCartesJouables--;
 			
-		} else if (this.niveau.compareTo("D") == 0 ) {		//Need to add this level later
-			
+		} else if (this.niveau.compareTo("D") == 0) {		//JoueurVir put his cart where he has the more points
+			int X = 0;
+			int Y = 0;
+			ArrayList<Integer> listPoint = new ArrayList<Integer>();
+			for (int i = 0; i < Plateau.possibilites.size(); i++) {
+				Carte[][] tableVir = Partie.getTableDuJeu();
+				int x = Plateau.possibilites.get(i).x;
+				int y = Plateau.possibilites.get(i).y;
+				tableVir[y][x] = PiocheCartes.getPiocheCartes().get(Partie.nombreDeCartesJouables - 1);
+				Compteur compteur = new Compteur(tableVir);
+				listPoint.add(compteur.getPointsJoueurs(this.id));
+				if (i == 0) {
+					X = x;
+					Y = y;
+				} else if (listPoint.get(i) > listPoint.get(i - 1)) {
+					X = x;
+					Y = y;
+				}
+				Partie.getTableDuJeu()[y][x] = null;
+			}
+
+
+			System.out.println(X + ", " + Y);
+			tableDuJeu[Y][X] = PiocheCartes.getPiocheCartes().get(Partie.nombreDeCartesJouables - 1);
+			Plateau.misAJourListeCartesJouees(tableDuJeu[Y][X], X, Y);
+			Plateau.determinerFormeDuTapis(Plateau.cartesJouees);
+			Plateau.supprimerCoordonnee(X, Y);
+			Plateau.ajouterCoordonneePossible(X, Y);
+			Plateau.determinerFormeDuTapis(Plateau.cartesJouees);
+			PiocheCartes.getPiocheCartes().remove(Partie.nombreDeCartesJouables - 1);
+			Partie.nombreDeCartesJouables--;
 		}
 		
 		
@@ -38,6 +67,7 @@ public class JoueurVir extends Joueur implements Strategie {
 		System.out.println();
 		
 		Plateau.updateTableDuJeu();
+		
 	}
 	
 	public void deplacerCarte() {
@@ -51,7 +81,7 @@ public class JoueurVir extends Joueur implements Strategie {
 				x = (int) (Math.random() * Partie.getTableDuJeu()[y].length);
 			
 				check = Plateau.estDeplacable(x, y);
-			} // thus Plateau.tableDuJeu[x][y] is moveable
+			} // thus Plateau.tableDuJeu[y][x] is moveable
 			
 			Plateau.estDeplacable(x, y);
 			if (Plateau.positionDeDeplacer.size() != 0) {
@@ -98,7 +128,7 @@ public class JoueurVir extends Joueur implements Strategie {
 			}
 			
 			
-		} else if (this.niveau.compareTo("D") == 0) {
+		} else if (this.niveau.compareTo("D") == 0) { //Need to update
 			
 		}
 		
