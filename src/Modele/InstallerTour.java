@@ -11,11 +11,12 @@ public class InstallerTour {
 		PiocheCartes piocheCartes = new PiocheCartes();
 		Carte carteCachee = this.retirerCarteCachee(piocheCartes.getPiocheCartes());
 		
+		//Player 1 is always JoueurPhy
+		JoueurPhy joueur1 = new JoueurPhy("Joueur 1", 1);
+		Partie.joueur1 = joueur1;
+		Partie.joueur1 = (JoueurPhy) joueur1;
+		
 		if (nombreDeJoueurs == 2 && activerJoueurVir == false) {  //2 player and no virtual player
-			JoueurPhy joueur1 = new JoueurPhy("Joueur 1", 1);
-			Partie.joueur1 = joueur1;
-			Partie.joueur1 = (JoueurPhy) joueur1;
-			
 			JoueurPhy joueur2 = new JoueurPhy("Joueur 2", 2);
 			Partie.joueur2 = joueur2;
 			Partie.joueur2 = (JoueurPhy) joueur2;
@@ -26,14 +27,9 @@ public class InstallerTour {
 			Partie.joueursEnJeu[1] = joueur2;
 			
 		} else if (nombreDeJoueurs == 2 && activerJoueurVir == true) {  //2 players with a virtual player
-			JoueurPhy joueur1 = new JoueurPhy("Joueur 1", 1);
-			Partie.joueur1 = joueur1;
-			Partie.joueur1 = (JoueurPhy) joueur1;
-			
-			JoueurVir joueur2 = new JoueurVir("Virtuel Joueur", 2);
+			JoueurVir joueur2 = new JoueurVir("Joueur Virtuel ", 2);
 			Partie.joueur2 = joueur2;
 			Partie.joueur2 = (JoueurVir) joueur2;
-			
 			joueur2.setStrategie(InstallerJeu.getNiveau());
 			
 			this.distribuerCarteVictoire(piocheCartes.getPiocheCartes(), Partie.joueur1, Partie.joueur2);
@@ -42,10 +38,6 @@ public class InstallerTour {
 			Partie.joueursEnJeu[1] = joueur2;
 			
 		} else if (nombreDeJoueurs == 3 && activerJoueurVir == false) { //3 players and no virtual player
-			JoueurPhy joueur1 = new JoueurPhy("Joueur 1", 1);
-			Partie.joueur1 = joueur1;
-			Partie.joueur1 = (JoueurPhy) joueur1;
-			
 			JoueurPhy joueur2 = new JoueurPhy("Joueur 2", 2);
 			Partie.joueur2 = joueur2;
 			Partie.joueur2 = (JoueurPhy) joueur2;
@@ -53,6 +45,22 @@ public class InstallerTour {
 			JoueurPhy joueur3 = new JoueurPhy("Joueur 3", 3);
 			Partie.joueur3 = joueur3;
 			Partie.joueur3 = (JoueurPhy) joueur3;
+
+			this.distribuerCarteVictoire(piocheCartes.getPiocheCartes(), Partie.joueur1, Partie.joueur2, Partie.joueur3);
+			
+			Partie.joueursEnJeu[0] = joueur1;
+			Partie.joueursEnJeu[1] = joueur2;
+			Partie.joueursEnJeu[2] = joueur3;
+			
+		} else if (nombreDeJoueurs == 3 && activerJoueurVir == true) {	//3 players with a virtual player
+			JoueurPhy joueur2 = new JoueurPhy("Joueur 2", 2);
+			Partie.joueur2 = joueur2;
+			Partie.joueur2 = (JoueurPhy) joueur2;
+			
+			JoueurVir joueur3 = new JoueurVir("Joueur Virtuel", 3);
+			Partie.joueur3 = joueur3;
+			Partie.joueur3 = (JoueurVir) joueur3;
+			joueur3.setStrategie(InstallerJeu.getNiveau());
 			
 			this.distribuerCarteVictoire(piocheCartes.getPiocheCartes(), Partie.joueur1, Partie.joueur2, Partie.joueur3);
 			

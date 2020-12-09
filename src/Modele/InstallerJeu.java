@@ -67,10 +67,24 @@ public class InstallerJeu {
 	}
 	
 	/*
+	 * Set variation for game
+	 */
+	public void setVarianteDuTapis(String varianteDuTapis) {
+		InstallerJeu.varianteDuTapis = varianteDuTapis;
+	}
+	
+	/*
 	 * Get number of players
 	 */
 	public static int getNombreDeJoueurs() {
 		return nombreDeJoueurs;
+	}
+	
+	/*
+	 * Set number for players
+	 */
+	public void setNombreDeJoueurs(int nombreDeJoueurs) {
+		InstallerJeu.nombreDeJoueurs = nombreDeJoueurs;
 	}
 	
 	/*
@@ -81,9 +95,24 @@ public class InstallerJeu {
 	}
 	
 	/*
+	 * Set option: Activate virtual player
+	 */
+	public void setActiverJoueurVir(boolean activerJoueurVir) {
+		InstallerJeu.activerJoueurVir = activerJoueurVir;
+	}
+	
+	/*
 	 * Get level of virtual player
 	 */
 	public static String getNiveau() {
 		return niveau;
 	}
+	
+	/*
+	 * Set level for virtual player
+	 */
+	public void setNiveau(String niveau) {
+		InstallerJeu.niveau = niveau;
+	}
+
 }

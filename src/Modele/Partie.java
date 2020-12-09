@@ -2,6 +2,8 @@ package Modele;
 
 import java.util.Scanner;
 
+import Controleur.ControleurParametre;
+
 public class Partie {
 	/**
 	 * @author Huu Khai NGUYEN (Alec)
@@ -41,6 +43,7 @@ public class Partie {
 		 * Install game: choose number of players, activer virtual player(Yes or No) and choose its level
 		 */
 		InstallerJeu installerJeu = new InstallerJeu();
+		ControleurParametre.setInstallerJeu(installerJeu);
 		
 		/*
 		 * Step 2:
@@ -89,8 +92,7 @@ public class Partie {
 	 */
 	public void jouerSonTour(Joueur joueur, boolean estEnTour, int tour) {
 		if (estEnTour) {
-			if (InstallerJeu.getActiverJoueurVir() == false && InstallerJeu.getNombreDeJoueurs() == 2) {
-				joueur = (JoueurPhy) joueur;
+			if (InstallerJeu.getNombreDeJoueurs() == 2) {
 				if (joueur.id == 1) {
 					joueur.piocherCarte(this.tableDuJeu, tour);
 					
@@ -102,23 +104,8 @@ public class Partie {
 					joueur.setEnTour(false);
 					joueursEnJeu[0].setEnTour(true);
 				}
-				
-			} else if (InstallerJeu.getActiverJoueurVir() == true && InstallerJeu.getNombreDeJoueurs() == 2) {
-				if (joueur.id == 1) {
-					joueur.piocherCarte(this.tableDuJeu, tour);
-					
-					joueur.setEnTour(false);
-					joueursEnJeu[joueur.id].setEnTour(true);
-				} else if (joueur.id == 2) {
-					joueur.piocherCarte(this.tableDuJeu, tour);
-					
-					joueur.setEnTour(false);
-					joueursEnJeu[0].setEnTour(true);
-				}
-				
-			
-			} else if (InstallerJeu.getActiverJoueurVir() == false && InstallerJeu.getNombreDeJoueurs() == 3) {
-				joueur = (JoueurPhy) joueur;
+
+			} else if (InstallerJeu.getNombreDeJoueurs() == 3) {
 				if (joueur.id == 1) {
 					joueur.piocherCarte(this.tableDuJeu, tour);
 					
