@@ -152,19 +152,27 @@ public class Partie {
 			for (int j = 0; j < 7; j++) {
 				if (Partie.getTableDuJeu()[i][j] != null) {
 					result = "|" + Partie.getTableDuJeu()[i][j].getForme() + " "
-									+ Partie.getTableDuJeu()[i][j].getCouleur() + " "
-									+ Partie.getTableDuJeu()[i][j].getNature();
-					
+							+ Partie.getTableDuJeu()[i][j].getCouleur() + " "
+							+ Partie.getTableDuJeu()[i][j].getNature();
+			
 					while (result.length() < 22) {
 						if (result.length() == 21) result += "|";
 						else result += " ";;
 					}
 					
 					System.out.print(result);
+				} else {
+					result = "";
+					while (result.length() < 22) {
+						if (result.length() == 21) result += "|";
+						else result += " ";;
+					}
 				}
 			}
 			System.out.println();
 		}
-		System.out.println();
+		System.out.println(Partie.getTableDuJeu()[3][3].getForme() + " "
+				+ Partie.getTableDuJeu()[3][3].getCouleur() + " "
+				+ Partie.getTableDuJeu()[3][3].getNature());
 	}
 }

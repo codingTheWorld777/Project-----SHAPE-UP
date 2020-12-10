@@ -26,7 +26,9 @@ public class Plateau {
 	
 	//2) Check if a card can move to another position and choose the position that player want to move the card to...
 	protected static ArrayList<Coordonnees> positionDeDeplacer = new ArrayList<Coordonnees>();
-	
+	//If a card can be moved but after moving it, cards around it doesn't repecte the rule of game
+	//so we need to add(draw) next card to the position of this card before moving to the new one
+	protected static boolean besoinAjouter = false;
 	
 	/* (1)
 	 * If player can add card to one position, add new possible position that player can choose for next turn
@@ -133,7 +135,6 @@ public class Plateau {
 			 
 			 if (cartesJouees.get(i).getCoordonnees().y > yMax) yMax = cartesJouees.get(i).getCoordonnees().y;
 		}
-//		System.out.println("xMin = " + xMin + ", xMax = " + xMax);
 		
 		/*
 		 * Determination of the form of game based on the variation which was chosen by player from the beginning of game
@@ -208,6 +209,136 @@ public class Plateau {
 				Plateau.yMinDuTapis = yMin;
 				Plateau.yMaxDuTapis = yMax;
 			}
+			
+		} else if (InstallerJeu.getVarianteDuTapis().equals("P") && InstallerJeu.getNombreDeJoueurs() == 2) {  //*forme du tapis: escalade
+			// Check the number of card in each row for variation "Escalade" (nombre de cartes par colonne)
+			ArrayList<Integer> nombreDeCartesParCol = new ArrayList<Integer>();
+			for (int i = 0; i < 7; i++)
+				nombreDeCartesParCol.add(i, 0);
+			
+			int compteur;
+			
+			for (int j = 0; j < 7; j++) {
+				compteur = 0;
+				
+				for (int i = 0; i < 5; i++) {
+					if (Partie.getTableDuJeu()[i][j] != null) compteur++;
+				}
+				
+				if (compteur > 0) nombreDeCartesParCol.set(j, compteur);
+			}
+			
+			//Delete position (x, y) = (3, 2) - center of table
+			for (int i = 0; i < possibilites.size(); i++) {
+				if (possibilites.get(i).x == 3 && possibilites.get(i).y == 2) {
+					possibilites.remove(i);
+					break;
+				}
+			}		
+			
+			/*
+			 * Determine the form based on the fisrt card on the table (column 0 or column 6)
+			 * -> We force the player to place the first card in the column 0 (or 6) at the beginning
+			 */
+			int parcoursX, parcoursY;
+			if (nombreDeCartesParCol.get(0) > 0) {
+				if ((Partie.getTableDuJeu()[4][1] == null && Partie.getTableDuJeu()[0][1] != null) 
+					|| Partie.getTableDuJeu()[1][2] != null) {
+					
+					parcoursX = 1;
+					parcoursY = 4;
+					
+					while (parcoursX <= 5) {
+						for (int k = 0; k < possibilites.size(); k++) {
+							for (int index = parcoursX; index <= 5; index++) {
+								try {
+									if (possibilites.get(k).y == parcoursY && possibilites.get(k).x == index) {
+										possibilites.remove(k);
+										break;
+									}
+								} catch (Exception e) {
+									System.out.println(e.toString());
+								}
+							}
+						}
+						parcoursX++;
+						parcoursY--;
+					}	
+				} else if ((Partie.getTableDuJeu()[0][1] == null && Partie.getTableDuJeu()[4][1] != null)
+							|| Partie.getTableDuJeu()[3][2] != null) {
+					
+					parcoursX = 1;
+					parcoursY = 0;
+					
+					while (parcoursX <= 5) {
+						for (int k = 0; k < possibilites.size(); k++) {
+							for (int index = parcoursX; index <= 5; index++) {
+								try {
+									if (possibilites.get(k).y == parcoursY && possibilites.get(k).x == index) {
+										possibilites.remove(k);
+									}
+								} catch (Exception e) {
+									System.out.println(e.toString());
+								}
+							}
+						}
+						parcoursX++;
+						parcoursY++;
+					}
+				}
+				
+			} else if (nombreDeCartesParCol.get(6) > 0) {
+				if ((Partie.getTableDuJeu()[4][5] == null && Partie.getTableDuJeu()[0][5] != null) 
+						|| Partie.getTableDuJeu()[1][4] != null) {
+						
+						parcoursX = 5;
+						parcoursY = 4;
+						
+						while (parcoursX >= 1) {
+							for (int k = 0; k < possibilites.size(); k++) {
+								for (int index = parcoursX; index >= 1; index--) {
+									try {
+										if (possibilites.get(k).y == parcoursY && possibilites.get(k).x == index) {
+											possibilites.remove(k);
+											break;
+										}
+									} catch (Exception e) {
+										System.out.println(e.toString());
+									}
+								}
+							}
+							parcoursX--;
+							parcoursY--;
+						}
+						
+					}  else if ((Partie.getTableDuJeu()[0][5] == null && Partie.getTableDuJeu()[4][5] != null)
+								|| Partie.getTableDuJeu()[3][4] != null) {
+						
+						parcoursX = 5;
+						parcoursY = 0;
+						
+						while (parcoursX <= 5) {
+							for (int k = 0; k < possibilites.size(); k++) {
+								for (int index = parcoursX; index >= 1; index--) {
+									try {
+										if (possibilites.get(k).y == parcoursY && possibilites.get(k).x == index) {
+											possibilites.remove(k);
+										}
+									} catch (Exception e) {
+										System.out.println(e.toString());
+									}
+								}
+							}
+							parcoursX--;
+							parcoursY++;
+						}
+					}
+			}
+			
+			Plateau.xMinDuTapis = xMin;
+			Plateau.xMaxDuTapis = xMax;
+			Plateau.yMinDuTapis = yMin;
+			Plateau.xMaxDuTapis = xMax;
 		}
 		
 	}
@@ -219,11 +350,18 @@ public class Plateau {
 	public static boolean estDeplacable(int x, int y) {
 		int X, Y;
 		boolean estDeplacable = false;
+		boolean besoinAjouter = false;
 		
+		/* 1) Check if this card is movable
+		 * 2) Check the cards around the cards you want to move
+			 * 	if there exists at least one of them does not satisfy the movement condition
+			 	* when the selected card changes positions: -> Must add 1 card to the position of selected card 
+			 * 	else OK
+		 */
 		
 		if (Partie.getTableDuJeu()[y][x] != null) {
-			
 			if (x + 1 <= 6) {
+				//1)
 				if (Partie.getTableDuJeu()[y][x + 1] == null) {
 					Y = y;
 					X = x + 1;
@@ -232,13 +370,24 @@ public class Plateau {
 						|| (Y - 1 >= 0 && Partie.getTableDuJeu()[Y - 1][X] != null)
 						|| (Y + 1 <= 4 && Partie.getTableDuJeu()[Y + 1][X] != null)) {
 						
-						Coordonnees position = new Coordonnees(X, Y);
-						Plateau.positionDeDeplacer.add(position);
+						if (Plateau.isInPossibilites(X, Y)) {
+							Coordonnees position = new Coordonnees(X, Y);
+							Plateau.positionDeDeplacer.add(position);
+						}
+					}
+				}
+				//2)
+				else if (Partie.getTableDuJeu()[y][x + 1] != null) {
+					if ((x + 2 <= 6 && Partie.getTableDuJeu()[y][x + 2] == null)
+							&& (y - 1 >= 0 && Partie.getTableDuJeu()[y - 1][x + 1] == null)
+							&& (y + 1 <= 4 && Partie.getTableDuJeu()[y + 1][x + 1] == null)) {
+						Plateau.besoinAjouter = true;
 					}
 				}
 			}
 			
 			if (x - 1 >= 0) {
+				//1)
 				if (Partie.getTableDuJeu()[y][x - 1] == null) {
 					Y = y;
 					X = x - 1;
@@ -247,13 +396,24 @@ public class Plateau {
 						|| (Y - 1 >= 0 && Partie.getTableDuJeu()[Y - 1][X] != null)
 						|| (Y + 1 <= 4 && Partie.getTableDuJeu()[Y + 1][X] != null)) {
 						
-						Coordonnees position = new Coordonnees(X, Y);
-						Plateau.positionDeDeplacer.add(position);
+						if (Plateau.isInPossibilites(X, Y)) {
+							Coordonnees position = new Coordonnees(X, Y);
+							Plateau.positionDeDeplacer.add(position);
+						}
+					}
+				}
+				//2)
+				else if (Partie.getTableDuJeu()[y][x - 1] != null) {
+					if ((x - 2 >= 0 && Partie.getTableDuJeu()[y][x - 2] == null)
+							&& (y - 1 >= 0 && Partie.getTableDuJeu()[y - 1][x - 1] == null)
+							&& (y + 1 <= 4 && Partie.getTableDuJeu()[y + 1][x - 1] == null)) {
+						Plateau.besoinAjouter = true;
 					}
 				}
 			}
 			
 			if (y + 1 <= 4) {  
+				//1)
 				if (Partie.getTableDuJeu()[y + 1][x] == null) {
 					Y = y + 1;
 					X = x;
@@ -262,14 +422,24 @@ public class Plateau {
 						|| (X - 1 >= 0 && Partie.getTableDuJeu()[Y][X - 1] != null) 
 						|| (X + 1 <= 6 && Partie.getTableDuJeu()[Y][X + 1] != null)) {
 						
-						Coordonnees position = new Coordonnees(X, Y);
-						Plateau.positionDeDeplacer.add(position);
+						if (Plateau.isInPossibilites(X, Y)) {
+							Coordonnees position = new Coordonnees(X, Y);
+							Plateau.positionDeDeplacer.add(position);
+						}
 					}
-					
+				}
+				//2)
+				else if (Partie.getTableDuJeu()[y + 1][x] != null) {
+					if ((y + 2 <= 4 && Partie.getTableDuJeu()[y + 2][x] == null)
+							&& (x - 1 >= 0 && Partie.getTableDuJeu()[y + 1][x - 1] == null) 
+							&& (x + 1 <= 6 && Partie.getTableDuJeu()[y + 1][x + 1] == null)) {
+						Plateau.besoinAjouter = true;
+					}
 				}
 			}
 			
 			if (y - 1 >= 0) {
+				//1)
 				if (Partie.getTableDuJeu()[y - 1][x] == null) {
 					Y = y - 1;
 					X = x;
@@ -278,14 +448,26 @@ public class Plateau {
 						|| (X - 1 >= 0 && Partie.getTableDuJeu()[Y][X - 1] != null)
 						|| (X + 1 <= 6 && Partie.getTableDuJeu()[Y][X + 1] != null)) {
 						
-						Coordonnees position = new Coordonnees(X, Y);
-						Plateau.positionDeDeplacer.add(position);
+						if (Plateau.isInPossibilites(X, Y)) {
+							Coordonnees position = new Coordonnees(X, Y);
+							Plateau.positionDeDeplacer.add(position);
+						}
 					}
-					
+				}
+				//2
+				else if (Partie.getTableDuJeu()[y - 1][x] != null) {
+					if ((y - 2 >= 0 && Partie.getTableDuJeu()[y - 2][x] == null)
+							&& (x - 1 >= 0 && Partie.getTableDuJeu()[y - 1][x - 1] == null)
+							&& (x + 1 <= 6 && Partie.getTableDuJeu()[y - 1][x + 1] == null)) {
+						Plateau.besoinAjouter = true;
+					}
 				}
 			}
 			
+			//1)
 			if (!Plateau.positionDeDeplacer.isEmpty()) estDeplacable = true;
+			
+			//2) use in deplacerCarte() method	
 		}
 		
 		return estDeplacable;
@@ -300,7 +482,8 @@ public class Plateau {
 		carte.setCoordonnees(x, y);
 	}
 	
-	/* (9)
+	
+	/* (8)
 	 * Update list of possible positions for drawing a card to a position
 	 * -> (this method is used after moving (déplacer) a card in order to eliminate some possible position
 	 * 	that is related to this card's position)
@@ -313,7 +496,29 @@ public class Plateau {
 		
 	}
 	
-	/* (8)
+	/* (9)
+	 * Reload list of cards played
+	 */
+	public static void reloadListePossibilites() {
+		for (int y = 0; y <= 4; y++) {
+			for (int x = 0; x <= 6; x++) {
+				if (Partie.getTableDuJeu()[y][x] != null) Plateau.ajouterCoordonneePossible(x, y);
+			}
+ 		}
+	}
+	
+	/* (10)
+	 * Check if an coordinate is in possibilites list
+	 */
+	public static boolean isInPossibilites(int x, int y) {
+		for (int i = 0; i < possibilites.size(); i++) {
+			if (possibilites.get(i).x == x && possibilites.get(i).y == y)
+				return true;
+		}
+		return false;
+	}
+	
+	/* (11)
 	 * Print table of game to screen
 	 */
 	public static void updateTableDuJeu() {
