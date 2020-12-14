@@ -161,18 +161,19 @@ public class Partie {
 					}
 					
 					System.out.print(result);
-				} else {
-					result = "";
+				} else if (Partie.getTableDuJeu()[i][j] == null) {
+					result = "| ";
+					
 					while (result.length() < 22) {
 						if (result.length() == 21) result += "|";
 						else result += " ";;
 					}
+					
+					System.out.print(result);
 				}
 			}
 			System.out.println();
 		}
-		System.out.println(Partie.getTableDuJeu()[3][3].getForme() + " "
-				+ Partie.getTableDuJeu()[3][3].getCouleur() + " "
-				+ Partie.getTableDuJeu()[3][3].getNature());
+		System.out.println();
 	}
 }

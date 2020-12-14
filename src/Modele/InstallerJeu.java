@@ -23,9 +23,11 @@ public class InstallerJeu {
 	
 	//Activate virtual player
 	private static boolean activerJoueurVir;
+	public static int activerJoueurVirValidation;
 	
 	//Choose level of virtual player
 	private static String niveau;
+	public static int niveauValidation;
 	
 	public InstallerJeu() {
 		this.getDonnees(); 
@@ -36,22 +38,26 @@ public class InstallerJeu {
 		Scanner src = new Scanner(System.in);
 		
 		//Set form for game (Rectangle 5x3 / Square 4x4 /Pyramid)
-		System.out.println("Entrer la forme du tapis de jeu (R/C/P): ");
-		this.varianteDuTapis = src.nextLine();
+		System.out.print("Entrer la forme du tapis de jeu (R/C/P): ");
+		if (this.varianteDuTapis == null) this.varianteDuTapis = src.nextLine();
+		else System.out.println(this.varianteDuTapis);
 		
 		//Set number of players
-		System.out.println("Entrer le nombre de joueurs (2-3): ");
-		this.nombreDeJoueurs = Integer.parseInt(src.nextLine());
+		System.out.print("Entrer le nombre de joueurs (2-3): ");
+		if (this.nombreDeJoueurs == 0) this.nombreDeJoueurs = Integer.parseInt(src.nextLine());
+		else System.out.println(this.nombreDeJoueurs);
 		
 		//Activate virtual player: Yes or No
-		System.out.println("Activer le joueur virtuel (true/false): ");
-		this.activerJoueurVir = src.nextBoolean();		
+		System.out.print("Activer le joueur virtuel (true/false): ");
+		if (this.activerJoueurVirValidation == 0) this.activerJoueurVir = src.nextBoolean();	
+		else System.out.println(this.activerJoueurVir);
 		
 		//Set level 
-		if (this.activerJoueurVir == true ) {
-			System.out.println("Choisir niveau du joueur virtuel (D/F): ");
-			this.niveau = src.next();
-		}
+		if (this.activerJoueurVir == true) {
+			System.out.print("Choisir niveau du joueur virtuel (D/F): ");
+			if (this.niveauValidation == 0) this.niveau = src.next();
+			else System.out.println(this.niveau);
+		} else System.out.println(this.activerJoueurVir);
 
 		
 		Partie.nombreDeCartesJouables = 17 - this.nombreDeJoueurs;
@@ -69,7 +75,7 @@ public class InstallerJeu {
 	/*
 	 * Set variation for game
 	 */
-	public void setVarianteDuTapis(String varianteDuTapis) {
+	public static void setVarianteDuTapis(String varianteDuTapis) {
 		InstallerJeu.varianteDuTapis = varianteDuTapis;
 	}
 	
@@ -83,7 +89,7 @@ public class InstallerJeu {
 	/*
 	 * Set number for players
 	 */
-	public void setNombreDeJoueurs(int nombreDeJoueurs) {
+	public static void setNombreDeJoueurs(int nombreDeJoueurs) {
 		InstallerJeu.nombreDeJoueurs = nombreDeJoueurs;
 	}
 	
@@ -97,7 +103,7 @@ public class InstallerJeu {
 	/*
 	 * Set option: Activate virtual player
 	 */
-	public void setActiverJoueurVir(boolean activerJoueurVir) {
+	public static void setActiverJoueurVir(boolean activerJoueurVir) {
 		InstallerJeu.activerJoueurVir = activerJoueurVir;
 	}
 	
@@ -111,7 +117,7 @@ public class InstallerJeu {
 	/*
 	 * Set level for virtual player
 	 */
-	public void setNiveau(String niveau) {
+	public static void setNiveau(String niveau) {
 		InstallerJeu.niveau = niveau;
 	}
 
