@@ -15,6 +15,12 @@ public class JoueurPhy extends Joueur {
 		Scanner src = new Scanner(System.in);
 		int x = src.nextInt();
 		
+		while (tour == 0 && InstallerJeu.getVarianteDuTapis() == "P") {
+			System.out.println("Choisir l'abscisse x de carte parmis 0 et 6 pour la premiere fois (Pyramide): ");
+			x = src.nextInt();
+			if (x == 0 || x == 6) break;
+		}
+		
 		System.out.println("Choisir l'ordonnée y de carte sur le table du jeu: ");
 		int y = src.nextInt();
 		

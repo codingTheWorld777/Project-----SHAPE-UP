@@ -210,7 +210,7 @@ public class Plateau {
 				Plateau.yMaxDuTapis = yMax;
 			}
 			
-		} else if (InstallerJeu.getVarianteDuTapis().equals("P") && InstallerJeu.getNombreDeJoueurs() == 2) {  //*forme du tapis: escalade
+		} else if (InstallerJeu.getVarianteDuTapis().equals("P")) {  //*forme du tapis: pyramide
 			// Check the number of card in each row for variation "Escalade" (nombre de cartes par colonne)
 			ArrayList<Integer> nombreDeCartesParCol = new ArrayList<Integer>();
 			for (int i = 0; i < 7; i++)
@@ -248,7 +248,7 @@ public class Plateau {
 					parcoursX = 1;
 					parcoursY = 4;
 					
-					while (parcoursX <= 5) {
+					while (parcoursX <= 5 && parcoursY >= 0) {
 						for (int k = 0; k < possibilites.size(); k++) {
 							for (int index = parcoursX; index <= 5; index++) {
 								try {
@@ -263,6 +263,8 @@ public class Plateau {
 						}
 						parcoursX++;
 						parcoursY--;
+						
+						if (InstallerJeu.getNombreDeJoueurs() == 3 && parcoursX == 5) parcoursX = 4;
 					}	
 				} else if ((Partie.getTableDuJeu()[0][1] == null && Partie.getTableDuJeu()[4][1] != null)
 							|| Partie.getTableDuJeu()[3][2] != null) {
@@ -270,7 +272,7 @@ public class Plateau {
 					parcoursX = 1;
 					parcoursY = 0;
 					
-					while (parcoursX <= 5) {
+					while (parcoursX <= 5 && parcoursY <= 4) {
 						for (int k = 0; k < possibilites.size(); k++) {
 							for (int index = parcoursX; index <= 5; index++) {
 								try {
@@ -284,6 +286,8 @@ public class Plateau {
 						}
 						parcoursX++;
 						parcoursY++;
+						
+						if (InstallerJeu.getNombreDeJoueurs() == 3 && parcoursX == 5) parcoursX = 4;
 					}
 				}
 				
@@ -291,55 +295,59 @@ public class Plateau {
 				if ((Partie.getTableDuJeu()[4][5] == null && Partie.getTableDuJeu()[0][5] != null) 
 						|| Partie.getTableDuJeu()[1][4] != null) {
 						
-						parcoursX = 5;
-						parcoursY = 4;
-						
-						while (parcoursX >= 1) {
-							for (int k = 0; k < possibilites.size(); k++) {
-								for (int index = parcoursX; index >= 1; index--) {
-									try {
-										if (possibilites.get(k).y == parcoursY && possibilites.get(k).x == index) {
-											possibilites.remove(k);
-											break;
-										}
-									} catch (Exception e) {
-										System.out.println(e.toString());
+					parcoursX = 5;
+					parcoursY = 4;
+					
+					while (parcoursX >= 1 && parcoursY >= 0) {
+						for (int k = 0; k < possibilites.size(); k++) {
+							for (int index = parcoursX; index >= 1; index--) {
+								try {
+									if (possibilites.get(k).y == parcoursY && possibilites.get(k).x == index) {
+										possibilites.remove(k);
+										break;
 									}
+								} catch (Exception e) {
+									System.out.println(e.toString());
 								}
 							}
-							parcoursX--;
-							parcoursY--;
 						}
+						parcoursX--;
+						parcoursY--;
 						
-					}  else if ((Partie.getTableDuJeu()[0][5] == null && Partie.getTableDuJeu()[4][5] != null)
+						if (InstallerJeu.getNombreDeJoueurs() == 3 && parcoursX == 5) parcoursX = 2;
+					}
+						
+				} else if ((Partie.getTableDuJeu()[0][5] == null && Partie.getTableDuJeu()[4][5] != null)
 								|| Partie.getTableDuJeu()[3][4] != null) {
 						
-						parcoursX = 5;
-						parcoursY = 0;
-						
-						while (parcoursX <= 5) {
-							for (int k = 0; k < possibilites.size(); k++) {
-								for (int index = parcoursX; index >= 1; index--) {
-									try {
-										if (possibilites.get(k).y == parcoursY && possibilites.get(k).x == index) {
-											possibilites.remove(k);
-										}
-									} catch (Exception e) {
-										System.out.println(e.toString());
+					parcoursX = 5;
+					parcoursY = 0;
+					
+					while (parcoursX >= 1 && parcoursY <= 5) {
+						for (int k = 0; k < possibilites.size(); k++) {
+							for (int index = parcoursX; index >= 1; index--) {
+								try {
+									if (possibilites.get(k).y == parcoursY && possibilites.get(k).x == index) {
+										possibilites.remove(k);
 									}
+								} catch (Exception e) {
+									System.out.println(e.toString());
 								}
 							}
-							parcoursX--;
-							parcoursY++;
 						}
+						parcoursX--;
+						parcoursY++;
+						
+						if (InstallerJeu.getNombreDeJoueurs() == 3 && parcoursX == 5) parcoursX = 2;
 					}
+				}
 			}
 			
 			Plateau.xMinDuTapis = xMin;
 			Plateau.xMaxDuTapis = xMax;
 			Plateau.yMinDuTapis = yMin;
-			Plateau.xMaxDuTapis = xMax;
-		}
+			Plateau.yMaxDuTapis = yMax;
+		} 
 		
 	}
 	

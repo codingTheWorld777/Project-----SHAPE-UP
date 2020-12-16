@@ -13,6 +13,7 @@ import javax.swing.JRadioButton;
 
 import Modele.InstallerJeu;
 import Modele.Partie;
+import Vue.FenetreParametre;
 
 public class ControleurParametre {
 	private static InstallerJeu installerJeu;
@@ -58,10 +59,14 @@ public class ControleurParametre {
 					if (selectedValue.getText().equals("Oui")) {
 						InstallerJeu.setActiverJoueurVir(true);
 						InstallerJeu.activerJoueurVirValidation = 1;
+						FenetreParametre.getNiveauPanel().setVisible(true);
 
 					} else if ((selectedValue.getText().equals("Non"))) {
 						InstallerJeu.setActiverJoueurVir(false);
 						InstallerJeu.activerJoueurVirValidation = 1;
+						FenetreParametre.getNiveauPanel().setVisible(false);
+						System.out.println("SetEnabledToFalse");
+						
 					}
 						
 					//In case niveauRaidoBtn is selected

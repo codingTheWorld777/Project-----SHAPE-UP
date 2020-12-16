@@ -21,12 +21,12 @@ public class FenetreParametre {
 	/**
 	 * Component of frame
 	 */
-	private JPanel variantePanel;
-	private JPanel nombreDeJoueursPanel;
-	private JPanel activerJoueurVirPanel;
-	private JPanel niveauPanel;
-	private JPanel nommmerJoueurPanel;
-	private JButton valider;
+	private static JPanel variantePanel;
+	private static JPanel nombreDeJoueursPanel;
+	private static JPanel activerJoueurVirPanel;
+	private static JPanel niveauPanel;
+	private static JPanel nommmerJoueurPanel;
+	private static JButton valider;
 
 	
 	/**
@@ -175,5 +175,9 @@ public class FenetreParametre {
 		
 		//**Handling event** >>ControleurParametre
 		controleur.controleurParametre(controleur.getInstallerJeu(), valider);
+	}
+	
+	public static JPanel getNiveauPanel() {
+		return FenetreParametre.niveauPanel;
 	}
 }
