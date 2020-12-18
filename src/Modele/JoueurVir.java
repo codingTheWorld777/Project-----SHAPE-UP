@@ -123,7 +123,7 @@ public class JoueurVir extends Joueur implements Strategie {
 						
 						if (y1 - 1 >= 0 && Partie.getTableDuJeu()[y1 - 1][x1] != null) Plateau.ajouterCoordonneePossible(x1, y1 - 1);
 					}
-				} else if (Plateau.besoinAjouter) {
+				} else if (Plateau.besoinAjouter == true) {
 					Plateau.possibilites.clear();
 					Coordonnees position = new Coordonnees(x, y);
 					Plateau.possibilites.add(position);
@@ -132,12 +132,6 @@ public class JoueurVir extends Joueur implements Strategie {
 				
 				Plateau.determinerFormeDuTapis(Plateau.cartesJouees);
 				Plateau.positionDeDeplacer.clear();
-				
-				//This loop can be deleted
-				for (int t = 0; t < Plateau.possibilites.size(); t++) {
-					System.out.print("(" + Plateau.possibilites.get(t).x + ", " + Plateau.possibilites.get(t).y + "), ");
-				}
-				System.out.println();
 				
 				Plateau.updateTableDuJeu();
 				System.out.println("Le joueur virtuel fini de deplacer une carte");
@@ -258,5 +252,11 @@ public class JoueurVir extends Joueur implements Strategie {
 	// D or F
 	public void setStrategie(String niveau) {
 		this.niveau = niveau;
+	}
+
+	@Override
+	public void update(Object o) {
+		// TODO Auto-generated method stub
+		
 	}
 }

@@ -37,7 +37,6 @@ public abstract class Joueur extends Observable implements Observer{
 	public Joueur(String nom, int id) {
 		this.nom = nom;
 		this.id = id;
-//		this.carteVictoire = carteVictoire;
 	}
 	
 	/*
@@ -49,6 +48,13 @@ public abstract class Joueur extends Observable implements Observer{
 	 * Move a card
 	 */
 	public abstract void deplacerCarte();
+	
+	/*
+	 * Get player's name
+	 */
+	public String getNom() {
+		return this.nom;
+	}
 	
 	/*
 	 * Set victory card for player

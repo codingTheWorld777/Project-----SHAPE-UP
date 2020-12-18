@@ -1,5 +1,6 @@
 package Controleur;
 
+import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -14,6 +15,7 @@ import javax.swing.JRadioButton;
 import Modele.InstallerJeu;
 import Modele.Partie;
 import Vue.FenetreParametre;
+import Vue.FenetreTableDuJeu;
 
 public class ControleurParametre {
 	private static InstallerJeu installerJeu;
@@ -59,14 +61,14 @@ public class ControleurParametre {
 					if (selectedValue.getText().equals("Oui")) {
 						InstallerJeu.setActiverJoueurVir(true);
 						InstallerJeu.activerJoueurVirValidation = 1;
+						
 						FenetreParametre.getNiveauPanel().setVisible(true);
 
 					} else if ((selectedValue.getText().equals("Non"))) {
 						InstallerJeu.setActiverJoueurVir(false);
 						InstallerJeu.activerJoueurVirValidation = 1;
-						FenetreParametre.getNiveauPanel().setVisible(false);
-						System.out.println("SetEnabledToFalse");
 						
+						FenetreParametre.getNiveauPanel().setVisible(false);
 					}
 						
 					//In case niveauRaidoBtn is selected
@@ -96,7 +98,30 @@ public class ControleurParametre {
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ControleurParametre.fenetreParametreFrame.dispose();
-				new Partie();
+				
+				//Thread for game in CMD
+				Thread threadCMD = new Thread() {
+					public void run() {
+						System.out.println("Start " + Thread.currentThread().getName());
+						new Partie();
+					}
+				};
+				threadCMD.start();
+				
+				
+				//Thread for GUI
+				EventQueue.invokeLater(new Runnable() {
+					public void run() {
+						try {
+							System.out.println("Start " + Thread.currentThread().getName());
+							FenetreTableDuJeu tableDuJeu = new FenetreTableDuJeu();
+						
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+					}
+				});
+				
 			}
 		});
 	}

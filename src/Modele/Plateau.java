@@ -266,6 +266,7 @@ public class Plateau {
 						
 						if (InstallerJeu.getNombreDeJoueurs() == 3 && parcoursX == 5) parcoursX = 4;
 					}	
+					
 				} else if ((Partie.getTableDuJeu()[0][1] == null && Partie.getTableDuJeu()[4][1] != null)
 							|| Partie.getTableDuJeu()[3][2] != null) {
 					
@@ -359,6 +360,7 @@ public class Plateau {
 		int X, Y;
 		boolean estDeplacable = false;
 		boolean besoinAjouter = false;
+		byte[] nombreEspace = new byte[4];
 		
 		/* 1) Check if this card is movable
 		 * 2) Check the cards around the cards you want to move
@@ -386,11 +388,10 @@ public class Plateau {
 				}
 				//2)
 				else if (Partie.getTableDuJeu()[y][x + 1] != null) {
-					if ((x + 2 <= 6 && Partie.getTableDuJeu()[y][x + 2] == null)
-							&& (y - 1 >= 0 && Partie.getTableDuJeu()[y - 1][x + 1] == null)
-							&& (y + 1 <= 4 && Partie.getTableDuJeu()[y + 1][x + 1] == null)) {
-						Plateau.besoinAjouter = true;
-					}
+					if (x + 2 <= 6 && Partie.getTableDuJeu()[y][x + 2] == null) nombreEspace[0]++;
+					if (y - 1 >= 0 && Partie.getTableDuJeu()[y - 1][x + 1] == null) nombreEspace[0]++;
+					if (y + 1 <= 4 && Partie.getTableDuJeu()[y + 1][x + 1] == null) nombreEspace[0]++;
+					
 				}
 			}
 			
@@ -412,11 +413,9 @@ public class Plateau {
 				}
 				//2)
 				else if (Partie.getTableDuJeu()[y][x - 1] != null) {
-					if ((x - 2 >= 0 && Partie.getTableDuJeu()[y][x - 2] == null)
-							&& (y - 1 >= 0 && Partie.getTableDuJeu()[y - 1][x - 1] == null)
-							&& (y + 1 <= 4 && Partie.getTableDuJeu()[y + 1][x - 1] == null)) {
-						Plateau.besoinAjouter = true;
-					}
+					if (x - 2 >= 0 && Partie.getTableDuJeu()[y][x - 2] == null) nombreEspace[1]++;
+					if (y - 1 >= 0 && Partie.getTableDuJeu()[y - 1][x - 1] == null) nombreEspace[1]++;
+					if (y + 1 <= 4 && Partie.getTableDuJeu()[y + 1][x - 1] == null) nombreEspace[1]++;
 				}
 			}
 			
@@ -438,11 +437,9 @@ public class Plateau {
 				}
 				//2)
 				else if (Partie.getTableDuJeu()[y + 1][x] != null) {
-					if ((y + 2 <= 4 && Partie.getTableDuJeu()[y + 2][x] == null)
-							&& (x - 1 >= 0 && Partie.getTableDuJeu()[y + 1][x - 1] == null) 
-							&& (x + 1 <= 6 && Partie.getTableDuJeu()[y + 1][x + 1] == null)) {
-						Plateau.besoinAjouter = true;
-					}
+					if (y + 2 <= 4 && Partie.getTableDuJeu()[y + 2][x] == null) nombreEspace[2]++;
+					if (x - 1 >= 0 && Partie.getTableDuJeu()[y + 1][x - 1] == null) nombreEspace[2]++;
+					if (x + 1 <= 6 && Partie.getTableDuJeu()[y + 1][x + 1] == null) nombreEspace[2]++;
 				}
 			}
 			
@@ -464,16 +461,24 @@ public class Plateau {
 				}
 				//2
 				else if (Partie.getTableDuJeu()[y - 1][x] != null) {
-					if ((y - 2 >= 0 && Partie.getTableDuJeu()[y - 2][x] == null)
-							&& (x - 1 >= 0 && Partie.getTableDuJeu()[y - 1][x - 1] == null)
-							&& (x + 1 <= 6 && Partie.getTableDuJeu()[y - 1][x + 1] == null)) {
-						Plateau.besoinAjouter = true;
-					}
+					if (y - 2 >= 0 && Partie.getTableDuJeu()[y - 2][x] == null) nombreEspace[3]++;
+					if (x - 1 >= 0 && Partie.getTableDuJeu()[y - 1][x - 1] == null) nombreEspace[3]++;
+					if (x + 1 <= 6 && Partie.getTableDuJeu()[y - 1][x + 1] == null) nombreEspace[3]++;
 				}
 			}
 			
 			//1)
 			if (!Plateau.positionDeDeplacer.isEmpty()) estDeplacable = true;
+			
+			if (estDeplacable == true) {
+				for (int i = 0; i < nombreEspace.length; i++) {
+					nombreEspace[i]++;
+					if (nombreEspace[i] >= 3) {
+						Plateau.besoinAjouter = true;
+						break;
+					}
+				}
+			}
 			
 			//2) use in deplacerCarte() method	
 		}

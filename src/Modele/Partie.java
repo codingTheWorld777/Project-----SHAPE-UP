@@ -3,6 +3,7 @@ package Modele;
 import java.util.Scanner;
 
 import Controleur.ControleurParametre;
+import Controleur.ControleurTableDuJeu;
 
 public class Partie {
 	/**
@@ -17,7 +18,7 @@ public class Partie {
 	public static Joueur joueur3;
 	
 	//Sets of players 
-	public static Joueur[] joueursEnJeu;;
+	public static Joueur[] joueursEnJeu;
 	
 	/*
 	 * Number of playable cards 
@@ -44,6 +45,7 @@ public class Partie {
 		 */
 		InstallerJeu installerJeu = new InstallerJeu();
 		ControleurParametre.setInstallerJeu(installerJeu);
+		ControleurTableDuJeu.setInstallerJeu(installerJeu);
 		
 		/*
 		 * Step 2:

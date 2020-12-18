@@ -11,6 +11,13 @@ public class JoueurPhy extends Joueur {
 	}
 	
 	public void piocherCarte(Carte[][] tableDuJeu, int tour) {
+		if (tour >= 1) {
+			for (int i = 0; i < Plateau.possibilites.size(); i++) {
+				System.out.print("(" + Plateau.possibilites.get(i).x + ", " + Plateau.possibilites.get(i).y + "), ");
+			}
+			System.out.println();
+		}
+		
 		System.out.println("Choisir l'abscisse x de carte sur le table du jeu: ");
 		Scanner src = new Scanner(System.in);
 		int x = src.nextInt();
@@ -159,7 +166,7 @@ public class JoueurPhy extends Joueur {
 								
 								if (y1 - 1 >= 0 && Partie.getTableDuJeu()[y1 - 1][x1] != null) Plateau.ajouterCoordonneePossible(x1, y1 - 1);
 							}
-						} else if (Plateau.besoinAjouter) {
+						} else if (Plateau.besoinAjouter == true) {
 							System.out.println("Vous avez besoin d'ajouter une nouvelle carte vers (" + x + ", " + y + ")");
 							Plateau.possibilites.clear();
 							Coordonnees position = new Coordonnees(x, y);
@@ -191,5 +198,11 @@ public class JoueurPhy extends Joueur {
 			}
 		}
 //		Plateau.positionDeDeplacer.clear();
+	}
+
+	@Override
+	public void update(Object o) {
+		// TODO Auto-generated method stub
+		
 	}
 }
