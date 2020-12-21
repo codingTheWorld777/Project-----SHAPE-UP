@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class JoueurVir extends Joueur implements Strategie {
+	/**
+	 * @author Huu Khai NGUYEN (Alec), Pierre-Louis DAMBRAINE
+	 */
+	
 	private String niveau;
 	
 	//constructor

@@ -9,7 +9,7 @@ import javax.imageio.ImageIO;
 
 public class Carte {
 	/**
-	 * @author Huu Khai NGUYEN (Alec), Pierre-Louis DAMBRAINE
+	 * @author Huu Khai NGUYEN (Alec)
 	 */
 	
 	/**

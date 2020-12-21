@@ -8,7 +8,7 @@ import Modele.Carte.naturePossible;
 
 public class PiocheCartes {
 	/**
-	 * @author Huu Khai NGUYEN (Alec), Pierre-Louis DAMBRAINE
+	 * @author Huu Khai NGUYEN (Alec)
 	 */
 //	public static void main(String args[]) {
 //		new PiocheCartes();
