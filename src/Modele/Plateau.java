@@ -498,7 +498,7 @@ public class Plateau {
 			
 			if (estDeplacable == true) {
 				for (int i = 0; i < nombreEspace.length; i++) {
-					System.out.print(nombreEspace[i] + "> ");
+//					System.out.print(nombreEspace[i] + "> ");
 					if (nombreEspace[i] >= 3 && 
 							((Plateau.xMaxDuTapis - Plateau.xMinDuTapis >= 2) || (Plateau.yMaxDuTapis - Plateau.yMinDuTapis >= 2))) {
 						Plateau.besoinAjouter = true;
@@ -549,7 +549,7 @@ public class Plateau {
 	}
 	
 	/* (10)
-	 * Check if an coordinate is in possibilites list
+	 * Check if a coordinate is in possibilites list
 	 */
 	public static boolean isInPossibilites(int x, int y) {
 		for (int i = 0; i < possibilites.size(); i++) {
@@ -560,6 +560,17 @@ public class Plateau {
 	}
 	
 	/* (11)
+	 * Check if a coordinate is in positionDeDeplacer list
+	 */
+	public static boolean isInPositionDeDeplacer(int x, int y) {
+		for (int i = 0; i < Plateau.positionDeDeplacer.size(); i++) {
+			if (positionDeDeplacer.get(i).x == x && positionDeDeplacer.get(i).y == y) 
+				return true;
+		}
+		return false;
+	}
+	
+	/* (12)
 	 * Print table of game to screen
 	 */
 	public static void updateTableDuJeu() {
