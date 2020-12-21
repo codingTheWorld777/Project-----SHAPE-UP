@@ -20,6 +20,9 @@ public class Partie {
 	//Sets of players 
 	public static Joueur[] joueursEnJeu;
 	
+	//Hidden card
+	public static Carte carteCachee;
+	
 	/*
 	 * Number of playable cards 
 	 */
@@ -54,6 +57,7 @@ public class Partie {
 		 * 	+ Draw victory card to each player
 		 */
 		InstallerTour installerTour = new InstallerTour(installerJeu.getNombreDeJoueurs(), installerJeu.getActiverJoueurVir());
+		ControleurTableDuJeu.setInstallerTour(installerTour);
 		
 		/*
 		 * Step 3:

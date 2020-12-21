@@ -1,11 +1,15 @@
 package Controleur;
 
+import Modele.Carte;
 import Modele.InstallerJeu;
+import Modele.InstallerTour;
+import Modele.Joueur;
 import Modele.Partie;
 import Vue.FenetreTableDuJeu;
 
 public class ControleurTableDuJeu {
 	private static InstallerJeu installerJeu;
+	private static InstallerTour installerTour;
 	
 	/**
 	 * Check if the game includes a three player and paint it 
@@ -19,12 +23,19 @@ public class ControleurTableDuJeu {
 		return false;
 	}
 	
-	public static String getNomDeJoueur(int id) {
-		return Partie.joueursEnJeu[id].getNom();
+	public static Joueur getJoueur(int id) {
+		return Partie.joueursEnJeu[id];
 	}
 	
 	/*
-	 * Set and get installerJeu variable from Class InstallerJeu in package.Modele when it is created
+	 * Get hidden card from "Partie"
+	 */
+	public Carte getCarteCachee() {
+		return Partie.carteCachee;
+	}
+	
+	/*
+	 * Set and get installerJeu variable from class Partie in package.Modele when it is created
 	 */
 	public static void setInstallerJeu(InstallerJeu installerJeu) {
 		ControleurTableDuJeu.installerJeu = installerJeu;
@@ -33,5 +44,17 @@ public class ControleurTableDuJeu {
 	public static InstallerJeu getInstallerJeu() {
 		return ControleurTableDuJeu.installerJeu;
 	}
+	
+	/*
+	 * Set and get installerTour variable fron class Partie in package,Modele when it is created
+	 */
+	public static void setInstallerTour(InstallerTour installerTour) {
+		ControleurTableDuJeu.installerTour = installerTour;
+	}
+	
+	public static InstallerTour getInstallerTour() {
+		return ControleurTableDuJeu.installerTour;
+	}
+	
 
 }

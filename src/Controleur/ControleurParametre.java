@@ -18,6 +18,10 @@ import Vue.FenetreParametre;
 import Vue.FenetreTableDuJeu;
 
 public class ControleurParametre {
+	/**
+	 * @author Huu Khai NGUYEN (Alec) 
+	 */
+	
 	private static InstallerJeu installerJeu;
 	
 	private static JFrame fenetreParametreFrame;
@@ -110,10 +114,17 @@ public class ControleurParametre {
 				
 				
 				//Thread for GUI
+				//Run this thread of "FenetreTableDuJeu" after 2 seconds to wait for "InstallerTour" is finish
+				try {
+					Thread.sleep(1800);
+					
+				} catch (InterruptedException er) {
+					System.out.println(er.toString());
+				}
+				
 				EventQueue.invokeLater(new Runnable() {
 					public void run() {
 						try {
-							System.out.println("Start " + Thread.currentThread().getName());
 							FenetreTableDuJeu tableDuJeu = new FenetreTableDuJeu();
 						
 						} catch (Exception e) {
@@ -122,6 +133,15 @@ public class ControleurParametre {
 					}
 				});
 				
+				
+//				try {
+//					FenetreTableDuJeu tableDuJeu = new FenetreTableDuJeu();
+//					Thread t = new Thread(tableDuJeu);
+//					t.start();
+//				
+//				} catch (Exception err) {
+//					err.printStackTrace();
+//				}
 			}
 		});
 	}

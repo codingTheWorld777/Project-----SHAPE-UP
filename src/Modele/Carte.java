@@ -1,5 +1,6 @@
 package Modele;
 
+import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
@@ -39,15 +40,17 @@ public class Carte {
 	 * Each card has a different image
 	 * Each card can be up or down (recto vs verso)
 	 * Each card has a index in order to get image
+	 * Each card has an ID which is matched with its image's name
 	 */
 	private BufferedImage carteImageRecto;
 	private BufferedImage carteImageVerso;
 	private static int nombreDeCarte;
+	private int ID; 
 	
 	/**
 	 * coordinates of card (of card played) 
 	 */
-	Coordonnees coordonnesDeCarte;
+	private Coordonnees coordonnesDeCarte;
 	
 
 	/**
@@ -139,12 +142,17 @@ public class Carte {
 	/**
 	 * Set image to card: Face up OR Face down
 	 */
-	public void setCarteImage(boolean recto) {
-		if (recto) {
-			System.out.println("Recto");
-		} else {
-			System.out.println("Verso");
-		}
+	public void setCarteImage(boolean recto) {}
+	
+	/*
+	 * Get card's image (faceUp-recto or faceDown-verso)
+	 */
+	public Image getCarteImageRecto() {
+		return this.carteImageRecto;
+	}
+	
+	public Image getCarteImageVerso() {
+		return this.carteImageVerso;
 	}
 	
 	/**
@@ -159,6 +167,17 @@ public class Carte {
 	 */
 	public static int getNombreDeCarte() {
 		return Carte.nombreDeCarte;
+	}
+	
+	/**
+	 * Set and Get ID of card
+	 */
+	public int getCarteID() {
+		return this.ID;
+	}
+	
+	public void setCarteID(int ID) {
+		this.ID = ID;
 	}
 	
 	/**

@@ -27,7 +27,7 @@ public class InstallerTour {
 			Partie.joueursEnJeu[1] = joueur2;
 			
 		} else if (nombreDeJoueurs == 2 && activerJoueurVir == true) {  //2 players with a virtual player
-			JoueurVir joueur2 = new JoueurVir("Joueur Virtuel ", 2);
+			JoueurVir joueur2 = new JoueurVir("Joueur Virtuel", 2);
 			Partie.joueur2 = joueur2;
 			Partie.joueur2 = (JoueurVir) joueur2;
 			joueur2.setStrategie(InstallerJeu.getNiveau());
@@ -81,6 +81,8 @@ public class InstallerTour {
 		Carte carteCachee = piocheCartes.get(pos);
 		piocheCartes.remove(pos);
 		
+		Partie.carteCachee = carteCachee;
+		
 		return carteCachee;
 	}
 	
@@ -121,7 +123,7 @@ public class InstallerTour {
 		int pos = (int) (Math.random() * 17);
 		int x = (int) (Math.random() * 17);
 		
-		while (pos + 2 * x >= 17) {
+		while (pos + 2 * x >= 17 || x == 0) {
 			pos = (int) (Math.random() * 17);
 			x = (int) (Math.random() * 17);
 		}

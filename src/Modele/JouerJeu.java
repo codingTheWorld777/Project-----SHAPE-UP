@@ -16,8 +16,7 @@ public class JouerJeu {
 				
 				} catch (Exception e) {
 					e.printStackTrace();
-				}
-				
+				}	
 			}
 		});
 	}

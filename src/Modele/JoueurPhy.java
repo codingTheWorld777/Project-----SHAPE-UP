@@ -11,6 +11,8 @@ public class JoueurPhy extends Joueur {
 	}
 	
 	public void piocherCarte(Carte[][] tableDuJeu, int tour) {
+		Plateau.determinerFormeDuTapis(Plateau.cartesJouees);
+		
 		if (tour >= 1) {
 			for (int i = 0; i < Plateau.possibilites.size(); i++) {
 				System.out.print("(" + Plateau.possibilites.get(i).x + ", " + Plateau.possibilites.get(i).y + "), ");
@@ -166,11 +168,14 @@ public class JoueurPhy extends Joueur {
 								
 								if (y1 - 1 >= 0 && Partie.getTableDuJeu()[y1 - 1][x1] != null) Plateau.ajouterCoordonneePossible(x1, y1 - 1);
 							}
+							Plateau.reloadListePossibilites();
+							
 						} else if (Plateau.besoinAjouter == true) {
 							System.out.println("Vous avez besoin d'ajouter une nouvelle carte vers (" + x + ", " + y + ")");
 							Plateau.possibilites.clear();
 							Coordonnees position = new Coordonnees(x, y);
 							Plateau.possibilites.add(position);
+							Plateau.besoinAjouter = false;
 						}
 						
 						Plateau.determinerFormeDuTapis(Plateau.cartesJouees);

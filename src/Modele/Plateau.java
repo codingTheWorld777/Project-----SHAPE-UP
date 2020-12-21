@@ -26,7 +26,8 @@ public class Plateau {
 	
 	//2) Check if a card can move to another position and choose the position that player want to move the card to...
 	protected static ArrayList<Coordonnees> positionDeDeplacer = new ArrayList<Coordonnees>();
-	//If a card can be moved but after moving it, cards around it doesn't repecte the rule of game
+	
+	//If a card can be moved but after moving it, cards around it doesn't respect the rule of game
 	//so we need to add(draw) next card to the position of this card before moving to the new one
 	protected static boolean besoinAjouter = false;
 	
@@ -136,6 +137,11 @@ public class Plateau {
 			 if (cartesJouees.get(i).getCoordonnees().y > yMax) yMax = cartesJouees.get(i).getCoordonnees().y;
 		}
 		
+		Plateau.xMinDuTapis = xMin;
+		Plateau.xMaxDuTapis = xMax;
+		Plateau.yMinDuTapis = yMin;
+		Plateau.yMaxDuTapis = yMax;
+		
 		/*
 		 * Determination of the form of game based on the variation which was chosen by player from the beginning of game
 		 */
@@ -147,9 +153,6 @@ public class Plateau {
 							possibilites.remove(j);
 						}
 					}
-					
-					Plateau.xMinDuTapis = xMin;
-					Plateau.xMaxDuTapis = xMax;
 				}
 				
 				if (yMax - yMin + 1 == 3) {
@@ -158,9 +161,6 @@ public class Plateau {
 							possibilites.remove(k);
 						}
 					}
-					
-					Plateau.yMinDuTapis = yMin;
-					Plateau.yMaxDuTapis = yMax;
 				}
 				
 			} else if (yMax - yMin + 1 >= 4) {
@@ -170,9 +170,6 @@ public class Plateau {
 							possibilites.remove(j);
 						}
 					}
-					
-					Plateau.yMinDuTapis = yMin;
-					Plateau.yMaxDuTapis = yMax;
 				}
 				
 				if (xMax - xMin + 1 == 3) {
@@ -181,9 +178,6 @@ public class Plateau {
 							possibilites.remove(k);
 						}
 					}
-					
-					Plateau.xMinDuTapis = xMin;
-					Plateau.xMaxDuTapis = xMax;
 				}
 			}
 			
@@ -194,9 +188,6 @@ public class Plateau {
 						possibilites.remove(j);
 					}
 				}
-				
-				Plateau.xMinDuTapis = xMin;
-				Plateau.xMaxDuTapis = xMax;
 			}
 			
 			if (yMax - yMin + 1 == 4) {
@@ -205,9 +196,6 @@ public class Plateau {
 						possibilites.remove(j);
 					}
 				}
-				
-				Plateau.yMinDuTapis = yMin;
-				Plateau.yMaxDuTapis = yMax;
 			}
 			
 		} else if (InstallerJeu.getVarianteDuTapis().equals("P")) {  //*forme du tapis: pyramide
@@ -344,10 +332,6 @@ public class Plateau {
 				}
 			}
 			
-			Plateau.xMinDuTapis = xMin;
-			Plateau.xMaxDuTapis = xMax;
-			Plateau.yMinDuTapis = yMin;
-			Plateau.yMaxDuTapis = yMax;
 		} 
 		
 	}
@@ -368,6 +352,8 @@ public class Plateau {
 			 	* when the selected card changes positions: -> Must add 1 card to the position of selected card 
 			 * 	else OK
 		 */
+		Plateau.reloadListePossibilites();
+		Plateau.determinerFormeDuTapis(cartesJouees);
 		
 		if (Partie.getTableDuJeu()[y][x] != null) {
 			if (x + 1 <= 6) {
@@ -388,10 +374,19 @@ public class Plateau {
 				}
 				//2)
 				else if (Partie.getTableDuJeu()[y][x + 1] != null) {
-					if (x + 2 <= 6 && Partie.getTableDuJeu()[y][x + 2] == null) nombreEspace[0]++;
-					if (y - 1 >= 0 && Partie.getTableDuJeu()[y - 1][x + 1] == null) nombreEspace[0]++;
-					if (y + 1 <= 4 && Partie.getTableDuJeu()[y + 1][x + 1] == null) nombreEspace[0]++;
+					if (y - 1 >= 0 && Partie.getTableDuJeu()[y - 1][x + 1] == null && Plateau.isInPossibilites(x + 1, y - 1) == true) 
+						nombreEspace[0]++;
 					
+					if (y + 1 <= 4 && Partie.getTableDuJeu()[y + 1][x + 1] == null && Plateau.isInPossibilites(x + 1, y + 1) == true) 
+						nombreEspace[0]++;
+					
+					if (nombreEspace[0] == 2) nombreEspace[0]++;
+					
+					if (x + 2 <= 6 && Partie.getTableDuJeu()[y][x + 2] == null && Plateau.isInPossibilites(x + 2, y) == true) 
+						nombreEspace[0]++;
+					
+//					if (x - 1 >= 0 && Partie.getTableDuJeu()[y][x - 1] == null && Plateau.isInPossibilites(x - 1, y) == true) 
+//						nombreEspace[0]++;
 				}
 			}
 			
@@ -413,9 +408,19 @@ public class Plateau {
 				}
 				//2)
 				else if (Partie.getTableDuJeu()[y][x - 1] != null) {
-					if (x - 2 >= 0 && Partie.getTableDuJeu()[y][x - 2] == null) nombreEspace[1]++;
-					if (y - 1 >= 0 && Partie.getTableDuJeu()[y - 1][x - 1] == null) nombreEspace[1]++;
-					if (y + 1 <= 4 && Partie.getTableDuJeu()[y + 1][x - 1] == null) nombreEspace[1]++;
+					
+					if (y - 1 >= 0 && Partie.getTableDuJeu()[y - 1][x - 1] == null && Plateau.isInPossibilites(x - 1, y - 1) == true) 
+						nombreEspace[1]++;
+					
+					if (y + 1 <= 4 && Partie.getTableDuJeu()[y + 1][x - 1] == null && Plateau.isInPossibilites(x - 1, y + 1) == true) 
+						nombreEspace[1]++;
+					
+					if (nombreEspace[1] == 2) nombreEspace[1]++;
+					
+					if (x - 2 >= 0 && Partie.getTableDuJeu()[y][x - 2] == null && Plateau.isInPossibilites(x - 2, y) == true) 
+						nombreEspace[1]++;		
+//					if (x + 1 <= 6 && Partie.getTableDuJeu()[y][x + 1] == null && Plateau.isInPossibilites(x + 1, y) == true) 
+//						nombreEspace[1]++;
 				}
 			}
 			
@@ -437,9 +442,18 @@ public class Plateau {
 				}
 				//2)
 				else if (Partie.getTableDuJeu()[y + 1][x] != null) {
-					if (y + 2 <= 4 && Partie.getTableDuJeu()[y + 2][x] == null) nombreEspace[2]++;
-					if (x - 1 >= 0 && Partie.getTableDuJeu()[y + 1][x - 1] == null) nombreEspace[2]++;
-					if (x + 1 <= 6 && Partie.getTableDuJeu()[y + 1][x + 1] == null) nombreEspace[2]++;
+					if (x - 1 >= 0 && Partie.getTableDuJeu()[y + 1][x - 1] == null && Plateau.isInPossibilites(x - 1, y + 1) == true) 
+						nombreEspace[2]++;
+					
+					if (x + 1 <= 6 && Partie.getTableDuJeu()[y + 1][x + 1] == null && Plateau.isInPossibilites(x + 1, y + 1) == true) 
+						nombreEspace[2]++;
+					
+					if (nombreEspace[2] == 2) nombreEspace[2]++;
+					
+					if (y + 2 <= 4 && Partie.getTableDuJeu()[y + 2][x] == null && Plateau.isInPossibilites(x, y + 2) == true) 
+						nombreEspace[2]++;
+//					if (y - 1 >= 0 && Partie.getTableDuJeu()[y - 1][x] == null && Plateau.isInPossibilites(x, y - 1) == true) 
+//						nombreEspace[2]++;
 				}
 			}
 			
@@ -461,9 +475,21 @@ public class Plateau {
 				}
 				//2
 				else if (Partie.getTableDuJeu()[y - 1][x] != null) {
-					if (y - 2 >= 0 && Partie.getTableDuJeu()[y - 2][x] == null) nombreEspace[3]++;
-					if (x - 1 >= 0 && Partie.getTableDuJeu()[y - 1][x - 1] == null) nombreEspace[3]++;
-					if (x + 1 <= 6 && Partie.getTableDuJeu()[y - 1][x + 1] == null) nombreEspace[3]++;
+					
+					if (x - 1 >= 0 && Partie.getTableDuJeu()[y - 1][x - 1] == null && Plateau.isInPossibilites(x - 1, y - 1) == true) 
+						nombreEspace[3]++;
+					
+					if (x + 1 <= 6 && Partie.getTableDuJeu()[y - 1][x + 1] == null && Plateau.isInPossibilites(x + 1, y - 1) == true) 
+						nombreEspace[3]++;
+					
+					if (nombreEspace[3] == 2) nombreEspace[3]++;
+					
+					if (y - 2 >= 0 && Partie.getTableDuJeu()[y - 2][x] == null && Plateau.isInPossibilites(x, y - 2) == true) 
+						nombreEspace[3]++;
+
+//					if (y + 1 <= 4 && Partie.getTableDuJeu()[y + 1][x] == null && Plateau.isInPossibilites(x, y + 1) == true) 
+//						nombreEspace[3]++;
+					
 				}
 			}
 			
@@ -472,11 +498,12 @@ public class Plateau {
 			
 			if (estDeplacable == true) {
 				for (int i = 0; i < nombreEspace.length; i++) {
-					nombreEspace[i]++;
-					if (nombreEspace[i] >= 3) {
+					System.out.print(nombreEspace[i] + "> ");
+					if (nombreEspace[i] >= 3 && 
+							((Plateau.xMaxDuTapis - Plateau.xMinDuTapis >= 2) || (Plateau.yMaxDuTapis - Plateau.yMinDuTapis >= 2))) {
 						Plateau.besoinAjouter = true;
 						break;
-					}
+					} 
 				}
 			}
 			
@@ -518,6 +545,7 @@ public class Plateau {
 				if (Partie.getTableDuJeu()[y][x] != null) Plateau.ajouterCoordonneePossible(x, y);
 			}
  		}
+		Plateau.determinerFormeDuTapis(cartesJouees);
 	}
 	
 	/* (10)

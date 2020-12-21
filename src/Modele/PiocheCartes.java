@@ -10,6 +10,15 @@ public class PiocheCartes {
 	/**
 	 * @author Huu Khai NGUYEN (Alec), Pierre-Louis DAMBRAINE
 	 */
+//	public static void main(String args[]) {
+//		new PiocheCartes();
+//		for (int i = 0; i < cartesOrg.length; i++) {
+//			System.out.println(i + 1 + ") "
+//					+ piocheCartes.get(i).getForme() + " "
+//					+ piocheCartes.get(i).getNature() + " "
+//					+ piocheCartes.get(i).getCouleur() + " " + piocheCartes.get(i).getCarteID());
+//		}
+//	}
 	
 	private static ArrayList<Carte> piocheCartes = new ArrayList<Carte>();
 	private static Carte[] cartesOrg = new Carte[18];
@@ -38,6 +47,7 @@ public class PiocheCartes {
 				for (int k = 0; k < couleurs.length; k++) {
 					Carte.setNombreDeCarte(compteur + 1);
 					Carte carte = new Carte(formes[i], natures[j], couleurs[k]);  //need to add BufferedImage carteImage
+					carte.setCarteID(compteur + 1);
 					
 					//Shuffle cards
 					while (compteur < cartesOrg.length) {
@@ -57,13 +67,6 @@ public class PiocheCartes {
 		for (int i = 0; i < cartesOrg.length; i++) {
 			piocheCartes.add(cartesOrg[i]);
 		}
-		
-//		for (int i = 0; i < cartesOrg.length; i++) {
-//			System.out.println(i + 1 + ") "
-//					+ piocheCartes.get(i).getForme() + " "
-//					+ piocheCartes.get(i).getNature() + " "
-//					+ piocheCartes.get(i).getCouleur());
-//		}
 		
 	}
 	

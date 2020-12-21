@@ -1,6 +1,7 @@
 package Modele;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
 
 public class JoueurVir extends Joueur implements Strategie {
 	
@@ -13,6 +14,7 @@ public class JoueurVir extends Joueur implements Strategie {
 	}
 	
 	public void piocherCarte(Carte[][] tableDuJeu, int tour) {
+		Plateau.determinerFormeDuTapis(Plateau.cartesJouees);
 		
 		if (this.niveau.compareTo("F") == 0) { //easy level
 			int i = (int) (Math.random() * Plateau.possibilites.size());
@@ -38,31 +40,36 @@ public class JoueurVir extends Joueur implements Strategie {
 		} else if (this.niveau.compareTo("D") == 0) { //hard level
 			int X = 0;
 			int Y = 0;
-			ArrayList<Integer> listPoint = new ArrayList<Integer>();
+			
+			int point = 0;
+			
 			for (int i = 0; i < Plateau.possibilites.size(); i++) {
 				Carte[][] tableVir = Partie.getTableDuJeu();
 				int x = Plateau.possibilites.get(i).x;
 				int y = Plateau.possibilites.get(i).y;
 				tableVir[y][x] = PiocheCartes.getPiocheCartes().get(Partie.nombreDeCartesJouables - 1);
 				Compteur compteur = new Compteur(tableVir);
-				listPoint.add(compteur.getPointsJoueurs(this.id));
+				
 				if (i == 0) {
+					point = compteur.getPointsJoueurs(this.id);
 					X = x;
 					Y = y;
-				} else if (listPoint.get(i) > listPoint.get(i - 1)) {
-					X = x;
-					Y = y;
+				} else {
+					if (compteur.getPointsJoueurs(this.id) > point) {
+						point = compteur.getPointsJoueurs(this.id);
+						X = x;
+						Y = y;
+					}
 				}
 				Partie.getTableDuJeu()[y][x] = null;
-			} //JoueurVir put his cart where he has the more point
-
-
+			} 	//JoueurVir put his card where he has the more point 
 			
 			tableDuJeu[Y][X] = PiocheCartes.getPiocheCartes().get(Partie.nombreDeCartesJouables - 1);
 			Plateau.misAJourListeCartesJouees(tableDuJeu[Y][X], X, Y);
 			Plateau.determinerFormeDuTapis(Plateau.cartesJouees);
 			Plateau.supprimerCoordonnee(X, Y);
 			Plateau.ajouterCoordonneePossible(X, Y);
+			Plateau.reloadListePossibilites(); //
 			Plateau.determinerFormeDuTapis(Plateau.cartesJouees);
 			PiocheCartes.getPiocheCartes().remove(Partie.nombreDeCartesJouables - 1);
 			Partie.nombreDeCartesJouables--;
@@ -127,8 +134,8 @@ public class JoueurVir extends Joueur implements Strategie {
 					Plateau.possibilites.clear();
 					Coordonnees position = new Coordonnees(x, y);
 					Plateau.possibilites.add(position);
+					Plateau.besoinAjouter = false;
 				}
-				
 				
 				Plateau.determinerFormeDuTapis(Plateau.cartesJouees);
 				Plateau.positionDeDeplacer.clear();
@@ -136,107 +143,200 @@ public class JoueurVir extends Joueur implements Strategie {
 				Plateau.updateTableDuJeu();
 				System.out.println("Le joueur virtuel fini de deplacer une carte");
 			}
-			
 			
 		} else if (this.niveau.compareTo("D") == 0) { 
-			//first step : choose the card to move 
-			int x = 0;
-			int y = 0;
-			ArrayList<Integer> listPoint = new ArrayList<Integer>();
-			for (int i = 0; i < Partie.getTableDuJeu().length; i++) {
-				for (int j = 0; j < Partie.getTableDuJeu()[i].length; j++) {
-					boolean check = Plateau.estDeplacable(j, i);
-					int scorePointCommun = 0; //1 for shape; 2 for nature and 3 for color
-					if (check) {
-						if (Partie.getTableDuJeu()[i][j] != null) {
-							if (Partie.getTableDuJeu()[i][j].getForme() == this.getCarteVictoire().getForme()) {
-								scorePointCommun++;
-							}
-							if (Partie.getTableDuJeu()[i][j].getNature() == this.getCarteVictoire().getNature()) {
-								scorePointCommun+=2;
-							}
-							if (Partie.getTableDuJeu()[i][j].getCouleur() == this.getCarteVictoire().getCouleur()) {
-								scorePointCommun+=3;
-							}
-							listPoint.add(scorePointCommun);
-							
-							//select the card with highest scoreCommun
-							if (listPoint.size() == 1) {
-								x = Partie.getTableDuJeu()[i][j].getCoordonnees().x;
-								y = Partie.getTableDuJeu()[i][j].getCoordonnees().y;
-							} else if (listPoint.get(listPoint.size() - 1) == Collections.max(listPoint)) {
-								x = Partie.getTableDuJeu()[i][j].getCoordonnees().x;
-								y = Partie.getTableDuJeu()[i][j].getCoordonnees().y;
-							}
-						}
-					}
-					
-				}
-			}
+			/**
+			 * 1) 
+			 * Find a list of moveable cards 
+			 * Check each card of this list to find its moveable position which has the highest point when move to this position
+			 * Save each moveable position to 'listPosDeCarteDeplacable' and its new position to 'listPosDeDeplacer'
+			 * 
+			 * 2)
+			 * If player can get point when move a card to new position:
+			 	* Choose from the list 'listPosDeCarteDeplacable' a position that has the highest point, and also its new position
+			 	* Move card to new position and finish player's turn
+			 * If player cannot get any point when move a card
+			 	* We check a draw card (-> carteJouee[nombreDeCartesJouees - 1]) with all cards on the table
+			 	*  with comparison of attributes
+			 */
 			
-			if (Partie.getTableDuJeu()[y][x] != null && Plateau.estDeplacable(x, y) == true) {
-				
-				//second step : choose the final coordinates of the card
-				int X = 0;
-				int Y = 0;
-				ArrayList<Integer> listPointDeplacer = new ArrayList<Integer>();
-				for (int i = 0; i < Plateau.positionDeDeplacer.size(); i++) {
-					Carte[][] tableVir = Partie.getTableDuJeu();
-					int x1 = Plateau.positionDeDeplacer.get(i).x;
-					int y1 = Plateau.positionDeDeplacer.get(i).y;
-					tableVir[y1][x1] = Partie.getTableDuJeu()[y][x];
-					Compteur compteur = new Compteur(tableVir);
-					listPointDeplacer.add(compteur.getPointsJoueurs(this.id));
-					if (i == 0) {
-						X = x1;
-						Y = y1;
-					} else if (listPointDeplacer.get(i) > listPointDeplacer.get(i - 1)) {
-						X = x1;
-						Y = y1;
-					}
-					Partie.getTableDuJeu()[y1][x1] = null;
-				} //JoueurVir put his cart where he has the more point
-				
-
-				Carte carte = Partie.getTableDuJeu()[y][x];
-				carte.setCoordonnees(X, Y); 	//reset coordinate of card
-				Partie.getTableDuJeu()[y][x] = null;
-				Plateau.supprimerCoordonnee(x, y);
-				Plateau.misAJourListePossibilites(x, y);
-				Partie.getTableDuJeu()[Y][X] = carte;
-				Plateau.ajouterCoordonneePossible(X, Y);
-				Plateau.supprimerCoordonnee(X, Y);
-				
-				/*
-				 * Check if there are some possible positions of mouvement of card that has the same possible position
-				 * 	with are positioned around this card 
-				 */
-				for (int compteur = X; compteur < 7; compteur++) {
-					if (Y + 1 <= 4 && Partie.getTableDuJeu()[Y + 1][X] != null) Plateau.ajouterCoordonneePossible(X, Y + 1);
-					
-					if (Y - 1 >= 0 && Partie.getTableDuJeu()[Y - 1][X] != null) Plateau.ajouterCoordonneePossible(X, Y - 1);	
-				}
-				
-				for (int compteur = X; compteur >= 0; compteur--) {
-					if (Y + 1 <= 4 && Partie.getTableDuJeu()[Y + 1][X] != null) Plateau.ajouterCoordonneePossible(X, Y + 1);
-					
-					if (Y - 1 >= 0 && Partie.getTableDuJeu()[Y - 1][X] != null) Plateau.ajouterCoordonneePossible(X, Y - 1);
-				}
-				
-				Plateau.determinerFormeDuTapis(Plateau.cartesJouees);
-				Plateau.positionDeDeplacer.clear();
-				
-				//This loop can be deleted
-				for (int t = 0; t < Plateau.possibilites.size(); t++) {
-					System.out.print("(" + Plateau.possibilites.get(t).x + ", " + Plateau.possibilites.get(t).y + "), ");
-				}
-				System.out.println();
-				
-				Plateau.updateTableDuJeu();
-				System.out.println("Le joueur virtuel fini de deplacer une carte");
-				return;
-			} 
-			
+			//1)
+//			int X = 0, Y = 0;  		//original position
+//			int X1 = 0, Y1 = 0;		//position after moving
+//			
+//			ArrayList<Integer> setOfMaximumPoints = new ArrayList<Integer>();
+//			ArrayList<Coordonnees> listPosDeCarteDeplacable = new ArrayList<Coordonnees>();
+//			ArrayList<Coordonnees> listPosDeDeplacer = new ArrayList<Coordonnees>();
+//			
+//			for (int i = 0; i < Plateau.cartesJouees.size(); i++) {
+//				int x = Plateau.cartesJouees.get(i).getCoordonnees().x;
+//				int y = Plateau.cartesJouees.get(i).getCoordonnees().y;
+//				boolean check = Plateau.estDeplacable(x, y);
+//				
+//				ArrayList<Integer> listPoint = new ArrayList<Integer>();
+//				ArrayList<Coordonnees> listCoordonnees = new ArrayList<Coordonnees>();
+//				
+//				if (check) {
+//					Carte carteChoisie = Partie.getTableDuJeu()[y][x];
+//					
+//					if (x + 1 <= 6 && Partie.getTableDuJeu()[y][x + 1] == null && Plateau.isInPossibilites(x + 1, y)) {
+//						Partie.getTableDuJeu()[y][x + 1] = Partie.getTableDuJeu()[y][x];
+//						Partie.getTableDuJeu()[y][x] = null;
+//						Compteur compteur = new Compteur(Partie.getTableDuJeu());
+//						listPoint.add(compteur.getPointsJoueurs(this.id));
+//						
+//						Partie.getTableDuJeu()[y][x + 1] = null;
+//						Partie.getTableDuJeu()[y][x] = carteChoisie;
+//						listCoordonnees.add(new Coordonnees(x + 1, y));
+//					} 
+//					
+//					if (x - 1 >= 0 && Partie.getTableDuJeu()[y][x - 1] == null && Plateau.isInPossibilites(x - 1, y)) {
+//						Partie.getTableDuJeu()[y][x - 1] = Partie.getTableDuJeu()[y][x];
+//						Partie.getTableDuJeu()[y][x] = null;
+//						Compteur compteur = new Compteur(Partie.getTableDuJeu());
+//						listPoint.add(compteur.getPointsJoueurs(this.id));
+//						
+//						Partie.getTableDuJeu()[y][x - 1] = null;
+//						Partie.getTableDuJeu()[y][x] = carteChoisie;
+//						listCoordonnees.add(new Coordonnees(x - 1, y));
+//					}
+//					
+//					if (y + 1 <= 4 && Partie.getTableDuJeu()[y + 1][x] == null && Plateau.isInPossibilites(x, y + 1)) {
+//						Partie.getTableDuJeu()[y + 1][x] = Partie.getTableDuJeu()[y][x];
+//						Partie.getTableDuJeu()[y][x] = null;
+//						Compteur compteur = new Compteur(Partie.getTableDuJeu());
+//						listPoint.add(compteur.getPointsJoueurs(this.id));
+//						
+//						Partie.getTableDuJeu()[y + 1][x] = null;
+//						Partie.getTableDuJeu()[y][x] = carteChoisie;
+//						listCoordonnees.add(new Coordonnees(x, y + 1));
+//					}
+//					
+//					if (y - 1 >= 0 && Partie.getTableDuJeu()[y - 1][x] == null && Plateau.isInPossibilites(x, y - 1)) {
+//						Partie.getTableDuJeu()[y - 1][x] = Partie.getTableDuJeu()[y][x];
+//						Partie.getTableDuJeu()[y][x] = null;
+//						Compteur compteur = new Compteur(Partie.getTableDuJeu());
+//						listPoint.add(compteur.getPointsJoueurs(this.id));
+//						
+//						Partie.getTableDuJeu()[y - 1][x] = null;
+//						Partie.getTableDuJeu()[y][x] = carteChoisie;
+//						listCoordonnees.add(new Coordonnees(x, y - 1));
+//					}
+//					
+//					for (int k = 0; !listPoint.isEmpty() && k < listPoint.size(); k++) {
+//						if (listPoint.get(k) == Collections.max(listPoint)) {
+//							setOfMaximumPoints.add(listPoint.get(k));
+//							listPosDeCarteDeplacable.add(new Coordonnees(x, y));
+//							listPosDeDeplacer.add(listCoordonnees.get(k));
+//							
+//							listPoint.clear();
+//							listCoordonnees.clear();
+//							break;
+//						}
+//					}
+//				}
+//				
+//			}
+//			
+//			//2)
+//			if (!setOfMaximumPoints.isEmpty()) {
+//				for (int i = 0; !setOfMaximumPoints.isEmpty() && i < setOfMaximumPoints.size(); i++) {
+//					System.out.print("SetOfMaximumPoints: " + setOfMaximumPoints.get(i) + ", ");
+//				}
+//				
+//				for (int i = 0; !setOfMaximumPoints.isEmpty() && i < setOfMaximumPoints.size(); i++) {
+//					if (setOfMaximumPoints.get(i) == Collections.max(setOfMaximumPoints)) {
+//						X = listPosDeCarteDeplacable.get(i).x;
+//						Y = listPosDeCarteDeplacable.get(i).y;
+//						
+//						X1 = listPosDeDeplacer.get(i).x;
+//						Y1 = listPosDeDeplacer.get(i).y;
+//						
+//						break;
+//					}
+//				}
+//				
+//			} else {
+//				boolean check = false;
+//				
+//				for (int i = 0; i < Partie.getTableDuJeu().length; i++) {
+//					for (int j = 0; j < Partie.getTableDuJeu()[i].length; j++) {
+//						check = Plateau.estDeplacable(j, i);
+//						int scorePointCommun = 0; //1 for shape; 2 for nature and 3 for color
+//						
+//						if (check) {
+//							System.out.println("i = " + i + ", j = " + j);
+//							X = j;
+//							Y = i;
+//							
+//							for (int k = 0; k < Plateau.positionDeDeplacer.size(); k++) {
+//								if (j + 1 <= 6 && Partie.getTableDuJeu()[i][j + 1] == null 
+//										&& (j + 1 == Plateau.positionDeDeplacer.get(k).x) && (i == Plateau.positionDeDeplacer.get(k).y)) {
+//									X1 = j + 1;
+//									Y1 = i;
+//									
+//								} else if (j - 1 >= 0 && Partie.getTableDuJeu()[i][j - 1] == null 
+//										&& (j - 1 == Plateau.positionDeDeplacer.get(k).x) && (i == Plateau.positionDeDeplacer.get(k).y)) {
+//									X1 = j - 1;
+//									Y1 = i;
+//									
+//								} else if (i + 1 <= 4 && Partie.getTableDuJeu()[i + 1][j] == null
+//										&& (j == Plateau.positionDeDeplacer.get(k).x) && (i + 1 == Plateau.positionDeDeplacer.get(k).y)) {
+//									X1 = j;
+//									Y1 = i + 1;
+//									
+//								} else if (i - 1 >= 0 && Partie.getTableDuJeu()[i - 1][j] == null
+//										&& (j == Plateau.positionDeDeplacer.get(k).x) && (i - 1 == Plateau.positionDeDeplacer.get(k).y)) {
+//									X1 = j;
+//									Y1 = i - 1;
+//								}
+//							}
+//			
+//						}
+//						
+//					}
+//					
+//					if (check) break;
+//				}
+//			}
+//
+//			Carte carte = Partie.getTableDuJeu()[Y][X];
+//			carte.setCoordonnees(X1, Y1); 	//reset coordinate of card
+//			Partie.getTableDuJeu()[Y][X] = null;
+//			Plateau.supprimerCoordonnee(X, Y);
+//			Plateau.misAJourListePossibilites(X, Y);
+//			Partie.getTableDuJeu()[Y1][X1] = carte;
+//			if (Plateau.besoinAjouter == false) Plateau.ajouterCoordonneePossible(X1, Y1);
+//				
+//			
+//			/*
+//			 * Check if there are some possible positions of mouvement of card that has the same possible position
+//			 * 	with are positioned around this card 
+//			 */
+//			if (Plateau.besoinAjouter == false)  {
+//				for (int compteur = X1; compteur < 7; compteur++) {
+//					if (Y1 + 1 <= 4 && Partie.getTableDuJeu()[Y1 + 1][X1] != null) Plateau.ajouterCoordonneePossible(X1, Y1 + 1);
+//					
+//					if (Y1 - 1 >= 0 && Partie.getTableDuJeu()[Y1 - 1][X1] != null) Plateau.ajouterCoordonneePossible(X1, Y1 - 1);	
+//				}
+//				
+//				for (int compteur = X1; compteur >= 0; compteur--) {
+//					if (Y1 + 1 <= 4 && Partie.getTableDuJeu()[Y1 + 1][X1] != null) Plateau.ajouterCoordonneePossible(X1, Y1 + 1);
+//					
+//					if (Y1 - 1 >= 0 && Partie.getTableDuJeu()[Y1 - 1][X1] != null) Plateau.ajouterCoordonneePossible(X1, Y1 - 1);
+//				}
+//			} else if (Plateau.besoinAjouter == true) {
+//				Plateau.possibilites.clear();
+//				Coordonnees position = new Coordonnees(X, Y);
+//				Plateau.possibilites.add(position);
+//				Plateau.besoinAjouter = false;
+//			}
+//			
+//			Plateau.determinerFormeDuTapis(Plateau.cartesJouees);
+//			Plateau.positionDeDeplacer.clear();
+//			
+//			Plateau.updateTableDuJeu();
+			System.out.println("Le joueur virtuel fini de deplacer une carte");
 		}
 		
 	}

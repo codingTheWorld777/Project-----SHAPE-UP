@@ -15,6 +15,9 @@ import javax.swing.JTextArea;
 import Controleur.ControleurParametre;
 
 public class FenetreParametre {
+	/**
+	 * @author Huu Khai NGUYEN (Alec)
+	 */
 
 	private JFrame frame;
 	
