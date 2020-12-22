@@ -5,7 +5,7 @@ import java.util.Scanner;
 import Controleur.ControleurParametre;
 import Controleur.ControleurTableDuJeu;
 
-public class Partie {
+public class Partie extends Observable {
 	/**
 	 * @author Huu Khai NGUYEN (Alec)
 	 */

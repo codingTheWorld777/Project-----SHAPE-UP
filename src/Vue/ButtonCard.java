@@ -1,5 +1,6 @@
 package Vue;
 
+import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridLayout;
 import java.awt.Image;
@@ -13,24 +14,18 @@ import javax.swing.JPanel;
 
 import Modele.Carte;
 import Modele.Coordonnees;
+import Modele.Partie;
+import Modele.Plateau;
 import Controleur.ControleurTableDuJeu;
 
 public class ButtonCard extends JButton {
 	private boolean recto = false;
 	private Coordonnees coordonnees;
-	
+	private boolean disponible = false;
 	private Image carteImage;
 	
-	public ButtonCard() {
-		this.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				System.out.println(((ButtonCard) e.getSource()).getCoordonnees().x + ", " + ((ButtonCard) e.getSource()).getCoordonnees().y);
-				
-			}
-			
-		});
+	public ButtonCard(int x, int y) {
+		this.coordonnees = new Coordonnees(x, y);
 	}
 	
 	/**
@@ -55,6 +50,7 @@ public class ButtonCard extends JButton {
 					}
 					
 				} else recto = false;
+				
 			}
 			
 		});

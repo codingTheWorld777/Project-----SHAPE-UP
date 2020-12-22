@@ -6,6 +6,7 @@ public class JoueurPhy extends Joueur {
 	/**
 	 *@author Huu Khai NGUYEN (Alec)
 	 */
+	
 	public JoueurPhy(String name, int id) {
 		super(name, id);
 	}
@@ -22,7 +23,15 @@ public class JoueurPhy extends Joueur {
 		
 		System.out.println("Choisir l'abscisse x de carte sur la table du jeu: ");
 		Scanner src = new Scanner(System.in);
-		int x = src.nextInt();
+		int x, y;
+		if (this.coordAPlacer == null) {
+			x = src.nextInt();
+		} 
+		else {
+			System.out.println(this.coordAPlacer.x);
+			x = this.coordAPlacer.x;
+		}
+		
 		
 		while (tour == 0 && InstallerJeu.getVarianteDuTapis() == "P") {
 			System.out.println("Choisir l'abscisse x de carte parmis 0 et 6 pour la premiere fois (Pyramide): ");
@@ -31,7 +40,14 @@ public class JoueurPhy extends Joueur {
 		}
 		
 		System.out.println("Choisir l'ordonnée y de carte sur le table du jeu: ");
-		int y = src.nextInt();
+		if (this.coordAPlacer == null) {
+			y = src.nextInt();
+		} 
+		else {
+			System.out.println(this.coordAPlacer.y);
+			y = coordAPlacer.y;
+		}
+		
 		
 		/*
 		 * First card on the table:
@@ -204,6 +220,7 @@ public class JoueurPhy extends Joueur {
 		}
 //		Plateau.positionDeDeplacer.clear();
 	}
+	
 
 	@Override
 	public void update(Object o) {

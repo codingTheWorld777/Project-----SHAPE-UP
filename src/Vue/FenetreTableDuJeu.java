@@ -1,5 +1,6 @@
 package Vue;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridLayout;
@@ -18,6 +19,7 @@ import javax.swing.UIManager;
 
 import Controleur.ControleurTableDuJeu;
 import Modele.Coordonnees;
+import Modele.Partie;
 
 import java.util.Observer;
 import java.util.Observable;
@@ -41,7 +43,7 @@ public class FenetreTableDuJeu extends JFrame implements MouseListener, MouseMot
 		initialize();
 	}
 	
-	public void update(Observable instanceObservable, Object arg1){
+	public void update(Observable instanceObservable, Object arg1) {
 		
 	}
 
@@ -77,11 +79,13 @@ public class FenetreTableDuJeu extends JFrame implements MouseListener, MouseMot
 		ButtonCard[][] cartesBtn = new ButtonCard[5][7];
 		for (int i = 0; i < 5; i++) {
 			for (int j = 0; j < 7; j++) {
-				ButtonCard carteBtn = new ButtonCard();
+				ButtonCard carteBtn = new ButtonCard(j, i);
 				cartesBtn[i][j] = carteBtn;
+				controleurJeu.ControleurTableDuJeu(Partie.joueur1, carteBtn);
 			}
 		}
 		
+
 		
 		GridBagConstraints gridConstraints = new GridBagConstraints();
 		for (int y = 0; y < 5; y++) {

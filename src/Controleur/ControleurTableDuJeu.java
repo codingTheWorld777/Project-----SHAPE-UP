@@ -1,17 +1,47 @@
 package Controleur;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
+
 import Modele.Carte;
+import Modele.Coordonnees;
 import Modele.InstallerJeu;
 import Modele.InstallerTour;
 import Modele.Joueur;
+import Modele.JoueurPhy;
 import Modele.Partie;
 import Modele.PiocheCartes;
+import Vue.ButtonCard;
 import Vue.FenetreTableDuJeu;
 
 public class ControleurTableDuJeu {
 	private static InstallerJeu installerJeu;
 	private static InstallerTour installerTour;
 	
+	private JButton btnCarte;
+	
+	public void ControleurTableDuJeu(Joueur joueur, ButtonCard btnCarte) {
+		btnCarte.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("ah oui");
+				Coordonnees coord = btnCarte.getCoordonnees();
+				
+				try {
+					joueur.setCoordAPlacer(coord);
+					System.out.println("ah oui");
+				} catch (Exception err) {
+					System.out.println(err.toString());
+				}
+			}
+		});
+	}
+	
+
+
 	/**
 	 * Check if the game includes a three player and paint it 
 	 * @param installerJeu
