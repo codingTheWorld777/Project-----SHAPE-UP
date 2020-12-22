@@ -19,8 +19,11 @@ import javax.swing.UIManager;
 import Controleur.ControleurTableDuJeu;
 import Modele.Coordonnees;
 
+import java.util.Observer;
+import java.util.Observable;
 
-public class FenetreTableDuJeu extends JFrame implements MouseListener, MouseMotionListener {
+
+public class FenetreTableDuJeu extends JFrame implements MouseListener, MouseMotionListener, Observer {
 	/**
 	 * @author Huu Khai NGUYEN (Alec)
 	 */
@@ -36,6 +39,10 @@ public class FenetreTableDuJeu extends JFrame implements MouseListener, MouseMot
 	 */
 	public FenetreTableDuJeu() {
 		initialize();
+	}
+	
+	public void update(Observable instanceObservable, Object arg1){
+		
 	}
 
 	/**
@@ -238,9 +245,20 @@ public class FenetreTableDuJeu extends JFrame implements MouseListener, MouseMot
 		JButton piocheCarte = new JButton();
 		piocheCarte.setBounds(41, 180, 81, 100);
 		
+		try {
+			Image imgVerso = controleurJeu.getCartePiochee().getCarteImageVerso();
+			imgVerso = imgVerso.getScaledInstance(piocheCarte.getWidth(), piocheCarte.getHeight(), Image.SCALE_DEFAULT);
+			piocheCarte.setIcon(new ImageIcon(imgVerso));
+		} catch (NullPointerException e) {
+			System.out.println(e.toString());
+		}
+		
+		
 		ButtonCard carteJouee = new ButtonCard(piocheCarte);
 		carteJouee.setBounds(41, 27, 81, 100);
 		piochesCartesPanel.add(carteJouee);
+		
+		
 		
 		JLabel piocheLabel = new JLabel("Piocher une carte");
 		piocheLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 14));
@@ -248,7 +266,6 @@ public class FenetreTableDuJeu extends JFrame implements MouseListener, MouseMot
 		
 		piochesCartesPanel.add(piocheLabel);
 		piochesCartesPanel.add(piocheCarte);
-		
 		
 		this.validate();
 	}

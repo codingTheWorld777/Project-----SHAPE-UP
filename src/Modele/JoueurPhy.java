@@ -12,7 +12,7 @@ public class JoueurPhy extends Joueur {
 	
 	public void piocherCarte(Carte[][] tableDuJeu, int tour) {
 		Plateau.determinerFormeDuTapis(Plateau.cartesJouees);
-		
+		System.out.println("Vous avez pioché la carte : " + PiocheCartes.getPiocheCartes().get(Partie.nombreDeCartesJouables - 1).getForme() + " " + PiocheCartes.getPiocheCartes().get(Partie.nombreDeCartesJouables - 1).getNature() + " " + PiocheCartes.getPiocheCartes().get(Partie.nombreDeCartesJouables - 1).getCouleur());
 		if (tour >= 1) {
 			for (int i = 0; i < Plateau.possibilites.size(); i++) {
 				System.out.print("(" + Plateau.possibilites.get(i).x + ", " + Plateau.possibilites.get(i).y + "), ");
@@ -20,7 +20,7 @@ public class JoueurPhy extends Joueur {
 			System.out.println();
 		}
 		
-		System.out.println("Choisir l'abscisse x de carte sur le table du jeu: ");
+		System.out.println("Choisir l'abscisse x de carte sur la table du jeu: ");
 		Scanner src = new Scanner(System.in);
 		int x = src.nextInt();
 		
@@ -198,7 +198,7 @@ public class JoueurPhy extends Joueur {
 				return;
 				
 			} else {
-				System.out.println("Cette position ne correspond pas. Choissiez-vous encore une fois!");
+				System.out.println("Cette position ne correspond pas. Choissiez encore une fois!");
 				deplacerCarte();
 			}
 		}

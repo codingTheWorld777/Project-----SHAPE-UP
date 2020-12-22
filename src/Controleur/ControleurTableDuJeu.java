@@ -5,6 +5,7 @@ import Modele.InstallerJeu;
 import Modele.InstallerTour;
 import Modele.Joueur;
 import Modele.Partie;
+import Modele.PiocheCartes;
 import Vue.FenetreTableDuJeu;
 
 public class ControleurTableDuJeu {
@@ -32,6 +33,20 @@ public class ControleurTableDuJeu {
 	 */
 	public Carte getCarteCachee() {
 		return Partie.carteCachee;
+	}
+	
+	/*
+	 * Get the drawn card from "PiocheCartes"
+	 */
+	public static Carte getCartePiochee() {
+		return PiocheCartes.getPiocheCartes().get(PiocheCartes.getPiocheCartes().size() - 1);
+	}
+	
+	/*
+	 * Get the number of playable cards
+	 */
+	public int getNombreCarteJouable() {
+		return PiocheCartes.getPiocheCartes().size();
 	}
 	
 	/*

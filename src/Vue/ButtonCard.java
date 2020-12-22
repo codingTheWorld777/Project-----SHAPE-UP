@@ -13,6 +13,7 @@ import javax.swing.JPanel;
 
 import Modele.Carte;
 import Modele.Coordonnees;
+import Controleur.ControleurTableDuJeu;
 
 public class ButtonCard extends JButton {
 	private boolean recto = false;
@@ -36,8 +37,8 @@ public class ButtonCard extends JButton {
 	 * Players click this type of button to draw one card
 	 * @param carteJouee
 	 */
-	public ButtonCard(JButton carteJouee) {
-		this.addActionListener(new ActionListener() {
+	public ButtonCard(JButton piocheCarte) {
+		piocheCarte.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -46,8 +47,9 @@ public class ButtonCard extends JButton {
 					recto = true;
 
 					try {
-						Image carteImage = ImageIO.read(getClass().getResource("../images/" + Carte.getNombreDeCarte() + ".png"));
-						carteJouee.setIcon(new ImageIcon(carteImage));
+						Image imgRecto = ControleurTableDuJeu.getCartePiochee().getCarteImageRecto();
+						imgRecto = imgRecto.getScaledInstance(piocheCarte.getWidth(), piocheCarte.getHeight(), Image.SCALE_DEFAULT);
+						setIcon(new ImageIcon(imgRecto));
 					} catch (Exception err) {
 						System.out.println(err.toString());
 					}
