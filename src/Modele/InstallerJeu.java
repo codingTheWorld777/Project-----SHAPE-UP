@@ -16,7 +16,7 @@ public class InstallerJeu {
 	 */
 	
 	//Form of game
-	private static String varianteDuTapis;
+	private static String varianteDuTapis = "";
 	
 	//Number of player
 	private static int nombreDeJoueurs;

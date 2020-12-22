@@ -39,7 +39,6 @@ public class ControleurParametre {
 				try {
 					InstallerJeu.setNombreDeJoueurs(Integer.parseInt(str));
 					
-					
 				} catch (NumberFormatException err) {
 					if (str.equals("classique")) InstallerJeu.setVarianteDuTapis("R");
 					else if (str.equals("caree")) InstallerJeu.setVarianteDuTapis("C");
@@ -101,47 +100,46 @@ public class ControleurParametre {
 	public void controleurParametre(InstallerJeu installerJeu, JButton button) {
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ControleurParametre.fenetreParametreFrame.dispose();
+				boolean condition = (ControleurTableDuJeu.getInstallerJeu().getVarianteDuTapis() != "")
+						&& (ControleurTableDuJeu.getInstallerJeu().getNombreDeJoueurs() == 2 || ControleurTableDuJeu.getInstallerJeu().getNombreDeJoueurs() == 3)
+						&& (ControleurTableDuJeu.getInstallerJeu().activerJoueurVirValidation != 0);
 				
-				//Thread for game in CMD
-				Thread threadCMD = new Thread() {
-					public void run() {
-						System.out.println("Start " + Thread.currentThread().getName());
-						new Partie();
-					}
-				};
-				threadCMD.start();
-				
-				
-				//Thread for GUI
-				//Run this thread of "FenetreTableDuJeu" after 2 seconds to wait for "InstallerTour" is finish
-				try {
-					Thread.sleep(1800);
-					
-				} catch (InterruptedException er) {
-					System.out.println(er.toString());
-				}
-				
-				EventQueue.invokeLater(new Runnable() {
-					public void run() {
-						try {
-							FenetreTableDuJeu tableDuJeu = new FenetreTableDuJeu();
+				if (condition) {
+					if ((ControleurTableDuJeu.getInstallerJeu().getActiverJoueurVir() == true && ControleurTableDuJeu.getInstallerJeu().niveauValidation != 0)
+							|| ControleurTableDuJeu.getInstallerJeu().getActiverJoueurVir() == false) {
+						ControleurParametre.fenetreParametreFrame.dispose();
 						
-						} catch (Exception e) {
-							e.printStackTrace();
+						//Thread for game in CMD
+						Thread threadCMD = new Thread() {
+							public void run() {
+								System.out.println("Start " + Thread.currentThread().getName());
+								new Partie();
+							}
+						};
+						threadCMD.start();
+						
+						
+						//Thread for GUI
+						//Run this thread of "FenetreTableDuJeu" after 2 seconds to wait for "InstallerTour" is finish
+						try {
+							Thread.sleep(1800);
+							
+						} catch (InterruptedException er) {
+							System.out.println(er.toString());
 						}
+						
+						EventQueue.invokeLater(new Runnable() {
+							public void run() {
+								try {
+									FenetreTableDuJeu tableDuJeu = new FenetreTableDuJeu();
+								
+								} catch (Exception e) {
+									e.printStackTrace();
+								}
+							}
+						});
 					}
-				});
-				
-				
-//				try {
-//					FenetreTableDuJeu tableDuJeu = new FenetreTableDuJeu();
-//					Thread t = new Thread(tableDuJeu);
-//					t.start();
-//				
-//				} catch (Exception err) {
-//					err.printStackTrace();
-//				}
+				}
 			}
 		});
 	}

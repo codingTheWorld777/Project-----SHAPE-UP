@@ -19,16 +19,20 @@
 
 
 ## Phase 3: Jouer en GUI
-- Créer une fenêtre graphique qui permet au joueur de choisir le nombre de joueurs (2-3), activer le joueurVir (Oui or Non), choisir le niveau pour le joueurVir (dans le cas activer ce joueur), choisir le nom pour chaque joueur  -> **Louis et Huu Khai**
+- Créer une fenêtre graphique qui permet au joueur de choisir le nombre de joueurs (2-3), activer le joueurVir (Oui or Non), choisir le niveau pour le joueurVir (dans le cas activer ce joueur), choisir le nom pour chaque joueur -> **Huu Khai [OK]**
 
-- Créer une fenêtre du jeu qui compris: les joueurs par rapport le nombre de joueurs choisis (2 or 3, avec le joueurVir ou pas), une table du jeu (un tableau de 7x5), les cartes jouées avec ses images affichées -> **Louis et Huu Khai**
+- Créer une fenêtre du jeu qui comprend: les joueurs par rapport le nombre de joueurs choisis (2 or 3, avec le joueurVir ou pas), une table du jeu (un tableau de 7x5), les cartes jouées avec ses images affichées -> **Louis et Huu Khai**
 
 - Définir la classe Controleur dans le fichier Controleur qui permet de prendre et d'envoyer des données, créer d'interaction entre Modele et Vue -> **Huu Khai et Louis**
 
 # Choses à faire pour la prochaine étape:
-- Définir les méthodes dans la classe JoueurVir par rapport au niveau du joueur virtuel -> **Louis**
-- Créer une fenêtre graphique qui permet au joueur de choisir le nombre de joueurs (2-3), activer le joueurVir (Oui or Non), choisir le niveau pour le joueurVir (dans le cas activer ce joueur), choisir le nom pour chaque joueur -> **Louis et Huu Khai**
-- Créer une fenêtre du jeu qui compris: les joueurs par rapport le nombre de joueurs choisis (2 or 3, avec le joueurVir ou pas), une table du jeu (un tableau de 7x5) -> **Louis et Huu Khai**
+- Créer une fenêtre du jeu qui comprend: les joueurs par rapport le nombre de joueurs choisis (2 or 3, avec le joueurVir ou pas), une table du jeu (un tableau de 7x5), la pioche de cartes -> **Huu Khai et Louis**
+
+- Manipuler les événement de l’interface (Il faut bien choisir le component de la carte sur l’interface qui permet le joueur de la déplacer -> **Huu Khai et Louis []**
+
+- Implémenter ‘Observable et Observer' avec les Controleurs qui vont controler et mettre à jour le changement et puis repeindre l'interface du jeu -> **Louis et Huu Khai []**
+
+- Écrire la classe VueText.java qui permet de jouer au jeu sur l’interface graphique en même temps que sur la ligne de commande
 
 
 
