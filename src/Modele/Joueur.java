@@ -31,7 +31,7 @@ public abstract class Joueur extends Observable implements Observer{
 	 */
 	protected int score;
 
-	protected Coordonnees coordAPlacer = null; // coords where player wants his card to be
+	protected Coordonnees coordAPlacer; // coords where player wants his card to be
 	
 	/*
 	 * Constructor of Player
@@ -39,6 +39,7 @@ public abstract class Joueur extends Observable implements Observer{
 	public Joueur(String nom, int id) {
 		this.nom = nom;
 		this.id = id;
+		this.coordAPlacer = null;
 	}
 	
 	/*
@@ -96,8 +97,8 @@ public abstract class Joueur extends Observable implements Observer{
 	/*
 	 * Set player's coordAPlacer
 	 */
-	public void setCoordAPlacer(Coordonnees coord) {
-		this.coordAPlacer = coord;
+	public void setCoordAPlacer(int x, int y) {
+		this.coordAPlacer = new Coordonnees(x, y);
 	}
 	
 	/*

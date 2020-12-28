@@ -24,14 +24,18 @@ public class JoueurPhy extends Joueur {
 		System.out.println("Choisir l'abscisse x de carte sur la table du jeu: ");
 		Scanner src = new Scanner(System.in);
 		int x, y;
-		if (this.coordAPlacer == null) {
-			x = src.nextInt();
+		while (this.coordAPlacer == null ) {
+			try {
+				Thread.sleep(2000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		} 
-		else {
-			System.out.println(this.coordAPlacer.x);
-			x = this.coordAPlacer.x;
-		}
 		
+		x = this.coordAPlacer.x;
+		System.out.println(x);
+
 		
 		while (tour == 0 && InstallerJeu.getVarianteDuTapis() == "P") {
 			System.out.println("Choisir l'abscisse x de carte parmis 0 et 6 pour la premiere fois (Pyramide): ");
@@ -44,8 +48,8 @@ public class JoueurPhy extends Joueur {
 			y = src.nextInt();
 		} 
 		else {
-			System.out.println(this.coordAPlacer.y);
-			y = coordAPlacer.y;
+			y = this.coordAPlacer.y;
+			System.out.println(y);
 		}
 		
 		
@@ -64,6 +68,7 @@ public class JoueurPhy extends Joueur {
 			Plateau.ajouterCoordonneePossible(x, y);
 			PiocheCartes.getPiocheCartes().remove(Partie.nombreDeCartesJouables - 1);
 			Partie.nombreDeCartesJouables--;
+			this.coordAPlacer = null;
 			
 			for (int t = 0; t < Plateau.possibilites.size(); t++) {
 				System.out.print("(" + Plateau.possibilites.get(t).x + ", " + Plateau.possibilites.get(t).y + "), ");
@@ -88,6 +93,7 @@ public class JoueurPhy extends Joueur {
 				Plateau.misAJourListeCartesJouees(tableDuJeu[y][x], x, y);
 				Plateau.determinerFormeDuTapis(Plateau.cartesJouees);
 				Plateau.supprimerCoordonnee(x, y);
+				this.coordAPlacer = null;
 				
 				if (Plateau.besoinAjouter == false) {
 					Plateau.ajouterCoordonneePossible(x, y);
@@ -109,7 +115,7 @@ public class JoueurPhy extends Joueur {
 				
 			} else {
 				System.out.println("Cette position ne correspond pas");
-				
+				this.coordAPlacer = null;
 				this.piocherCarte(tableDuJeu, tour);
 			}
 		}
@@ -143,10 +149,10 @@ public class JoueurPhy extends Joueur {
 					System.out.print("(" + Plateau.positionDeDeplacer.get(k).x + ", " + Plateau.positionDeDeplacer.get(k).y + "), ");
 				}
 				
-				System.out.println("Choisir l'abscisse x de position que vous voulez déplacer carte à: ");
+				System.out.println("Choisir l'abscisse x de position que vous voulez déplacer carte � : ");
 				int x1 = src.nextInt();
 				
-				System.out.println("Choisir l'ordonnée y de position que vous voulez déplacer carte à: ");
+				System.out.println("Choisir l'ordonnée y de position que vous voulez déplacer carte � : ");
 				int y1 = src.nextInt();
 				
 				for (Coordonnees positionDeDeplacer: Plateau.positionDeDeplacer) {

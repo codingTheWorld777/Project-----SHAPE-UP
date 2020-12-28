@@ -1,10 +1,13 @@
 package Controleur;
 
+import java.awt.Color;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
-
+import javax.swing.JComponent;
 import Modele.Carte;
 import Modele.Coordonnees;
 import Modele.InstallerJeu;
@@ -13,6 +16,7 @@ import Modele.Joueur;
 import Modele.JoueurPhy;
 import Modele.Partie;
 import Modele.PiocheCartes;
+import Modele.Plateau;
 import Vue.ButtonCard;
 import Vue.FenetreTableDuJeu;
 
@@ -20,24 +24,60 @@ public class ControleurTableDuJeu {
 	private static InstallerJeu installerJeu;
 	private static InstallerTour installerTour;
 	
-	private JButton btnCarte;
+
 	
 	public void ControleurTableDuJeu(Joueur joueur, ButtonCard btnCarte) {
 		btnCarte.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("ah oui");
-				Coordonnees coord = btnCarte.getCoordonnees();
+				Coordonnees coord;
 				
 				try {
-					joueur.setCoordAPlacer(coord);
-					System.out.println("ah oui");
+					if (FenetreTableDuJeu.carteJouee.getCarteTiree()) {
+						if (Partie.tour == 0 && joueur.getEnTour() == true) {
+							coord = btnCarte.getCoordonnees();
+							joueur.setCoordAPlacer(coord.x, coord.y);
+							Image imgRecto = ControleurTableDuJeu.getCartePiochee().getCarteImageRecto();
+							imgRecto = imgRecto.getScaledInstance(btnCarte.getWidth(), btnCarte.getHeight(), Image.SCALE_DEFAULT);
+							btnCarte.setIcon(new ImageIcon(imgRecto));
+							FenetreTableDuJeu.carteJouee.setCarteTiree(false);
+						} else if (joueur.getEnTour() == true){
+							coord = btnCarte.getCoordonnees();
+							if (Plateau.isInPossibilites(coord.x, coord.y)) {
+								joueur.setCoordAPlacer(coord.x, coord.y);
+								Image imgRecto = ControleurTableDuJeu.getCartePiochee().getCarteImageRecto();
+								imgRecto = imgRecto.getScaledInstance(btnCarte.getWidth(), btnCarte.getHeight(), Image.SCALE_DEFAULT);
+								btnCarte.setIcon(new ImageIcon(imgRecto));
+								FenetreTableDuJeu.carteJouee.setCarteTiree(false);
+							} else {
+								System.out.println("réessayez");
+							}
+						
+						
+						}
+					} else {
+						System.out.println("Piochez une carte !");
+					}
 				} catch (Exception err) {
 					System.out.println(err.toString());
 				}
 			}
 		});
+	}
+	
+	public boolean checkPossibilites(ButtonCard[][] tabBtnCarte) {
+		boolean isInPossibilites = true;
+		for (int i = 0; i<tabBtnCarte.length; i++) {
+			for (int j = 0; j<tabBtnCarte[i].length; j++) {
+				if (!Plateau.isInPossibilites(tabBtnCarte[i][j].getCoordonnees().x, tabBtnCarte[i][j].getCoordonnees().y)) {
+					isInPossibilites = false;
+				}
+			}
+		}
+			
+			
+		return isInPossibilites;
 	}
 	
 

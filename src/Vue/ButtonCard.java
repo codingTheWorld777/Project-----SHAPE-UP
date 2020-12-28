@@ -23,6 +23,7 @@ public class ButtonCard extends JButton {
 	private Coordonnees coordonnees;
 	private boolean disponible = false;
 	private Image carteImage;
+	private boolean carteTiree = false;
 	
 	public ButtonCard(int x, int y) {
 		this.coordonnees = new Coordonnees(x, y);
@@ -45,6 +46,7 @@ public class ButtonCard extends JButton {
 						Image imgRecto = ControleurTableDuJeu.getCartePiochee().getCarteImageRecto();
 						imgRecto = imgRecto.getScaledInstance(piocheCarte.getWidth(), piocheCarte.getHeight(), Image.SCALE_DEFAULT);
 						setIcon(new ImageIcon(imgRecto));
+						carteTiree = true;
 					} catch (Exception err) {
 						System.out.println(err.toString());
 					}
@@ -101,4 +103,16 @@ public class ButtonCard extends JButton {
 	public void setCoordonnees(Coordonnees coordonnees) {
 		this.coordonnees = coordonnees;
 	}
+	
+	/*
+	 * Get or set boolean carteTiree
+	 */
+	public boolean getCarteTiree() {
+		return this.carteTiree;
+	}
+	
+	public void setCarteTiree(boolean b) {
+		this.carteTiree = b;
+	}
+	 
 }

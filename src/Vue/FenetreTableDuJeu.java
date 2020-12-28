@@ -34,6 +34,7 @@ public class FenetreTableDuJeu extends JFrame implements MouseListener, MouseMot
 	private static JPanel joueur1Panel, joueur2Panel,joueur3Panel;
 	private static JPanel piochesCartesPanel;
 	private static ButtonCard carteCacheeBtn;
+	public static ButtonCard carteJouee;
 	
 
 	/**
@@ -81,7 +82,9 @@ public class FenetreTableDuJeu extends JFrame implements MouseListener, MouseMot
 			for (int j = 0; j < 7; j++) {
 				ButtonCard carteBtn = new ButtonCard(j, i);
 				cartesBtn[i][j] = carteBtn;
-				controleurJeu.ControleurTableDuJeu(Partie.joueur1, carteBtn);
+				for (int k = 0; k<Partie.joueursEnJeu.length; k++) {
+					controleurJeu.ControleurTableDuJeu(Partie.joueursEnJeu[k], carteBtn);
+				}
 			}
 		}
 		
@@ -258,7 +261,7 @@ public class FenetreTableDuJeu extends JFrame implements MouseListener, MouseMot
 		}
 		
 		
-		ButtonCard carteJouee = new ButtonCard(piocheCarte);
+		carteJouee = new ButtonCard(piocheCarte);
 		carteJouee.setBounds(41, 27, 81, 100);
 		piochesCartesPanel.add(carteJouee);
 		
