@@ -6,6 +6,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Point;
+import java.awt.SystemColor;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
@@ -16,6 +17,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
+import javax.swing.border.LineBorder;
 
 import Controleur.ControleurTableDuJeu;
 import Modele.Coordonnees;
@@ -23,20 +25,24 @@ import Modele.Partie;
 
 import java.util.Observer;
 import java.util.Observable;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 
-public class FenetreTableDuJeu extends JFrame implements MouseListener, MouseMotionListener, Observer {
+public class FenetreTableDuJeu extends JFrame implements Observer {
 	/**
 	 * @author Huu Khai NGUYEN (Alec)
 	 */
 	
 	private static JPanel zoneDeCartePanel;
 	private static JPanel joueur1Panel, joueur2Panel,joueur3Panel;
+	private JButton finirMonTour1, finirMonTour2, finirMonTour3;
+	private JLabel point1, point2, point3;
 	private static JPanel piochesCartesPanel;
 	private static ButtonCard carteCacheeBtn;
 	public static ButtonCard carteJouee;
 	
-
+	private ButtonCard[][] cartesBtn;
 	/**
 	 * Create the application.
 	 */
@@ -77,18 +83,18 @@ public class FenetreTableDuJeu extends JFrame implements MouseListener, MouseMot
 		zoneDeCartePanel.setLayout(new GridLayout(5, 7, 7, 4));
 		this.getContentPane().add(zoneDeCartePanel);
 		
-		ButtonCard[][] cartesBtn = new ButtonCard[5][7];
+		cartesBtn = new ButtonCard[5][7];
 		for (int i = 0; i < 5; i++) {
 			for (int j = 0; j < 7; j++) {
 				ButtonCard carteBtn = new ButtonCard(j, i);
+				carteBtn.setBorder(new LineBorder(SystemColor.activeCaptionText, 1));
+	            
 				cartesBtn[i][j] = carteBtn;
-				for (int k = 0; k<Partie.joueursEnJeu.length; k++) {
+				for (int k = 0; k < Partie.joueursEnJeu.length; k++) {
 					controleurJeu.ControleurTableDuJeu(Partie.joueursEnJeu[k], carteBtn);
 				}
 			}
 		}
-		
-
 		
 		GridBagConstraints gridConstraints = new GridBagConstraints();
 		for (int y = 0; y < 5; y++) {
@@ -100,6 +106,7 @@ public class FenetreTableDuJeu extends JFrame implements MouseListener, MouseMot
 				zoneDeCartePanel.add(cartesBtn[y][x], gridConstraints);
 			}
 		}
+		controleurJeu.setCartesBtn(cartesBtn);
 		
 		
 		// ********Zone of player ********
@@ -115,7 +122,7 @@ public class FenetreTableDuJeu extends JFrame implements MouseListener, MouseMot
 		joueur1Label.setBounds(52, 6, 63, 21);
 		joueur1Panel.add(joueur1Label);
 		
-		JLabel point1 = new JLabel("Point: 0");
+		point1 = new JLabel("Point: 0");
 		point1.setFont(new Font("Lucida Grande", Font.PLAIN, 14));
 		point1.setBounds(12, 39, 113, 21);
 		joueur1Panel.add(point1);
@@ -133,10 +140,12 @@ public class FenetreTableDuJeu extends JFrame implements MouseListener, MouseMot
 		joueur1Panel.add(carteVictoire1);
 		
 		
-		JButton finirMonTour1 = new JButton("Finir mon tour");
+		finirMonTour1 = new JButton("Finir mon tour");
 		finirMonTour1.setFont(new Font("Lucida Grande", Font.PLAIN, 14));
 		finirMonTour1.setBounds(21, 180, 120, 34);
 		joueur1Panel.add(finirMonTour1);
+		controleurJeu.finirMonTour(finirMonTour1, Partie.joueur1);
+		
 		
 		//******** Zone of hidden card ********
 		carteCacheeBtn = new ButtonCard(controleurJeu.getCarteCachee());
@@ -172,7 +181,7 @@ public class FenetreTableDuJeu extends JFrame implements MouseListener, MouseMot
 		}
 		joueur2Panel.add(joueur2Label);
 		
-		JLabel point2 = new JLabel("Point: 0");
+		point2 = new JLabel("Point: 0");
 		point2.setFont(new Font("Lucida Grande", Font.PLAIN, 14));
 		point2.setBounds(12, 39, 113, 21);
 		joueur2Panel.add(point2);
@@ -189,11 +198,14 @@ public class FenetreTableDuJeu extends JFrame implements MouseListener, MouseMot
 			System.out.println(e.toString());
 		}
 		
-		
-		JButton finirMonTour2 = new JButton("Finir mon tour");
+		finirMonTour2 = new JButton("Finir mon tour");
 		finirMonTour2.setFont(new Font("Lucida Grande", Font.PLAIN, 14));
 		finirMonTour2.setBounds(21, 180, 120, 34);
-		joueur2Panel.add(finirMonTour2);
+		
+		if (!controleurJeu.getJoueur(1).getNom().equals("Joueur Virtuel"))
+			joueur2Panel.add(finirMonTour2);
+		
+		controleurJeu.finirMonTour(finirMonTour2, Partie.joueur2);
 		
 		
 		//******** Player 3 ********
@@ -217,7 +229,7 @@ public class FenetreTableDuJeu extends JFrame implements MouseListener, MouseMot
 				System.out.println(e.toString());
 			}
 			
-			JLabel point3 = new JLabel("Point: 0");
+			point3 = new JLabel("Point: 0");
 			point3.setFont(new Font("Lucida Grande", Font.PLAIN, 14));
 			point3.setBounds(12, 39, 113, 21);
 			joueur3Panel.add(point3);
@@ -234,12 +246,14 @@ public class FenetreTableDuJeu extends JFrame implements MouseListener, MouseMot
 				System.out.println(e.toString());
 			}
 			
-			
-			JButton finirMonTour3 = new JButton("Finir mon tour");
+			finirMonTour3 = new JButton("Finir mon tour");
 			finirMonTour3.setFont(new Font("Lucida Grande", Font.PLAIN, 14));
 			finirMonTour3.setBounds(21, 180, 120, 34);
-			joueur3Panel.add(finirMonTour3);	
 			
+			if (!controleurJeu.getJoueur(2).getNom().equals("Joueur Virtuel")) 
+				joueur3Panel.add(finirMonTour3);
+			
+			controleurJeu.finirMonTour(finirMonTour3, Partie.joueur3);
 		}
 		
 		//******** Zone of card draw ********
@@ -276,40 +290,15 @@ public class FenetreTableDuJeu extends JFrame implements MouseListener, MouseMot
 		
 		this.validate();
 	}
-
-	@Override
-	public void mouseDragged(MouseEvent e) {
-		// TODO Auto-generated method stub
+	
+	
+	//Get player's JPanel
+	public static JPanel getJoueurPanel(int i) {
+		if (i == 0) return joueur1Panel;
+		else if (i == 1) return joueur2Panel;
+		else if (i == 2) return joueur3Panel;
 		
+		return new JPanel();
 	}
-
-	@Override
-	public void mouseMoved(MouseEvent e) {
-		Point pos = this.getLocationOnScreen();
-		System.out.println(pos.x + ", " + pos.y);
-	}
-
-	@Override
-	public void mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseEntered(MouseEvent e) {}
-
-	@Override
-	public void mouseExited(MouseEvent e) {}
+	
 }

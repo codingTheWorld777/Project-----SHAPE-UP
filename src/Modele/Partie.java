@@ -62,7 +62,7 @@ public class Partie extends Observable {
 		/*
 		 * Step 3:
 		 * All player in turn of game and play their turn:
-		 * + Move a card	[]
+		 * + Move a card	[OK]
 		 * + Draw and put that card in a possible position 	[OK]
 		 */
 		joueursEnJeu[0].setEnTour(true);  //Choosing Player 1 for the first turn
@@ -75,10 +75,21 @@ public class Partie extends Observable {
 					Partie.tour++;
 				} else if (Partie.tour >= 1) {
 					//move a card: Yes/No. From turn 3 (there were already 3 card on the table)
-					if (Partie.tour >= 3) joueursEnJeu[i].deplacerCarte();
+					if (Partie.tour >= 3) 
+						joueursEnJeu[i].deplacerCarte();
 					
 					this.jouerSonTour(joueursEnJeu[i], joueursEnJeu[i].estEnTour, Partie.tour);		//draw and play a card
 					Partie.tour++;
+					
+//					if (joueursEnJeu[i].pouvoirFinirMonTour) {
+//						joueursEnJeu[i].pouvoirFinirMonTour = false;
+//						joueursEnJeu[i].aPiocheUneCarte = false;
+//						continue;
+//					}
+					
+					if (Partie.tour >= 3 && joueursEnJeu[i].coordAPlacer == null)
+						joueursEnJeu[i].deplacerCarte();
+					
 				}
 			}
 		}

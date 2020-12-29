@@ -132,6 +132,7 @@ public class ControleurParametre {
 							public void run() {
 								try {
 									FenetreTableDuJeu tableDuJeu = new FenetreTableDuJeu();
+									ControleurTableDuJeu.setFenetreTableDuJeu(tableDuJeu);
 								
 								} catch (Exception e) {
 									e.printStackTrace();

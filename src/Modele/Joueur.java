@@ -31,7 +31,16 @@ public abstract class Joueur extends Observable implements Observer{
 	 */
 	protected int score;
 
-	protected Coordonnees coordAPlacer; // coords where player wants his card to be
+	//Coords where player wants his card to be
+	protected Coordonnees coordAPlacer; 
+	
+	//Coords of card that is chosen by player to move it to new position
+	protected Coordonnees coordChoisieADeplacer;
+	protected Coordonnees coordADeplacer;
+	
+	//Check if player want to stop his turn (of course he must draw a card before)
+	public boolean pouvoirFinirMonTour = false;  
+	public boolean aPiocheUneCarte = false;
 	
 	/*
 	 * Constructor of Player
@@ -99,6 +108,21 @@ public abstract class Joueur extends Observable implements Observer{
 	 */
 	public void setCoordAPlacer(int x, int y) {
 		this.coordAPlacer = new Coordonnees(x, y);
+	}
+	
+	/*
+	 * Set and get player's coordChoisieADeplacer et coordADeplacer
+	 */
+	public void setCoordChoisieADeplacer(int x, int y) {
+		this.coordChoisieADeplacer = new Coordonnees(x, y);
+	}
+	
+	public Coordonnees getCoordChoisieADeplacer() {
+		return this.coordChoisieADeplacer;
+	}
+	
+	public void setCoordADeplacer(int x, int y) {
+		this.coordADeplacer = new Coordonnees(x, y);
 	}
 	
 	/*

@@ -52,6 +52,12 @@ public class Carte {
 	 */
 	private Coordonnees coordonnesDeCarte;
 	
+	/**
+	 * Function of variable "estSurTableDuJeu"
+	 * 	if 'estSurTableDuJeu == true": Card is now on game's table (rectangle 5x7)
+	 * 	else: Card is not on game's table (rectangle 5x7)
+	 */
+	public boolean estSurTableDuJeu;
 
 	/**
 	 * Constructor

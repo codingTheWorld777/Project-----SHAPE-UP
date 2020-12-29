@@ -560,7 +560,7 @@ public class Plateau {
 	}
 	
 	/* (11)
-	 * Check if a coordinate is in positionDeDeplacer list
+	 * Check if a coordinate is in 'positionDeDeplacer' list
 	 */
 	public static boolean isInPositionDeDeplacer(int x, int y) {
 		for (int i = 0; i < Plateau.positionDeDeplacer.size(); i++) {
@@ -571,6 +571,31 @@ public class Plateau {
 	}
 	
 	/* (12)
+	 * Check if a card is in 'cartesJouees' list
+	 */
+	public static boolean isInCartesJouees(int x, int y) {
+		for (int i = 0; i < Plateau.cartesJouees.size(); i++) {
+			if (cartesJouees.get(i).getCoordonnees().x == x && cartesJouees.get(i).getCoordonnees().y == y) 
+				return true;
+		}
+		return false;
+	}
+	
+	/* (13)
+	 * Get list of drawed cards 
+	 */
+	public static ArrayList<Carte> getListeDeCartesJouees() {
+		return Plateau.cartesJouees;
+	}
+	
+	/* (14)
+	 * Get list of positionDeDeplacer
+	 */
+	public static ArrayList<Coordonnees> getPositionDeDeplacer() {
+		return Plateau.positionDeDeplacer;
+	}
+	
+	/* (15)
 	 * Print table of game to screen
 	 */
 	public static void updateTableDuJeu() {

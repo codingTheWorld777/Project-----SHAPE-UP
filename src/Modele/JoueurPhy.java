@@ -13,7 +13,7 @@ public class JoueurPhy extends Joueur {
 	
 	public void piocherCarte(Carte[][] tableDuJeu, int tour) {
 		Plateau.determinerFormeDuTapis(Plateau.cartesJouees);
-		System.out.println("Vous avez pioch� la carte : " + PiocheCartes.getPiocheCartes().get(Partie.nombreDeCartesJouables - 1).getForme() + " " + PiocheCartes.getPiocheCartes().get(Partie.nombreDeCartesJouables - 1).getNature() + " " + PiocheCartes.getPiocheCartes().get(Partie.nombreDeCartesJouables - 1).getCouleur());
+		System.out.println("Vous avez pioché la carte : " + PiocheCartes.getPiocheCartes().get(Partie.nombreDeCartesJouables - 1).getForme() + " " + PiocheCartes.getPiocheCartes().get(Partie.nombreDeCartesJouables - 1).getNature() + " " + PiocheCartes.getPiocheCartes().get(Partie.nombreDeCartesJouables - 1).getCouleur());
 		if (tour >= 1) {
 			for (int i = 0; i < Plateau.possibilites.size(); i++) {
 				System.out.print("(" + Plateau.possibilites.get(i).x + ", " + Plateau.possibilites.get(i).y + "), ");
@@ -24,17 +24,21 @@ public class JoueurPhy extends Joueur {
 		System.out.println("Choisir l'abscisse x de carte sur la table du jeu: ");
 		Scanner src = new Scanner(System.in);
 		int x, y;
-		while (this.coordAPlacer == null ) {
+		
+		while (this.coordAPlacer == null) {
 			try {
 				Thread.sleep(2000);
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		} 
 		
-		x = this.coordAPlacer.x;
-		System.out.println(x);
+		if (this.coordAPlacer == null) {
+			x = src.nextInt();
+		} else {
+			x = this.coordAPlacer.x;
+			System.out.println(x);
+		}
 
 		
 		while (tour == 0 && InstallerJeu.getVarianteDuTapis() == "P") {
@@ -46,8 +50,7 @@ public class JoueurPhy extends Joueur {
 		System.out.println("Choisir l'ordonnée y de carte sur le table du jeu: ");
 		if (this.coordAPlacer == null) {
 			y = src.nextInt();
-		} 
-		else {
+		} else {
 			y = this.coordAPlacer.y;
 			System.out.println(y);
 		}
@@ -90,9 +93,11 @@ public class JoueurPhy extends Joueur {
 		if (tour >= 1) {
 			if (Plateau.verifierPos(x, y) && !Plateau.verifierAvecCartesJouees(x, y)) {
 				tableDuJeu[y][x] = PiocheCartes.getPiocheCartes().get(Partie.nombreDeCartesJouables - 1);
+				tableDuJeu[y][x].estSurTableDuJeu = true;
 				Plateau.misAJourListeCartesJouees(tableDuJeu[y][x], x, y);
 				Plateau.determinerFormeDuTapis(Plateau.cartesJouees);
-				Plateau.supprimerCoordonnee(x, y);
+				
+
 				this.coordAPlacer = null;
 				
 				if (Plateau.besoinAjouter == false) {
@@ -102,6 +107,7 @@ public class JoueurPhy extends Joueur {
 					Plateau.besoinAjouter = false;
 				}
 				
+				if (Plateau.isInPossibilites(x, y)) Plateau.supprimerCoordonnee(x, y);
 				Plateau.determinerFormeDuTapis(Plateau.cartesJouees);
 				PiocheCartes.getPiocheCartes().remove(Partie.nombreDeCartesJouables - 1);
 				Partie.nombreDeCartesJouables--;
@@ -112,14 +118,17 @@ public class JoueurPhy extends Joueur {
 				System.out.println();
 				
 				Plateau.updateTableDuJeu();
+				this.aPiocheUneCarte = true;
+				System.out.println("I am here!! In piocherCarte()");
+				return;
 				
 			} else {
 				System.out.println("Cette position ne correspond pas");
 				this.coordAPlacer = null;
 				this.piocherCarte(tableDuJeu, tour);
+				return;
 			}
 		}
-	
 	}
 	
 	/*
@@ -127,17 +136,42 @@ public class JoueurPhy extends Joueur {
 	 */
 	public void deplacerCarte() {
 		Plateau.determinerFormeDuTapis(Plateau.cartesJouees);
+		this.coordChoisieADeplacer = null;
+		this.coordADeplacer = null;
 		
 		System.out.println("Voulez-vous déplacer une carte?: (0/1): ");
 		Scanner src = new Scanner(System.in);
-		int deplacer = src.nextInt();
 		
+		if (this.coordAPlacer != null) return;
+	
+		while (this.coordChoisieADeplacer == null) {
+			try {
+				Thread.sleep(2000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		} 
+		
+		int deplacer ;
+		if (this.coordChoisieADeplacer != null) {
+			deplacer = 1;
+		} else deplacer = src.nextInt();
+		
+		int x, y;
 		if (deplacer == 1) {
 			System.out.println("Choisir l'abscisse x de carte que vous voulez déplacer: ");
-			int x = src.nextInt();
+			
+			if (this.coordChoisieADeplacer != null) {
+				x = this.coordChoisieADeplacer.x;
+				System.out.println(x);
+			} else x = src.nextInt();
 			
 			System.out.println("Choisir l'ordonnée y de carte que vous voulez déplacer: ");
-			int y = src.nextInt();
+			if (this.coordChoisieADeplacer != null) {
+				y = this.coordChoisieADeplacer.y;
+				System.out.println(y);
+			} else y = src.nextInt();
+			
 			boolean check = Plateau.estDeplacable(x, y);
 			System.out.println(check);
 			System.out.println("BesoinAjouter = " + Plateau.besoinAjouter);
@@ -149,11 +183,23 @@ public class JoueurPhy extends Joueur {
 					System.out.print("(" + Plateau.positionDeDeplacer.get(k).x + ", " + Plateau.positionDeDeplacer.get(k).y + "), ");
 				}
 				
-				System.out.println("Choisir l'abscisse x de position que vous voulez déplacer carte � : ");
-				int x1 = src.nextInt();
+				int x1, y1; 
+				System.out.println("Choisir l'abscisse x de position que vous voulez déplacer carte à : ");
 				
-				System.out.println("Choisir l'ordonnée y de position que vous voulez déplacer carte � : ");
-				int y1 = src.nextInt();
+				while (this.coordADeplacer == null) {
+					try {
+						Thread.sleep(2000);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+				
+				if (this.coordADeplacer != null) x1 = this.coordADeplacer.x; 
+				else x1 = src.nextInt();
+				
+				System.out.println("Choisir l'ordonnée y de position que vous voulez déplacer carte à : ");
+				if (this.coordADeplacer != null) y1 = this.coordADeplacer.y;
+				else y1 = src.nextInt();
 				
 				for (Coordonnees positionDeDeplacer: Plateau.positionDeDeplacer) {
 					if (positionDeDeplacer.x == x1 && positionDeDeplacer.y == y1) {
@@ -202,6 +248,8 @@ public class JoueurPhy extends Joueur {
 						
 						Plateau.determinerFormeDuTapis(Plateau.cartesJouees);
 						Plateau.positionDeDeplacer.clear();
+						this.coordChoisieADeplacer = null;
+						this.coordADeplacer = null;
 						
 						//This loop can be deleted
 						for (int t = 0; t < Plateau.possibilites.size(); t++) {
@@ -219,10 +267,12 @@ public class JoueurPhy extends Joueur {
 				deplacerCarte();
 				return;
 				
-			} else {
-				System.out.println("Cette position ne correspond pas. Choissiez encore une fois!");
-				deplacerCarte();
 			}
+//			else {
+//				System.out.println("Cette position ne correspond pas. Choissiez encore une fois!");
+//				deplacerCarte();
+//				return;
+//			}
 		}
 //		Plateau.positionDeDeplacer.clear();
 	}
