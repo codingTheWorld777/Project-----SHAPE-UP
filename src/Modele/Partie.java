@@ -33,6 +33,7 @@ public class Partie extends Observable {
 	 * Turn
 	 */
 	public static int tour = 0;
+	public static int tourDeJoueur = 1;
 	
 	/*
 	 * Board of game
@@ -69,6 +70,11 @@ public class Partie extends Observable {
 		joueursEnJeu[0].setEnTour(true);  //Choosing Player 1 for the first turn
 		while (Partie.nombreDeCartesJouables > 0) {    
 			for (int i = 0; i < InstallerJeu.getNombreDeJoueurs() && Partie.nombreDeCartesJouables > 0; i++) {
+				for (int k = 0; k < InstallerJeu.getNombreDeJoueurs(); k++) {
+					if (Partie.joueursEnJeu[k].getEnTour() == true) Partie.tourDeJoueur = Partie.joueursEnJeu[k].getId();
+					System.out.println("Tour de joueur "+ Partie.tourDeJoueur);
+				}
+				
 				System.out.println("Joueur " + joueursEnJeu[i].id);
 				if (Partie.tour == 0) {
 					Partie.jouerSonTour(joueursEnJeu[i], joueursEnJeu[i].estEnTour, Partie.tour);		//draw and play a card

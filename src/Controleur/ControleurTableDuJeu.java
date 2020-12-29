@@ -196,35 +196,37 @@ public class ControleurTableDuJeu {
 		finirMonTourBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (joueur.aPiocheUneCarte == true) {
-					joueur.pouvoirFinirMonTour = true;
-				} 
+				if (joueur.getId() == Partie.tourDeJoueur) {
+					if (joueur.aPiocheUneCarte == true) {
+						joueur.pouvoirFinirMonTour = true;
+					} 
 
-				/* 1) Change color of player in turn to green and the others to pink
-				 * 2) Count scores of each player after 1 turn and show its in screen
-				 */
-				Compteur compteurPoint = new Compteur();
-				compteurPoint.compter(Partie.getTableDuJeu());
-				
-				for (int i = 0; i < Partie.joueursEnJeu.length; i++) {
-					//1)
-					if (Partie.joueursEnJeu[i].getEnTour()) FenetreTableDuJeu.getJoueurPanel(i + 1).setBackground(color);
-					else FenetreTableDuJeu.getJoueurPanel(i + 1).setBackground(UIManager.getColor("Button.select"));
+					/* 1) Change color of player in turn to green and the others to pink
+					 * 2) Count scores of each player after 1 turn and show its in screen
+					 */
+					Compteur compteurPoint = new Compteur();
+					compteurPoint.compter(Partie.getTableDuJeu());
 					
-					//2)
-					if (i == 0) 
-						FenetreTableDuJeu.point1.setText("Point: " + compteurPoint.getPointsJoueurs(Partie.joueursEnJeu[i].getId()));
-					
-					if (i == 1) 
-						FenetreTableDuJeu.point2.setText("Point: " + compteurPoint.getPointsJoueurs(Partie.joueursEnJeu[i].getId()));
-					
-					if (Partie.joueursEnJeu.length == 3 && i == 2) 
-						FenetreTableDuJeu.point3.setText("Point: " + compteurPoint.getPointsJoueurs(Partie.joueursEnJeu[i].getId()));
+					for (int i = 0; i < Partie.joueursEnJeu.length; i++) {
+						//1)
+						if (Partie.joueursEnJeu[i].getEnTour()) FenetreTableDuJeu.getJoueurPanel(i + 1).setBackground(color);
+						else FenetreTableDuJeu.getJoueurPanel(i + 1).setBackground(UIManager.getColor("Button.select"));
+						
+						//2)
+						if (i == 0) 
+							FenetreTableDuJeu.point1.setText("Point: " + compteurPoint.getPointsJoueurs(Partie.joueursEnJeu[i].getId()));
+						
+						if (i == 1) 
+							FenetreTableDuJeu.point2.setText("Point: " + compteurPoint.getPointsJoueurs(Partie.joueursEnJeu[i].getId()));
+						
+						if (Partie.joueursEnJeu.length == 3 && i == 2) 
+							FenetreTableDuJeu.point3.setText("Point: " + compteurPoint.getPointsJoueurs(Partie.joueursEnJeu[i].getId()));
 
+					}
+
+					pouvoirPiocher = true;				
 				}
-
-				pouvoirPiocher = true;				
-			}
+				}
 		});
 
 	}
