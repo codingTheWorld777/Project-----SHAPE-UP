@@ -132,5 +132,10 @@ public abstract class Joueur extends Observable implements Observer{
 		return this.estEnTour;
 	}
 	
-	
+	/*
+	 * Get player's id
+	 */
+	public int getId() {
+		return this.id;
+	}
 }

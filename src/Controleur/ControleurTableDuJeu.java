@@ -11,6 +11,7 @@ import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.UIManager;
 import javax.swing.border.LineBorder;
 
 import Modele.Carte;
@@ -27,12 +28,14 @@ import Vue.FenetreTableDuJeu;
 public class ControleurTableDuJeu {
 	private static FenetreTableDuJeu tableDuJeu;
 	
-	private static InstallerJeu installerJeu;
-	private static InstallerTour installerTour;
+	protected static InstallerJeu installerJeu;
+	protected static InstallerTour installerTour;
 	
 	private ButtonCard[][] cartesBtn;
 	private int x, y;
 	
+	protected static boolean pouvoirPiocher = true;
+	private static Color color = new Color(107, 142, 35);
 	/**
 	 * Constructor
 	 * @param joueur
@@ -48,7 +51,7 @@ public class ControleurTableDuJeu {
 				 * Click the button in 'piocheCarte' zone to draw a card
 				 */
 				try {
-					if (FenetreTableDuJeu.carteJouee.getCarteTiree()) {
+					if (FenetreTableDuJeu.carteJouee.getCarteTiree() && pouvoirPiocher) {
 						if (Partie.tour == 0 && joueur.getEnTour() == true) {
 							coord = btnCarte.getCoordonnees();
 							joueur.setCoordAPlacer(coord.x, coord.y);
@@ -59,6 +62,7 @@ public class ControleurTableDuJeu {
 							
 							FenetreTableDuJeu.carteJouee.setCarteTiree(false);
 							ControleurTableDuJeu.getCartePiochee().estSurTableDuJeu = true;
+							pouvoirPiocher = false;
 							
 						} else if (joueur.getEnTour() == true) {
 							coord = btnCarte.getCoordonnees();
@@ -72,6 +76,7 @@ public class ControleurTableDuJeu {
 								
 								FenetreTableDuJeu.carteJouee.setCarteTiree(false);
 								ControleurTableDuJeu.getCartePiochee().estSurTableDuJeu = true;
+								pouvoirPiocher = false;
 								
 							} else System.out.println("réessayez");						
 						}
@@ -97,7 +102,6 @@ public class ControleurTableDuJeu {
 				//1)
 				try {
 					if (Plateau.isInCartesJouees(btnCarte.getCoordonnees().x, btnCarte.getCoordonnees().y) && joueur.getCoordChoisieADeplacer() == null) {
-						System.out.println("Haizz");
 						boolean check = false;
 						
 						for (int i = 0; i < Plateau.getListeDeCartesJouees().size(); i++) {
@@ -129,6 +133,7 @@ public class ControleurTableDuJeu {
 				//2)
 				try {
 					if (Plateau.isInPositionDeDeplacer(btnCarte.getCoordonnees().x, btnCarte.getCoordonnees().y) && joueur.getCoordChoisieADeplacer() != null) {
+						System.out.println("fuck here");
 						int x1 = btnCarte.getCoordonnees().x;
 						int y1 = btnCarte.getCoordonnees().y;
 						joueur.setCoordADeplacer(x1, y1);
@@ -145,6 +150,7 @@ public class ControleurTableDuJeu {
 								imgRecto = imgRecto.getScaledInstance(btnCarte.getWidth(), btnCarte.getHeight(), Image.SCALE_DEFAULT);
 								
 								cartesBtn[y1][x1].setIcon(new ImageIcon(imgRecto));
+								cartesBtn[y1][x1].setBorder(new LineBorder(SystemColor.activeCaptionText, 1));
 								cartesBtn[y][x].setIcon(null);
 								cartesBtn[y][x].setBorder(new LineBorder(SystemColor.activeCaptionText, 1));
 								
@@ -163,7 +169,7 @@ public class ControleurTableDuJeu {
 								
 						}
 						
-					} else System.out.println("Choisissez une encore une fois!!");
+					}
 				} catch (Exception err){
 					System.out.println(err.toString());
 				}
@@ -171,6 +177,31 @@ public class ControleurTableDuJeu {
 			}
 			
 		});
+	}
+	
+	
+	/**
+	 * Finish a round of player
+	 * Activate the next player
+	 * @param finirMonTour
+	 */
+	public static void finirMonTour(JButton finirMonTourBtn, Joueur joueur, int id) {
+		boolean finirMonTour = false;
+		finirMonTourBtn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (joueur.aPiocheUneCarte == true) {
+					joueur.pouvoirFinirMonTour = true;
+				} 
+
+				for (int i = 0; i < Partie.joueursEnJeu.length; i++) {
+					if (Partie.joueursEnJeu[i].getEnTour()) FenetreTableDuJeu.getJoueurPanel(i + 1).setBackground(color);
+					else FenetreTableDuJeu.getJoueurPanel(i + 1).setBackground(UIManager.getColor("Button.select"));
+				}
+				pouvoirPiocher = true;
+			}
+		});
+
 	}
 	
 	
@@ -187,24 +218,6 @@ public class ControleurTableDuJeu {
 		return isInPossibilites;
 	}
 	
-
-	/**
-	 * Finish a round of player
-	 * Activate the next player
-	 * @param finirMonTour
-	 */
-	public static void finirMonTour(JButton finirMonTourBtn, Joueur joueur) {
-		boolean finirMonTour = false;
-		finirMonTourBtn.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (joueur.aPiocheUneCarte == true) {
-					joueur.pouvoirFinirMonTour = true;
-				} 
-			}
-		});
-
-	}
 
 	/**
 	 * Set and get game's table for controler
@@ -271,7 +284,7 @@ public class ControleurTableDuJeu {
 	}
 	
 	/*
-	 * Set and get installerTour variable fron class Partie in package,Modele when it is created
+	 * Set and get installerTour variable from class Partie in package,Modele when it is created
 	 */
 	public static void setInstallerTour(InstallerTour installerTour) {
 		ControleurTableDuJeu.installerTour = installerTour;
@@ -281,5 +294,4 @@ public class ControleurTableDuJeu {
 		return ControleurTableDuJeu.installerTour;
 	}
 	
-
 }

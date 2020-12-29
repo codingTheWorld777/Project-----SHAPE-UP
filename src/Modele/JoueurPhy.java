@@ -72,6 +72,7 @@ public class JoueurPhy extends Joueur {
 			PiocheCartes.getPiocheCartes().remove(Partie.nombreDeCartesJouables - 1);
 			Partie.nombreDeCartesJouables--;
 			this.coordAPlacer = null;
+			this.aPiocheUneCarte = true;
 			
 			for (int t = 0; t < Plateau.possibilites.size(); t++) {
 				System.out.print("(" + Plateau.possibilites.get(t).x + ", " + Plateau.possibilites.get(t).y + "), ");
@@ -119,7 +120,6 @@ public class JoueurPhy extends Joueur {
 				
 				Plateau.updateTableDuJeu();
 				this.aPiocheUneCarte = true;
-				System.out.println("I am here!! In piocherCarte()");
 				return;
 				
 			} else {
@@ -182,9 +182,10 @@ public class JoueurPhy extends Joueur {
 				for (int k = 0; k < Plateau.positionDeDeplacer.size(); k++) {
 					System.out.print("(" + Plateau.positionDeDeplacer.get(k).x + ", " + Plateau.positionDeDeplacer.get(k).y + "), ");
 				}
+				System.out.println();
 				
 				int x1, y1; 
-				System.out.println("Choisir l'abscisse x de position que vous voulez déplacer carte à : ");
+				System.out.print("Choisir l'abscisse x de position que vous voulez déplacer carte à: ");
 				
 				while (this.coordADeplacer == null) {
 					try {
@@ -194,11 +195,17 @@ public class JoueurPhy extends Joueur {
 					}
 				}
 				
-				if (this.coordADeplacer != null) x1 = this.coordADeplacer.x; 
+				if (this.coordADeplacer != null) {
+					x1 = this.coordADeplacer.x; 
+					System.out.println(x1);
+				}
 				else x1 = src.nextInt();
 				
-				System.out.println("Choisir l'ordonnée y de position que vous voulez déplacer carte à : ");
-				if (this.coordADeplacer != null) y1 = this.coordADeplacer.y;
+				System.out.print("Choisir l'ordonnée y de position que vous voulez déplacer carte à: ");
+				if (this.coordADeplacer != null) {
+					y1 = this.coordADeplacer.y;
+					System.out.println(y1);
+				}
 				else y1 = src.nextInt();
 				
 				for (Coordonnees positionDeDeplacer: Plateau.positionDeDeplacer) {
@@ -266,7 +273,6 @@ public class JoueurPhy extends Joueur {
 				Plateau.positionDeDeplacer.clear();
 				deplacerCarte();
 				return;
-				
 			}
 //			else {
 //				System.out.println("Cette position ne correspond pas. Choissiez encore une fois!");

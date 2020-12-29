@@ -123,16 +123,16 @@ public class ControleurParametre {
 						//Run this thread of "FenetreTableDuJeu" after 2 seconds to wait for "InstallerTour" is finish
 						try {
 							Thread.sleep(1800);
-							
 						} catch (InterruptedException er) {
 							System.out.println(er.toString());
 						}
 						
 						EventQueue.invokeLater(new Runnable() {
 							public void run() {
-								try {
+								try {								
 									FenetreTableDuJeu tableDuJeu = new FenetreTableDuJeu();
-									ControleurTableDuJeu.setFenetreTableDuJeu(tableDuJeu);
+									ControleurTableDuJeu controleurJeu = new ControleurTableDuJeu();
+									controleurJeu.setFenetreTableDuJeu(tableDuJeu);
 								
 								} catch (Exception e) {
 									e.printStackTrace();

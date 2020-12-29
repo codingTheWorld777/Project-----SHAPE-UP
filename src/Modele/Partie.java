@@ -10,6 +10,7 @@ public class Partie extends Observable {
 	 * @author Huu Khai NGUYEN (Alec)
 	 */
 	
+		
 	/*
 	 * Player of game (from 2-3 players)
 	 */
@@ -66,31 +67,51 @@ public class Partie extends Observable {
 		 * + Draw and put that card in a possible position 	[OK]
 		 */
 		joueursEnJeu[0].setEnTour(true);  //Choosing Player 1 for the first turn
-		while (Partie.nombreDeCartesJouables > 0) {    //15 just for this case: 2 players and no virtual player, 
-
+		while (Partie.nombreDeCartesJouables > 0) {    
 			for (int i = 0; i < InstallerJeu.getNombreDeJoueurs() && Partie.nombreDeCartesJouables > 0; i++) {
 				System.out.println("Joueur " + joueursEnJeu[i].id);
 				if (Partie.tour == 0) {
-					this.jouerSonTour(joueursEnJeu[i], joueursEnJeu[i].estEnTour, Partie.tour);
+					Partie.jouerSonTour(joueursEnJeu[i], joueursEnJeu[i].estEnTour, Partie.tour);		//draw and play a card
 					Partie.tour++;
+					
+					while (joueursEnJeu[i].pouvoirFinirMonTour == false) {
+						try {
+							Thread.sleep(2000);
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
+					} 
+					
+					joueursEnJeu[i].aPiocheUneCarte = false;
+					joueursEnJeu[i].pouvoirFinirMonTour = false;
+					
 				} else if (Partie.tour >= 1) {
-					//move a card: Yes/No. From turn 3 (there were already 3 card on the table)
-					if (Partie.tour >= 3) 
-						joueursEnJeu[i].deplacerCarte();
+					if (joueursEnJeu[i].coordChoisieADeplacer != null) {
+						//Move a card: Yes/No. From turn 3 (there were already 3 card on the table and check...)
+						if (Partie.tour >= 3 && Plateau.nePasDeplacer() == false) 
+							joueursEnJeu[i].deplacerCarte();
+						
+						Partie.jouerSonTour(joueursEnJeu[i], joueursEnJeu[i].estEnTour, Partie.tour);		//draw and play a card
+						Partie.tour++;
+						
+					} else {
+						Partie.jouerSonTour(joueursEnJeu[i], joueursEnJeu[i].estEnTour, Partie.tour);		//draw and play a card
+						Partie.tour++;
+					}
+
+					while (joueursEnJeu[i].pouvoirFinirMonTour == false) {
+						try {
+							Thread.sleep(2000);
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
+					} 
 					
-					this.jouerSonTour(joueursEnJeu[i], joueursEnJeu[i].estEnTour, Partie.tour);		//draw and play a card
-					Partie.tour++;
-					
-//					if (joueursEnJeu[i].pouvoirFinirMonTour) {
-//						joueursEnJeu[i].pouvoirFinirMonTour = false;
-//						joueursEnJeu[i].aPiocheUneCarte = false;
-//						continue;
-//					}
-					
-					if (Partie.tour >= 3 && joueursEnJeu[i].coordAPlacer == null)
-						joueursEnJeu[i].deplacerCarte();
+					joueursEnJeu[i].aPiocheUneCarte = false;
+					joueursEnJeu[i].pouvoirFinirMonTour = false;
 					
 				}
+				System.out.println("Carte restant: " + Partie.nombreDeCartesJouables);
 			}
 		}
 		
@@ -114,16 +135,16 @@ public class Partie extends Observable {
 	 * 	+ Move a card
 	 * 	+ Draw ad put that card in a possible position
 	 */
-	public void jouerSonTour(Joueur joueur, boolean estEnTour, int tour) {
+	public static void jouerSonTour(Joueur joueur, boolean estEnTour, int tour) {
 		if (estEnTour) {
 			if (InstallerJeu.getNombreDeJoueurs() == 2) {
 				if (joueur.id == 1) {
-					joueur.piocherCarte(this.tableDuJeu, tour);
+					joueur.piocherCarte(Partie.tableDuJeu, tour);
 					
 					joueur.setEnTour(false);
 					joueursEnJeu[joueur.id].setEnTour(true);
 				} else if (joueur.id == 2) {
-					joueur.piocherCarte(this.tableDuJeu, tour);
+					joueur.piocherCarte(Partie.tableDuJeu, tour);
 					
 					joueur.setEnTour(false);
 					joueursEnJeu[0].setEnTour(true);
@@ -131,19 +152,19 @@ public class Partie extends Observable {
 
 			} else if (InstallerJeu.getNombreDeJoueurs() == 3) {
 				if (joueur.id == 1) {
-					joueur.piocherCarte(this.tableDuJeu, tour);
+					joueur.piocherCarte(Partie.tableDuJeu, tour);
 					
 					joueur.setEnTour(false);
 					joueursEnJeu[1].setEnTour(true);
 					
 				} else if (joueur.id == 2) {
-					joueur.piocherCarte(this.tableDuJeu, tour);
+					joueur.piocherCarte(Partie.tableDuJeu, tour);
 					
 					joueur.setEnTour(false);
 					joueursEnJeu[2].setEnTour(true);
 					
 				} else if (joueur.id == 3) {
-					joueur.piocherCarte(this.tableDuJeu, tour);
+					joueur.piocherCarte(Partie.tableDuJeu, tour);
 					
 					joueur.setEnTour(false);
 					joueursEnJeu[0].setEnTour(true);

@@ -513,8 +513,21 @@ public class Plateau {
 		return estDeplacable;
 	}
 	
-	
 	/* (7)
+	 * Check the game's table if it has at least 1 position that is moveable
+	 */
+	public static boolean nePasDeplacer() {
+		for (int y = Plateau.yMinDuTapis; y <= Plateau.yMaxDuTapis; y++) {
+			for (int x = Plateau.xMinDuTapis; x <= Plateau.xMaxDuTapis; x++) {
+				if (Plateau.estDeplacable(x, y)) return false;
+			}
+		}
+		
+		return true;
+	}
+	
+	
+	/* (8)
 	 * Update list of cards played 
 	 */
 	public static void misAJourListeCartesJouees(Carte carte, int x, int y) {
@@ -523,7 +536,7 @@ public class Plateau {
 	}
 	
 	
-	/* (8)
+	/* (9)
 	 * Update list of possible positions for drawing a card to a position
 	 * -> (this method is used after moving (déplacer) a card in order to eliminate some possible position
 	 * 	that is related to this card's position)
@@ -536,7 +549,7 @@ public class Plateau {
 		
 	}
 	
-	/* (9)
+	/* (10)
 	 * Reload list of cards played
 	 */
 	public static void reloadListePossibilites() {
@@ -548,7 +561,7 @@ public class Plateau {
 		Plateau.determinerFormeDuTapis(cartesJouees);
 	}
 	
-	/* (10)
+	/* (11)
 	 * Check if a coordinate is in possibilites list
 	 */
 	public static boolean isInPossibilites(int x, int y) {
@@ -559,7 +572,7 @@ public class Plateau {
 		return false;
 	}
 	
-	/* (11)
+	/* (12)
 	 * Check if a coordinate is in 'positionDeDeplacer' list
 	 */
 	public static boolean isInPositionDeDeplacer(int x, int y) {
@@ -570,7 +583,7 @@ public class Plateau {
 		return false;
 	}
 	
-	/* (12)
+	/* (13)
 	 * Check if a card is in 'cartesJouees' list
 	 */
 	public static boolean isInCartesJouees(int x, int y) {
@@ -581,21 +594,22 @@ public class Plateau {
 		return false;
 	}
 	
-	/* (13)
+	/* (14)
 	 * Get list of drawed cards 
 	 */
 	public static ArrayList<Carte> getListeDeCartesJouees() {
 		return Plateau.cartesJouees;
 	}
 	
-	/* (14)
-	 * Get list of positionDeDeplacer
+	/* (15)
+	 * get list of 'possibilites'
 	 */
 	public static ArrayList<Coordonnees> getPositionDeDeplacer() {
 		return Plateau.positionDeDeplacer;
 	}
 	
-	/* (15)
+	
+	/* (16)
 	 * Print table of game to screen
 	 */
 	public static void updateTableDuJeu() {

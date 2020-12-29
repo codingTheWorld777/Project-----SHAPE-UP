@@ -112,7 +112,7 @@ public class FenetreTableDuJeu extends JFrame implements Observer {
 		// ********Zone of player ********
 		//******** Player 1 ********
 		joueur1Panel = new JPanel();
-		joueur1Panel.setBackground(UIManager.getColor("Button.select"));
+		joueur1Panel.setBackground(new Color(107, 142, 35));
 		joueur1Panel.setBounds(50, 38, 164, 229);
 		joueur1Panel.setLayout(null);
 		this.getContentPane().add(joueur1Panel);
@@ -144,7 +144,7 @@ public class FenetreTableDuJeu extends JFrame implements Observer {
 		finirMonTour1.setFont(new Font("Lucida Grande", Font.PLAIN, 14));
 		finirMonTour1.setBounds(21, 180, 120, 34);
 		joueur1Panel.add(finirMonTour1);
-		controleurJeu.finirMonTour(finirMonTour1, Partie.joueur1);
+		controleurJeu.finirMonTour(finirMonTour1, Partie.joueur1, 1);
 		
 		
 		//******** Zone of hidden card ********
@@ -205,7 +205,7 @@ public class FenetreTableDuJeu extends JFrame implements Observer {
 		if (!controleurJeu.getJoueur(1).getNom().equals("Joueur Virtuel"))
 			joueur2Panel.add(finirMonTour2);
 		
-		controleurJeu.finirMonTour(finirMonTour2, Partie.joueur2);
+		controleurJeu.finirMonTour(finirMonTour2, Partie.joueur2, 2);
 		
 		
 		//******** Player 3 ********
@@ -253,7 +253,7 @@ public class FenetreTableDuJeu extends JFrame implements Observer {
 			if (!controleurJeu.getJoueur(2).getNom().equals("Joueur Virtuel")) 
 				joueur3Panel.add(finirMonTour3);
 			
-			controleurJeu.finirMonTour(finirMonTour3, Partie.joueur3);
+			controleurJeu.finirMonTour(finirMonTour3, Partie.joueur3, 3);
 		}
 		
 		//******** Zone of card draw ********
@@ -293,10 +293,10 @@ public class FenetreTableDuJeu extends JFrame implements Observer {
 	
 	
 	//Get player's JPanel
-	public static JPanel getJoueurPanel(int i) {
-		if (i == 0) return joueur1Panel;
-		else if (i == 1) return joueur2Panel;
-		else if (i == 2) return joueur3Panel;
+	public static JPanel getJoueurPanel(int id) {
+		if (id == 1) return joueur1Panel;
+		else if (id == 2) return joueur2Panel;
+		else if (id == 3) return joueur3Panel;
 		
 		return new JPanel();
 	}
