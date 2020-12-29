@@ -15,6 +15,7 @@ import javax.swing.UIManager;
 import javax.swing.border.LineBorder;
 
 import Modele.Carte;
+import Modele.Compteur;
 import Modele.Coordonnees;
 import Modele.InstallerJeu;
 import Modele.InstallerTour;
@@ -26,6 +27,10 @@ import Vue.ButtonCard;
 import Vue.FenetreTableDuJeu;
 
 public class ControleurTableDuJeu {
+	/**
+	 * @author Huu Khai NGUYEN (Alec), Pierre-Louis DAMBRAINE
+	 */
+	
 	private static FenetreTableDuJeu tableDuJeu;
 	
 	protected static InstallerJeu installerJeu;
@@ -81,6 +86,7 @@ public class ControleurTableDuJeu {
 							} else System.out.println("réessayez");						
 						}
 						
+//						Partie.jouerSonTour(joueur, joueur.getEnTour(), Partie.tour);
 					}
 					
 				} catch (Exception err) {
@@ -101,9 +107,10 @@ public class ControleurTableDuJeu {
 				
 				//1)
 				try {
-					if (Plateau.isInCartesJouees(btnCarte.getCoordonnees().x, btnCarte.getCoordonnees().y) && joueur.getCoordChoisieADeplacer() == null) {
-						boolean check = false;
+					if (Plateau.isInCartesJouees(btnCarte.getCoordonnees().x, btnCarte.getCoordonnees().y) 
+						&& (Plateau.nePasDeplacer() == false) && (joueur.getCoordChoisieADeplacer() == null)) {
 						
+						boolean check = false;
 						for (int i = 0; i < Plateau.getListeDeCartesJouees().size(); i++) {
 							if (Plateau.getListeDeCartesJouees().get(i).getCoordonnees().x == btnCarte.getCoordonnees().x
 								&& Plateau.getListeDeCartesJouees().get(i).getCoordonnees().y == btnCarte.getCoordonnees().y) {
@@ -133,7 +140,6 @@ public class ControleurTableDuJeu {
 				//2)
 				try {
 					if (Plateau.isInPositionDeDeplacer(btnCarte.getCoordonnees().x, btnCarte.getCoordonnees().y) && joueur.getCoordChoisieADeplacer() != null) {
-						System.out.println("fuck here");
 						int x1 = btnCarte.getCoordonnees().x;
 						int y1 = btnCarte.getCoordonnees().y;
 						joueur.setCoordADeplacer(x1, y1);
@@ -194,11 +200,30 @@ public class ControleurTableDuJeu {
 					joueur.pouvoirFinirMonTour = true;
 				} 
 
+				/* 1) Change color of player in turn to green and the others to pink
+				 * 2) Count scores of each player after 1 turn and show its in screen
+				 */
+				Compteur compteurPoint = new Compteur();
+				compteurPoint.compter(Partie.getTableDuJeu());
+				
 				for (int i = 0; i < Partie.joueursEnJeu.length; i++) {
+					//1)
 					if (Partie.joueursEnJeu[i].getEnTour()) FenetreTableDuJeu.getJoueurPanel(i + 1).setBackground(color);
 					else FenetreTableDuJeu.getJoueurPanel(i + 1).setBackground(UIManager.getColor("Button.select"));
+					
+					//2)
+					if (i == 0) 
+						FenetreTableDuJeu.point1.setText("Point: " + compteurPoint.getPointsJoueurs(Partie.joueursEnJeu[i].getId()));
+					
+					if (i == 1) 
+						FenetreTableDuJeu.point2.setText("Point: " + compteurPoint.getPointsJoueurs(Partie.joueursEnJeu[i].getId()));
+					
+					if (Partie.joueursEnJeu.length == 3 && i == 2) 
+						FenetreTableDuJeu.point3.setText("Point: " + compteurPoint.getPointsJoueurs(Partie.joueursEnJeu[i].getId()));
+
 				}
-				pouvoirPiocher = true;
+
+				pouvoirPiocher = true;				
 			}
 		});
 

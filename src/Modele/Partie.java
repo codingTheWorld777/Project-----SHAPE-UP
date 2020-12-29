@@ -122,7 +122,8 @@ public class Partie extends Observable {
 		System.out.println("\n \n");
 		this.imprimerResult();
 		
-		Compteur compteurPoint = new Compteur(Partie.getTableDuJeu());
+		Compteur compteurPoint = new Compteur();
+		compteurPoint.compter(tableDuJeu);
 		
 		for (int i = 0; i < Partie.joueursEnJeu.length; i++) {
 			System.out.print(Partie.joueursEnJeu[i].nom 

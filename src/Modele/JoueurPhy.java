@@ -139,10 +139,8 @@ public class JoueurPhy extends Joueur {
 		this.coordChoisieADeplacer = null;
 		this.coordADeplacer = null;
 		
-		System.out.println("Voulez-vous déplacer une carte?: (0/1): ");
+		System.out.print("Voulez-vous déplacer une carte?: (0/1): ");
 		Scanner src = new Scanner(System.in);
-		
-		if (this.coordAPlacer != null) return;
 	
 		while (this.coordChoisieADeplacer == null) {
 			try {
@@ -155,6 +153,7 @@ public class JoueurPhy extends Joueur {
 		int deplacer ;
 		if (this.coordChoisieADeplacer != null) {
 			deplacer = 1;
+			System.out.println(deplacer);
 		} else deplacer = src.nextInt();
 		
 		int x, y;
@@ -173,7 +172,7 @@ public class JoueurPhy extends Joueur {
 			} else y = src.nextInt();
 			
 			boolean check = Plateau.estDeplacable(x, y);
-			System.out.println(check);
+			System.out.println("La carte sur cette position est deplacable? " + check);
 			System.out.println("BesoinAjouter = " + Plateau.besoinAjouter);
 			
 			if (check) {
@@ -198,15 +197,16 @@ public class JoueurPhy extends Joueur {
 				if (this.coordADeplacer != null) {
 					x1 = this.coordADeplacer.x; 
 					System.out.println(x1);
-				}
-				else x1 = src.nextInt();
+					
+				} else x1 = src.nextInt();
 				
 				System.out.print("Choisir l'ordonnée y de position que vous voulez déplacer carte à: ");
 				if (this.coordADeplacer != null) {
 					y1 = this.coordADeplacer.y;
 					System.out.println(y1);
-				}
-				else y1 = src.nextInt();
+					
+				} else y1 = src.nextInt();
+				
 				
 				for (Coordonnees positionDeDeplacer: Plateau.positionDeDeplacer) {
 					if (positionDeDeplacer.x == x1 && positionDeDeplacer.y == y1) {

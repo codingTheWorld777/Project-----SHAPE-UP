@@ -51,15 +51,16 @@ public class JoueurVir extends Joueur implements Strategie {
 				int x = Plateau.possibilites.get(i).x;
 				int y = Plateau.possibilites.get(i).y;
 				tableVir[y][x] = PiocheCartes.getPiocheCartes().get(Partie.nombreDeCartesJouables - 1);
-				Compteur compteur = new Compteur(tableVir);
+				Compteur compteurPoint = new Compteur();
+				compteurPoint.compter(tableVir);
 				
 				if (i == 0) {
-					point = compteur.getPointsJoueurs(this.id);
+					point = compteurPoint.getPointsJoueurs(this.id);
 					X = x;
 					Y = y;
 				} else {
-					if (compteur.getPointsJoueurs(this.id) > point) {
-						point = compteur.getPointsJoueurs(this.id);
+					if (compteurPoint.getPointsJoueurs(this.id) > point) {
+						point = compteurPoint.getPointsJoueurs(this.id);
 						X = x;
 						Y = y;
 					}
@@ -182,12 +183,13 @@ public class JoueurVir extends Joueur implements Strategie {
 				
 				if (check) {
 					Carte carteChoisie = Partie.getTableDuJeu()[y][x];
+					Compteur compteurPoint = new Compteur();
 					
 					if (x + 1 <= 6 && Partie.getTableDuJeu()[y][x + 1] == null && Plateau.isInPositionDeDeplacer(x + 1, y)) {
 						Partie.getTableDuJeu()[y][x + 1] = Partie.getTableDuJeu()[y][x];
 						Partie.getTableDuJeu()[y][x] = null;
-						Compteur compteur = new Compteur(Partie.getTableDuJeu());
-						listPoint.add(compteur.getPointsJoueurs(this.id));
+						compteurPoint.compter(Partie.getTableDuJeu());
+						listPoint.add(compteurPoint.getPointsJoueurs(this.id));
 						
 						Partie.getTableDuJeu()[y][x + 1] = null;
 						Partie.getTableDuJeu()[y][x] = carteChoisie;
@@ -197,8 +199,8 @@ public class JoueurVir extends Joueur implements Strategie {
 					if (x - 1 >= 0 && Partie.getTableDuJeu()[y][x - 1] == null && Plateau.isInPositionDeDeplacer(x - 1, y)) {
 						Partie.getTableDuJeu()[y][x - 1] = Partie.getTableDuJeu()[y][x];
 						Partie.getTableDuJeu()[y][x] = null;
-						Compteur compteur = new Compteur(Partie.getTableDuJeu());
-						listPoint.add(compteur.getPointsJoueurs(this.id));
+						compteurPoint.compter(Partie.getTableDuJeu());
+						listPoint.add(compteurPoint.getPointsJoueurs(this.id));
 						
 						Partie.getTableDuJeu()[y][x - 1] = null;
 						Partie.getTableDuJeu()[y][x] = carteChoisie;
@@ -208,8 +210,8 @@ public class JoueurVir extends Joueur implements Strategie {
 					if (y + 1 <= 4 && Partie.getTableDuJeu()[y + 1][x] == null && Plateau.isInPositionDeDeplacer(x, y + 1)) {
 						Partie.getTableDuJeu()[y + 1][x] = Partie.getTableDuJeu()[y][x];
 						Partie.getTableDuJeu()[y][x] = null;
-						Compteur compteur = new Compteur(Partie.getTableDuJeu());
-						listPoint.add(compteur.getPointsJoueurs(this.id));
+						compteurPoint.compter(Partie.getTableDuJeu());
+						listPoint.add(compteurPoint.getPointsJoueurs(this.id));
 						
 						Partie.getTableDuJeu()[y + 1][x] = null;
 						Partie.getTableDuJeu()[y][x] = carteChoisie;
@@ -219,8 +221,8 @@ public class JoueurVir extends Joueur implements Strategie {
 					if (y - 1 >= 0 && Partie.getTableDuJeu()[y - 1][x] == null && Plateau.isInPositionDeDeplacer(x, y - 1)) {
 						Partie.getTableDuJeu()[y - 1][x] = Partie.getTableDuJeu()[y][x];
 						Partie.getTableDuJeu()[y][x] = null;
-						Compteur compteur = new Compteur(Partie.getTableDuJeu());
-						listPoint.add(compteur.getPointsJoueurs(this.id));
+						compteurPoint.compter(Partie.getTableDuJeu());
+						listPoint.add(compteurPoint.getPointsJoueurs(this.id));
 						
 						Partie.getTableDuJeu()[y - 1][x] = null;
 						Partie.getTableDuJeu()[y][x] = carteChoisie;

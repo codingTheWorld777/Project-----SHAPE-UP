@@ -37,7 +37,7 @@ public class FenetreTableDuJeu extends JFrame implements Observer {
 	private static JPanel zoneDeCartePanel;
 	private static JPanel joueur1Panel, joueur2Panel,joueur3Panel;
 	private JButton finirMonTour1, finirMonTour2, finirMonTour3;
-	private JLabel point1, point2, point3;
+	public static JLabel point1, point2, point3;
 	private static JPanel piochesCartesPanel;
 	private static ButtonCard carteCacheeBtn;
 	public static ButtonCard carteJouee;
@@ -292,7 +292,9 @@ public class FenetreTableDuJeu extends JFrame implements Observer {
 	}
 	
 	
-	//Get player's JPanel
+	/*
+	 * Get player's JPanel (to change its color after finishing its move) 
+	 */
 	public static JPanel getJoueurPanel(int id) {
 		if (id == 1) return joueur1Panel;
 		else if (id == 2) return joueur2Panel;
@@ -300,5 +302,4 @@ public class FenetreTableDuJeu extends JFrame implements Observer {
 		
 		return new JPanel();
 	}
-	
 }

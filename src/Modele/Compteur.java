@@ -9,7 +9,7 @@ public class Compteur {
 	private int[] pointsJoueurs;
 	
 	//constructor
-	public Compteur(Carte[][] tableDuJeu) {
+	public void compter(Carte[][] tableDuJeu) {
 		//initialization of pointsJoueurs 
 		this.pointsJoueurs = new int [Partie.joueursEnJeu.length];
 
