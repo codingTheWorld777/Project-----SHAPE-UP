@@ -65,11 +65,15 @@ public class Partie extends Observable {
 		 * + Move a card	[OK]
 		 * + Draw and put that card in a possible position 	[OK]
 		 */
+		
 		joueursEnJeu[0].setEnTour(true);  //Choosing Player 1 for the first turn
 		while (Partie.nombreDeCartesJouables > 0) {    
 			for (int i = 0; i < InstallerJeu.getNombreDeJoueurs() && Partie.nombreDeCartesJouables > 0; i++) {
 				for (int k = 0; k < InstallerJeu.getNombreDeJoueurs(); k++) {
-					if (Partie.joueursEnJeu[k].getEnTour() == true) Partie.tourDeJoueur = Partie.joueursEnJeu[k].getId();
+					if (Partie.joueursEnJeu[k].getEnTour() == true) {
+						Partie.tourDeJoueur = Partie.joueursEnJeu[k].getId();;
+						break;
+					}
 				}
 				
 				System.out.println("Joueur " + joueursEnJeu[i].id);
@@ -89,15 +93,9 @@ public class Partie extends Observable {
 					joueursEnJeu[i].pouvoirFinirMonTour = false;
 					
 				} else if (Partie.tour >= 1) {
-//					if (joueursEnJeu[i].coordChoisieADeplacer != null) {
-//						//Move a card: Yes/No. From turn 3 (there were already 3 card on the table and check...)
-//						if (Partie.tour >= 3 && Plateau.nePasDeplacer() == false) 
-//							joueursEnJeu[i].deplacerCarte();
-//					}	
-					
 					Partie.jouerSonTour(joueursEnJeu[i], joueursEnJeu[i].estEnTour, Partie.tour);		//draw and play a card
-					Partie.tour++;	
-				
+					Partie.tour++;
+					
 					while (joueursEnJeu[i].pouvoirFinirMonTour == false) {
 						try {
 							Thread.sleep(2000);

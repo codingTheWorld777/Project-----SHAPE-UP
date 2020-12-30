@@ -35,8 +35,8 @@ public abstract class Joueur extends Observable implements Observer{
 	protected Coordonnees coordAPlacer; 
 	
 	//Coords of card that is chosen by player to move it to new position
-	protected Coordonnees coordChoisieADeplacer;
-	protected Coordonnees coordADeplacer;
+	public Coordonnees coordChoisieADeplacer;
+	public Coordonnees coordADeplacer;
 	
 	//Check if player want to stop his turn (of course he must draw a card before)
 	public boolean pouvoirFinirMonTour = false;  

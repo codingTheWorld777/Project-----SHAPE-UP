@@ -42,7 +42,7 @@ public class FenetreTableDuJeu extends JFrame implements Observer {
 	private static ButtonCard carteCacheeBtn;
 	public static ButtonCard carteJouee;
 	
-	private ButtonCard[][] cartesBtn;
+	protected ButtonCard[][] cartesBtn;
 	/**
 	 * Create the application.
 	 */
@@ -84,6 +84,7 @@ public class FenetreTableDuJeu extends JFrame implements Observer {
 		this.getContentPane().add(zoneDeCartePanel);
 		
 		cartesBtn = new ButtonCard[5][7];
+		ButtonCard.cartesBtn = cartesBtn;
 		for (int i = 0; i < 5; i++) {
 			for (int j = 0; j < 7; j++) {
 				ButtonCard carteBtn = new ButtonCard(j, i);

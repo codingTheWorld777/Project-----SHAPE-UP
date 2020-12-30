@@ -2,10 +2,13 @@ package Modele;
 
 import java.util.Scanner;
 
+import Controleur.ControleurTableDuJeu;
+
 public class JoueurPhy extends Joueur {
 	/**
 	 *@author Huu Khai NGUYEN (Alec)
 	 */
+	private ControleurTableDuJeu controleurJeu =  new ControleurTableDuJeu();
 	
 	public JoueurPhy(String name, int id) {
 		super(name, id);
@@ -119,7 +122,9 @@ public class JoueurPhy extends Joueur {
 				System.out.println();
 				
 				Plateau.updateTableDuJeu();
+				
 				this.aPiocheUneCarte = true;
+
 				return;
 				
 			} else {
@@ -136,20 +141,11 @@ public class JoueurPhy extends Joueur {
 	 */
 	public void deplacerCarte() {
 		Plateau.determinerFormeDuTapis(Plateau.cartesJouees);
-		this.coordChoisieADeplacer = null;
-		this.coordADeplacer = null;
 		
 		System.out.print("Voulez-vous déplacer une carte?: (0/1): ");
 		Scanner src = new Scanner(System.in);
-	
-		while (this.coordChoisieADeplacer == null) {
-			try {
-				Thread.sleep(2000);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-		} 
 		
+		System.out.println(coordChoisieADeplacer.x + ", " + coordChoisieADeplacer.y);
 		int deplacer ;
 		if (this.coordChoisieADeplacer != null) {
 			deplacer = 1;
@@ -232,17 +228,17 @@ public class JoueurPhy extends Joueur {
 						 * 	with are positioned around this card 
 						 */
 						if (Plateau.besoinAjouter == false)  {
-							for (int compteur = x1; compteur < 7; compteur++) {
-								if (y1 + 1 <= 4 && Partie.getTableDuJeu()[y1 + 1][x1] != null) Plateau.ajouterCoordonneePossible(x1, y1 + 1);
-								
-								if (y1 - 1 >= 0 && Partie.getTableDuJeu()[y1 - 1][x1] != null) Plateau.ajouterCoordonneePossible(x1, y1 - 1);	
-							}
-							
-							for (int compteur = x1; compteur >= 0; compteur--) {
-								if (y1 + 1 <= 4 && Partie.getTableDuJeu()[y1 + 1][x1] != null) Plateau.ajouterCoordonneePossible(x1, y1 + 1);
-								
-								if (y1 - 1 >= 0 && Partie.getTableDuJeu()[y1 - 1][x1] != null) Plateau.ajouterCoordonneePossible(x1, y1 - 1);
-							}
+//							for (int compteur = x1; compteur < 7; compteur++) {
+//								if (y1 + 1 <= 4 && Partie.getTableDuJeu()[y1 + 1][x1] != null) Plateau.ajouterCoordonneePossible(x1, y1 + 1);
+//								
+//								if (y1 - 1 >= 0 && Partie.getTableDuJeu()[y1 - 1][x1] != null) Plateau.ajouterCoordonneePossible(x1, y1 - 1);	
+//							}
+//							
+//							for (int compteur = x1; compteur >= 0; compteur--) {
+//								if (y1 + 1 <= 4 && Partie.getTableDuJeu()[y1 + 1][x1] != null) Plateau.ajouterCoordonneePossible(x1, y1 + 1);
+//								
+//								if (y1 - 1 >= 0 && Partie.getTableDuJeu()[y1 - 1][x1] != null) Plateau.ajouterCoordonneePossible(x1, y1 - 1);
+//							}
 							Plateau.reloadListePossibilites();
 							
 						} else if (Plateau.besoinAjouter == true) {
@@ -253,10 +249,11 @@ public class JoueurPhy extends Joueur {
 							Plateau.besoinAjouter = false;
 						}
 						
-						Plateau.determinerFormeDuTapis(Plateau.cartesJouees);
 						Plateau.positionDeDeplacer.clear();
 						this.coordChoisieADeplacer = null;
 						this.coordADeplacer = null;
+						
+						Plateau.determinerFormeDuTapis(Plateau.cartesJouees);
 						
 						//This loop can be deleted
 						for (int t = 0; t < Plateau.possibilites.size(); t++) {
@@ -265,20 +262,18 @@ public class JoueurPhy extends Joueur {
 						System.out.println();
 						
 						Plateau.updateTableDuJeu();
+
 						return;
 					}
 				}
 				
 				System.out.println("Vous ne pouvez pas deplacer cette carte vers " + "(" + x1 + ", " + y1 + ")");
 				Plateau.positionDeDeplacer.clear();
-				deplacerCarte();
-				return;
-			}
-//			else {
-//				System.out.println("Cette position ne correspond pas. Choissiez encore une fois!");
 //				deplacerCarte();
-//				return;
-//			}
+				return;
+				
+			} else return;
+
 		}
 //		Plateau.positionDeDeplacer.clear();
 	}

@@ -31,6 +31,7 @@ public class ControleurTableDuJeu {
 	 * @author Huu Khai NGUYEN (Alec), Pierre-Louis DAMBRAINE
 	 */
 	
+	
 	private static FenetreTableDuJeu tableDuJeu;
 	
 	protected static InstallerJeu installerJeu;
@@ -43,6 +44,9 @@ public class ControleurTableDuJeu {
 	protected static boolean permettreDeDeplacer;
 	
 	private static Color color = new Color(107, 142, 35);
+	private static Color joueurBackg = new Color(107, 142, 35);
+	private LineBorder lineBorder = new LineBorder(SystemColor.activeCaptionText, 1);
+	
 	/**
 	 * Constructor
 	 * @param joueur
@@ -53,6 +57,9 @@ public class ControleurTableDuJeu {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				Coordonnees coord;
+				
+				if (!Plateau.isInPossibilites(btnCarte.getCoordonnees().x, btnCarte.getCoordonnees().y))
+					ControleurTableDuJeu.setBorderColorToOrg1();
 				
 				/*
 				 * Click the button in 'piocheCarte' zone to draw a card
@@ -88,7 +95,6 @@ public class ControleurTableDuJeu {
 							} else System.out.println("réessayez");						
 						}
 						
-//						Partie.jouerSonTour(joueur, joueur.getEnTour(), Partie.tour);
 					}
 					
 				} catch (Exception err) {
@@ -97,34 +103,31 @@ public class ControleurTableDuJeu {
 				
 				
 				/*
-				 * Click a card on game's table:
+				 * Click a card on game's table, we have 2 situations here: 
 				 * 1) 
 				 	* If the chosen card is moveable: Change border's color of all ButtonCard on game's table that the chosen card 
 				 	can move to these ButtonCard to green
 				 	* Else: Do nothing
-				 *2) 
-				 	* After choosing a card on game's table that is moveable:
-				 		* Click 'ButtonCard' on game's table to move this card to this position 
 				 */
-				
-				//1)
 				try {
-					if (Plateau.isInCartesJouees(btnCarte.getCoordonnees().x, btnCarte.getCoordonnees().y) && (Plateau.nePasDeplacer() == false)) {
+					if (Plateau.isInCartesJouees(btnCarte.getCoordonnees().x, btnCarte.getCoordonnees().y) 
+							&& (Plateau.nePasDeplacer() == false)) {
 						ControleurTableDuJeu.setBorderColorToOrg();
 						
-						if (Plateau.estDeplacable(btnCarte.getCoordonnees().x, btnCarte.getCoordonnees().y) && permettreDeDeplacer) {
+						if (Plateau.estDeplacable(btnCarte.getCoordonnees().x, btnCarte.getCoordonnees().y)) {
 							joueur.setCoordChoisieADeplacer(btnCarte.getCoordonnees().x, btnCarte.getCoordonnees().y);
 							
 							for (int i = 0; i < Plateau.getPositionDeDeplacer().size(); i++) {
-								x =  Plateau.getPositionDeDeplacer().get(i).x;
-								y =  Plateau.getPositionDeDeplacer().get(i).y;
+								x = Plateau.getPositionDeDeplacer().get(i).x;
+								y = Plateau.getPositionDeDeplacer().get(i).y;
 								cartesBtn[y][x].setBorder(BorderFactory.createLineBorder(Color.green));
 							}
 						}
-						
+				
 						return;
-					}
-					
+					} 
+						 
+
 					if (!Plateau.isInPositionDeDeplacer(btnCarte.getCoordonnees().x, btnCarte.getCoordonnees().y)) {
 						if (Plateau.isInCartesJouees(btnCarte.getCoordonnees().x, btnCarte.getCoordonnees().y) 
 								&& !Plateau.estDeplacable(btnCarte.getCoordonnees().x, btnCarte.getCoordonnees().y)) {
@@ -132,42 +135,55 @@ public class ControleurTableDuJeu {
 						} else if (!Plateau.isInCartesJouees(btnCarte.getCoordonnees().x, btnCarte.getCoordonnees().y))
 							ControleurTableDuJeu.setBorderColorToOrg();
 					}
+					
 				} catch (Exception err) {
 					System.out.println(err.toString());
 				}
 					
 				
-				//2)
+				/**
+				 * 2) After choosing a card on game's table that is moveable:
+				 		* Click 'ButtonCard' on game's table to move this card to this position 
+				 */
 				try {
-					if (Plateau.isInPositionDeDeplacer(btnCarte.getCoordonnees().x, btnCarte.getCoordonnees().y) && joueur.getCoordChoisieADeplacer() != null) {
+					if (joueur.getCoordChoisieADeplacer() != null && Plateau.isInPositionDeDeplacer(btnCarte.getCoordonnees().x, btnCarte.getCoordonnees().y)) {
 						int x1 = btnCarte.getCoordonnees().x;
 						int y1 = btnCarte.getCoordonnees().y;
-						joueur.setCoordADeplacer(x1, y1);
 						
-						for (int i = 0; i < Plateau.getListeDeCartesJouees().size(); i++) {
+						if (Plateau.isInPositionDeDeplacer(x1, y1)) {
+							joueur.setCoordADeplacer(x1, y1);
+							
 							int x = joueur.getCoordChoisieADeplacer().x;
 							int y = joueur.getCoordChoisieADeplacer().y;
 							
-							if (permettreDeDeplacer && Plateau.getListeDeCartesJouees().get(i).getCoordonnees().x == x 
-								&& Plateau.getListeDeCartesJouees().get(i).getCoordonnees().y == y) {
-								
-								URL url = getClass().getResource("../images/" + Plateau.getListeDeCartesJouees().get(i).getCarteID() + ".png");
-								Image imgRecto = ImageIO.read(url);
-								imgRecto = imgRecto.getScaledInstance(btnCarte.getWidth(), btnCarte.getHeight(), Image.SCALE_DEFAULT);
-								
-								cartesBtn[y1][x1].setIcon(new ImageIcon(imgRecto));
-								cartesBtn[y1][x1].setBorder(new LineBorder(SystemColor.activeCaptionText, 1));
-								cartesBtn[y][x].setIcon(null);
-								cartesBtn[y][x].setBorder(new LineBorder(SystemColor.activeCaptionText, 1));
-								
-								ControleurTableDuJeu.setBorderColorToOrg();
-								permettreDeDeplacer = false;
-								
-								return;
+							for (int i = 0; i < Plateau.getListeDeCartesJouees().size(); i++) {
+								if (permettreDeDeplacer && Plateau.getListeDeCartesJouees().get(i).getCoordonnees().x == x 
+									&& Plateau.getListeDeCartesJouees().get(i).getCoordonnees().y == y) {
+									
+									URL url = getClass().getResource("../images/" + Plateau.getListeDeCartesJouees().get(i).getCarteID() + ".png");
+									Image imgRecto = ImageIO.read(url);
+									imgRecto = imgRecto.getScaledInstance(btnCarte.getWidth(), btnCarte.getHeight(), Image.SCALE_DEFAULT);
+									
+									cartesBtn[y1][x1].setIcon(new ImageIcon(imgRecto));
+									cartesBtn[y1][x1].setBorder(lineBorder);
+									cartesBtn[y][x].setIcon(null);
+									cartesBtn[y][x].setBorder(lineBorder);
+									
+									permettreDeDeplacer = false;
+									
+									ControleurTableDuJeu.setBorderColorToOrg();
+									
+									//If we play by click on GUI: After updating card's image, we update datas 
+									//in all necessary lists by using method "deplacerCarte" of player
+									joueur.deplacerCarte();
+									if (!joueur.aPiocheUneCarte) Plateau.determinerFormeDuTapis(Plateau.getListeDeCartesJouees());
+									
+									Thread.sleep(180);
+									return;
+								}
+
 							}
-								
-						}
-						
+						}	
 					}
 				} catch (Exception err){
 					System.out.println(err.toString());
@@ -177,7 +193,6 @@ public class ControleurTableDuJeu {
 			
 		});
 	}
-	
 	
 	/**
 	 * Finish a round of player
@@ -203,7 +218,7 @@ public class ControleurTableDuJeu {
 					
 					for (int i = 0; i < Partie.joueursEnJeu.length; i++) {
 						//1)
-						if (Partie.joueursEnJeu[i].getEnTour()) FenetreTableDuJeu.getJoueurPanel(i + 1).setBackground(color);
+						if (Partie.joueursEnJeu[i].getEnTour()) FenetreTableDuJeu.getJoueurPanel(i + 1).setBackground(joueurBackg);
 						else FenetreTableDuJeu.getJoueurPanel(i + 1).setBackground(UIManager.getColor("Button.select"));
 						
 						//2)
@@ -219,6 +234,9 @@ public class ControleurTableDuJeu {
 					}
 
 					pouvoirPiocher = true;		
+					joueur.coordChoisieADeplacer = null;
+					joueur.coordADeplacer = null;
+					
 					ControleurTableDuJeu.setBorderColorToOrg();
 				}
 			}
@@ -229,7 +247,7 @@ public class ControleurTableDuJeu {
 	
 	public boolean checkPossibilites(ButtonCard[][] tabBtnCarte) {
 		boolean isInPossibilites = true;
-		for (int i = 0; i<tabBtnCarte.length; i++) {
+		for (int i = 0; i < tabBtnCarte.length; i++) {
 			for (int j = 0; j < tabBtnCarte[i].length; j++) {
 				if (!Plateau.isInPossibilites(tabBtnCarte[i][j].getCoordonnees().x, tabBtnCarte[i][j].getCoordonnees().y)) {
 					isInPossibilites = false;
@@ -240,22 +258,39 @@ public class ControleurTableDuJeu {
 		return isInPossibilites;
 	}
 	
+	
+	/*
+	 * Change border's color of card to origin for card in list 'positionDeDeplacer'
+	 */
 	public static void setBorderColorToOrg() {
 		if (!Plateau.getPositionDeDeplacer().isEmpty()) {
+			LineBorder lineBorder = new LineBorder(SystemColor.activeCaptionText, 1);
 			for (int i = 0; i < Plateau.getPositionDeDeplacer().size(); i++) {
 				int x0 =  Plateau.getPositionDeDeplacer().get(i).x;
 				int y0 =  Plateau.getPositionDeDeplacer().get(i).y;
-				cartesBtn[y0][x0].setBorder(new LineBorder(SystemColor.activeCaptionText, 1));
+				cartesBtn[y0][x0].setBorder(lineBorder);
 			}
 			Plateau.getPositionDeDeplacer().clear();
 		}
+		
+		if (!pouvoirPiocher) ControleurTableDuJeu.setBorderColorToOrg1();
 	}
-
+	
+	/*
+	 * Change border's color of card to origin for card in list 'positionDeDeplacer'
+	 */
+	public static void setBorderColorToOrg1() {
+		LineBorder lineBorder = new LineBorder(SystemColor.activeCaptionText, 1);
+		Plateau.determinerFormeDuTapis(Plateau.getListeDeCartesJouees());
+		for (int y = 0; y < 5; y++) {
+			for (int x = 0; x < 7; x++)
+				cartesBtn[y][x].setBorder(lineBorder);
+		}
+	}
 
 	/**
 	 * Set and get game's table for controler
 	 */
-	
 	public static void setFenetreTableDuJeu(FenetreTableDuJeu tableDuJeu) {
 		tableDuJeu = tableDuJeu;
 	}
