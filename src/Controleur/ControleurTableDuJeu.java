@@ -5,9 +5,7 @@ import java.awt.Image;
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.net.URL;
 
-import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -26,17 +24,20 @@ import Modele.Plateau;
 import Vue.ButtonCard;
 import Vue.FenetreTableDuJeu;
 
-public class ControleurTableDuJeu {
+public class ControleurTableDuJeu implements Runnable {
 	/**
 	 * @author Huu Khai NGUYEN (Alec), Pierre-Louis DAMBRAINE
 	 */
+
+	public Thread threadRepaint = new Thread(this);
 	
+	private static boolean aChoisiADeplacer = true;
 	private static FenetreTableDuJeu tableDuJeu;
 	
 	protected static InstallerJeu installerJeu;
 	protected static InstallerTour installerTour;
 	
-	private ButtonCard[][] cartesBtn;
+	private static ButtonCard[][] cartesBtn;
 	private int x, y;
 	
 	protected static boolean pouvoirPiocher = true;
@@ -51,7 +52,7 @@ public class ControleurTableDuJeu {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				Coordonnees coord;
-				
+
 				/*
 				 * Click the button in 'piocheCarte' zone to draw a card
 				 */
@@ -86,7 +87,6 @@ public class ControleurTableDuJeu {
 							} else System.out.println("réessayez");						
 						}
 						
-//						Partie.jouerSonTour(joueur, joueur.getEnTour(), Partie.tour);
 					}
 					
 				} catch (Exception err) {
@@ -107,31 +107,32 @@ public class ControleurTableDuJeu {
 				
 				//1)
 				try {
-					if (Plateau.isInCartesJouees(btnCarte.getCoordonnees().x, btnCarte.getCoordonnees().y) 
-						&& (Plateau.nePasDeplacer() == false) && (joueur.getCoordChoisieADeplacer() == null)) {
+					if (aChoisiADeplacer && Plateau.isInCartesJouees(btnCarte.getCoordonnees().x, btnCarte.getCoordonnees().y) 
+							&& (Plateau.nePasDeplacer() == false)) {
+						ControleurTableDuJeu.setBorderColorToOrg();
 						
-						boolean check = false;
-						for (int i = 0; i < Plateau.getListeDeCartesJouees().size(); i++) {
-							if (Plateau.getListeDeCartesJouees().get(i).getCoordonnees().x == btnCarte.getCoordonnees().x
-								&& Plateau.getListeDeCartesJouees().get(i).getCoordonnees().y == btnCarte.getCoordonnees().y) {
-								check = true;
-								break;
+						if (Plateau.estDeplacable(btnCarte.getCoordonnees().x, btnCarte.getCoordonnees().y)) {
+							joueur.setCoordChoisieADeplacer(btnCarte.getCoordonnees().x, btnCarte.getCoordonnees().y);
+							
+							for (int i = 0; i < Plateau.getPositionDeDeplacer().size(); i++) {
+								x = Plateau.getPositionDeDeplacer().get(i).x;
+								y = Plateau.getPositionDeDeplacer().get(i).y;
+								cartesBtn[y][x].setBorder(BorderFactory.createLineBorder(Color.green));
 							}
 						}
-						
-						if (check) {
-							if (Plateau.estDeplacable(btnCarte.getCoordonnees().x, btnCarte.getCoordonnees().y)) {
-								joueur.setCoordChoisieADeplacer(btnCarte.getCoordonnees().x, btnCarte.getCoordonnees().y);
-								
-								for (int i = 0; i < Plateau.getPositionDeDeplacer().size(); i++) {
-									x =  Plateau.getPositionDeDeplacer().get(i).x;
-									y =  Plateau.getPositionDeDeplacer().get(i).y;
-									cartesBtn[y][x].setBorder(BorderFactory.createLineBorder(Color.green));
-								}
-							}
-							return;
-						}
+						aChoisiADeplacer = false;
+						return;
+					} 
+//					else ControleurTableDuJeu.setBorderColorToOrg();
+						 
+					if (!Plateau.isInPositionDeDeplacer(btnCarte.getCoordonnees().x, btnCarte.getCoordonnees().y)) {
+						if (Plateau.isInCartesJouees(btnCarte.getCoordonnees().x, btnCarte.getCoordonnees().y) 
+								&& !Plateau.estDeplacable(btnCarte.getCoordonnees().x, btnCarte.getCoordonnees().y)) {
+							ControleurTableDuJeu.setBorderColorToOrg();
+						} else if (!Plateau.isInCartesJouees(btnCarte.getCoordonnees().x, btnCarte.getCoordonnees().y))
+							ControleurTableDuJeu.setBorderColorToOrg();
 					}
+					
 				} catch (Exception err) {
 					System.out.println(err.toString());
 				}
@@ -139,42 +140,28 @@ public class ControleurTableDuJeu {
 				
 				//2)
 				try {
-					if (Plateau.isInPositionDeDeplacer(btnCarte.getCoordonnees().x, btnCarte.getCoordonnees().y) && joueur.getCoordChoisieADeplacer() != null) {
+					if (joueur.getCoordChoisieADeplacer() != null && Plateau.isInPositionDeDeplacer(btnCarte.getCoordonnees().x, btnCarte.getCoordonnees().y)) {
 						int x1 = btnCarte.getCoordonnees().x;
 						int y1 = btnCarte.getCoordonnees().y;
-						joueur.setCoordADeplacer(x1, y1);
 						
-						for (int i = 0; i < Plateau.getListeDeCartesJouees().size(); i++) {
+						if (Plateau.isInPositionDeDeplacer(x1, y1)) {
+							joueur.setCoordADeplacer(x1, y1);
+							
 							int x = joueur.getCoordChoisieADeplacer().x;
 							int y = joueur.getCoordChoisieADeplacer().y;
 							
-							if (Plateau.getListeDeCartesJouees().get(i).getCoordonnees().x == x 
-								&& Plateau.getListeDeCartesJouees().get(i).getCoordonnees().y == y) {
-								
-								URL url = getClass().getResource("../images/" + Plateau.getListeDeCartesJouees().get(i).getCarteID() + ".png");
-								Image imgRecto = ImageIO.read(url);
-								imgRecto = imgRecto.getScaledInstance(btnCarte.getWidth(), btnCarte.getHeight(), Image.SCALE_DEFAULT);
-								
-								cartesBtn[y1][x1].setIcon(new ImageIcon(imgRecto));
-								cartesBtn[y1][x1].setBorder(new LineBorder(SystemColor.activeCaptionText, 1));
-								cartesBtn[y][x].setIcon(null);
-								cartesBtn[y][x].setBorder(new LineBorder(SystemColor.activeCaptionText, 1));
-								
-								if (Plateau.estDeplacable(btnCarte.getCoordonnees().x, btnCarte.getCoordonnees().y)) {
-									joueur.setCoordChoisieADeplacer(btnCarte.getCoordonnees().x, btnCarte.getCoordonnees().y);
+							for (int i = 0; i < Plateau.getListeDeCartesJouees().size(); i++) {
+								if (Plateau.getListeDeCartesJouees().get(i).getCoordonnees().x == x 
+									&& Plateau.getListeDeCartesJouees().get(i).getCoordonnees().y == y) {
 									
-									for (int j = 0; j < Plateau.getPositionDeDeplacer().size(); j++) {
-										int x2 =  Plateau.getPositionDeDeplacer().get(j).x;
-										int y2 =  Plateau.getPositionDeDeplacer().get(j).y;
-										cartesBtn[y2][x2].setBorder(new LineBorder(SystemColor.activeCaptionText, 1));
-									}
+									cartesBtn[y][x].setIcon(null);
+									cartesBtn[y][x].setBorder(new LineBorder(SystemColor.activeCaptionText, 1));
+
+									return;
 								}
-								
-								break;
+									
 							}
-								
-						}
-						
+						}	
 					}
 				} catch (Exception err){
 					System.out.println(err.toString());
@@ -185,6 +172,11 @@ public class ControleurTableDuJeu {
 		});
 	}
 	
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+		repaint(Partie.getTableDuJeu());
+	}
 	
 	/**
 	 * Finish a round of player
@@ -224,9 +216,13 @@ public class ControleurTableDuJeu {
 
 					}
 
-					pouvoirPiocher = true;				
+					pouvoirPiocher = true;		
+					aChoisiADeplacer = true;
+					
+					ControleurTableDuJeu.setBorderColorToOrg();
 				}
-				}
+			}
+			
 		});
 
 	}
@@ -245,11 +241,38 @@ public class ControleurTableDuJeu {
 		return isInPossibilites;
 	}
 	
+	/*
+	 * Change border's color of card to origin
+	 */
+	public static void setBorderColorToOrg() {
+		if (!Plateau.getPositionDeDeplacer().isEmpty()) {
+			for (int i = 0; i < Plateau.getPositionDeDeplacer().size(); i++) {
+				int x0 =  Plateau.getPositionDeDeplacer().get(i).x;
+				int y0 =  Plateau.getPositionDeDeplacer().get(i).y;
+				cartesBtn[y0][x0].setBorder(new LineBorder(SystemColor.activeCaptionText, 1));
+			}
+			Plateau.getPositionDeDeplacer().clear();
+		}
+	}
+	
+	/**
+	 * Repaint game's table
+	 */
+	public static void repaint(Carte[][] tableDuJeu) {
+		int x, y;
+		for (int i = 0; i < Plateau.getListeDeCartesJouees().size(); i++) {
+			x = Plateau.getListeDeCartesJouees().get(i).getCoordonnees().x;
+			y = Plateau.getListeDeCartesJouees().get(i).getCoordonnees().y;
+			
+			Image imgRecto = tableDuJeu[y][x].getCarteImageRecto();
+			imgRecto = imgRecto.getScaledInstance(cartesBtn[y][x].getWidth(), cartesBtn[y][x].getHeight(), Image.SCALE_DEFAULT);
+			cartesBtn[y][x].setIcon(new ImageIcon(imgRecto));
+		}
+	}
 
 	/**
 	 * Set and get game's table for controler
 	 */
-	
 	public static void setFenetreTableDuJeu(FenetreTableDuJeu tableDuJeu) {
 		tableDuJeu = tableDuJeu;
 	}

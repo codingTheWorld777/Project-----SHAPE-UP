@@ -2,10 +2,13 @@ package Modele;
 
 import java.util.Scanner;
 
+import Controleur.ControleurTableDuJeu;
+
 public class JoueurPhy extends Joueur {
 	/**
 	 *@author Huu Khai NGUYEN (Alec)
 	 */
+	private ControleurTableDuJeu controleurJeu =  new ControleurTableDuJeu();
 	
 	public JoueurPhy(String name, int id) {
 		super(name, id);
@@ -119,7 +122,9 @@ public class JoueurPhy extends Joueur {
 				System.out.println();
 				
 				Plateau.updateTableDuJeu();
+				
 				this.aPiocheUneCarte = true;
+				
 				return;
 				
 			} else {
@@ -264,6 +269,7 @@ public class JoueurPhy extends Joueur {
 						}
 						System.out.println();
 						
+						controleurJeu.threadRepaint.start();
 						Plateau.updateTableDuJeu();
 						return;
 					}
