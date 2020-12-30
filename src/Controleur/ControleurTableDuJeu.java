@@ -36,7 +36,7 @@ public class ControleurTableDuJeu {
 	protected static InstallerJeu installerJeu;
 	protected static InstallerTour installerTour;
 	
-	private ButtonCard[][] cartesBtn;
+	private static ButtonCard[][] cartesBtn;
 	private int x, y;
 	
 	protected static boolean pouvoirPiocher = true;
@@ -110,27 +110,26 @@ public class ControleurTableDuJeu {
 					if (Plateau.isInCartesJouees(btnCarte.getCoordonnees().x, btnCarte.getCoordonnees().y) 
 						&& (Plateau.nePasDeplacer() == false) && (joueur.getCoordChoisieADeplacer() == null)) {
 						
-						boolean check = false;
-						for (int i = 0; i < Plateau.getListeDeCartesJouees().size(); i++) {
-							if (Plateau.getListeDeCartesJouees().get(i).getCoordonnees().x == btnCarte.getCoordonnees().x
-								&& Plateau.getListeDeCartesJouees().get(i).getCoordonnees().y == btnCarte.getCoordonnees().y) {
-								check = true;
-								break;
+						if (!Plateau.getPositionDeDeplacer().isEmpty()) ControleurTableDuJeu.setBorderColorToOrg();
+						
+						if (Plateau.estDeplacable(btnCarte.getCoordonnees().x, btnCarte.getCoordonnees().y)) {
+							joueur.setCoordChoisieADeplacer(btnCarte.getCoordonnees().x, btnCarte.getCoordonnees().y);
+							
+							for (int i = 0; i < Plateau.getPositionDeDeplacer().size(); i++) {
+								x =  Plateau.getPositionDeDeplacer().get(i).x;
+								y =  Plateau.getPositionDeDeplacer().get(i).y;
+								cartesBtn[y][x].setBorder(BorderFactory.createLineBorder(Color.green));
 							}
 						}
 						
-						if (check) {
-							if (Plateau.estDeplacable(btnCarte.getCoordonnees().x, btnCarte.getCoordonnees().y)) {
-								joueur.setCoordChoisieADeplacer(btnCarte.getCoordonnees().x, btnCarte.getCoordonnees().y);
-								
-								for (int i = 0; i < Plateau.getPositionDeDeplacer().size(); i++) {
-									x =  Plateau.getPositionDeDeplacer().get(i).x;
-									y =  Plateau.getPositionDeDeplacer().get(i).y;
-									cartesBtn[y][x].setBorder(BorderFactory.createLineBorder(Color.green));
-								}
-							}
-							return;
+						if (!Plateau.isInPositionDeDeplacer(btnCarte.getCoordonnees().x, btnCarte.getCoordonnees().y)) {
+							if (Plateau.isInCartesJouees(btnCarte.getCoordonnees().x, btnCarte.getCoordonnees().y) 
+									&& !Plateau.estDeplacable(btnCarte.getCoordonnees().x, btnCarte.getCoordonnees().y)) {
+								ControleurTableDuJeu.setBorderColorToOrg();
+							} else if (!Plateau.isInCartesJouees(btnCarte.getCoordonnees().x, btnCarte.getCoordonnees().y))
+								ControleurTableDuJeu.setBorderColorToOrg();
 						}
+						return;
 					}
 				} catch (Exception err) {
 					System.out.println(err.toString());
@@ -160,15 +159,7 @@ public class ControleurTableDuJeu {
 								cartesBtn[y][x].setIcon(null);
 								cartesBtn[y][x].setBorder(new LineBorder(SystemColor.activeCaptionText, 1));
 								
-								if (Plateau.estDeplacable(btnCarte.getCoordonnees().x, btnCarte.getCoordonnees().y)) {
-									joueur.setCoordChoisieADeplacer(btnCarte.getCoordonnees().x, btnCarte.getCoordonnees().y);
-									
-									for (int j = 0; j < Plateau.getPositionDeDeplacer().size(); j++) {
-										int x2 =  Plateau.getPositionDeDeplacer().get(j).x;
-										int y2 =  Plateau.getPositionDeDeplacer().get(j).y;
-										cartesBtn[y2][x2].setBorder(new LineBorder(SystemColor.activeCaptionText, 1));
-									}
-								}
+								ControleurTableDuJeu.setBorderColorToOrg();
 								
 								break;
 							}
@@ -224,9 +215,10 @@ public class ControleurTableDuJeu {
 
 					}
 
-					pouvoirPiocher = true;				
+					pouvoirPiocher = true;		
+					ControleurTableDuJeu.setBorderColorToOrg();
 				}
-				}
+			}
 		});
 
 	}
@@ -245,6 +237,17 @@ public class ControleurTableDuJeu {
 		return isInPossibilites;
 	}
 	
+	public static void setBorderColorToOrg() {
+		if (!Plateau.getPositionDeDeplacer().isEmpty()) {
+			for (int i = 0; i < Plateau.getPositionDeDeplacer().size(); i++) {
+				int x0 =  Plateau.getPositionDeDeplacer().get(i).x;
+				int y0 =  Plateau.getPositionDeDeplacer().get(i).y;
+				cartesBtn[y0][x0].setBorder(new LineBorder(SystemColor.activeCaptionText, 1));
+			}
+			Plateau.getPositionDeDeplacer().clear();
+		}
+	}
+
 
 	/**
 	 * Set and get game's table for controler

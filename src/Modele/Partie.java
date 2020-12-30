@@ -1,7 +1,5 @@
 package Modele;
 
-import java.util.Scanner;
-
 import Controleur.ControleurParametre;
 import Controleur.ControleurTableDuJeu;
 
@@ -92,19 +90,15 @@ public class Partie extends Observable {
 					joueursEnJeu[i].pouvoirFinirMonTour = false;
 					
 				} else if (Partie.tour >= 1) {
-					if (joueursEnJeu[i].coordChoisieADeplacer != null) {
-						//Move a card: Yes/No. From turn 3 (there were already 3 card on the table and check...)
-						if (Partie.tour >= 3 && Plateau.nePasDeplacer() == false) 
-							joueursEnJeu[i].deplacerCarte();
-						
-						Partie.jouerSonTour(joueursEnJeu[i], joueursEnJeu[i].estEnTour, Partie.tour);		//draw and play a card
-						Partie.tour++;
-						
-					} else {
-						Partie.jouerSonTour(joueursEnJeu[i], joueursEnJeu[i].estEnTour, Partie.tour);		//draw and play a card
-						Partie.tour++;
-					}
-
+//					if (joueursEnJeu[i].coordChoisieADeplacer != null) {
+//						//Move a card: Yes/No. From turn 3 (there were already 3 card on the table and check...)
+//						if (Partie.tour >= 3 && Plateau.nePasDeplacer() == false) 
+//							joueursEnJeu[i].deplacerCarte();
+//					}	
+					
+					Partie.jouerSonTour(joueursEnJeu[i], joueursEnJeu[i].estEnTour, Partie.tour);		//draw and play a card
+					Partie.tour++;	
+				
 					while (joueursEnJeu[i].pouvoirFinirMonTour == false) {
 						try {
 							Thread.sleep(2000);
