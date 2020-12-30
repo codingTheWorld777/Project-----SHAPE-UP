@@ -53,6 +53,7 @@ public class ButtonCard extends JButton {
 					
 				} else recto = false;
 				
+				ControleurTableDuJeu.setBorderColorToOrg();
 			}
 			
 		});

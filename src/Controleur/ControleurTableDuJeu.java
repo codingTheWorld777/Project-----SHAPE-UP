@@ -40,6 +40,8 @@ public class ControleurTableDuJeu {
 	private int x, y;
 	
 	protected static boolean pouvoirPiocher = true;
+	protected static boolean permettreDeDeplacer;
+	
 	private static Color color = new Color(107, 142, 35);
 	/**
 	 * Constructor
@@ -107,12 +109,10 @@ public class ControleurTableDuJeu {
 				
 				//1)
 				try {
-					if (Plateau.isInCartesJouees(btnCarte.getCoordonnees().x, btnCarte.getCoordonnees().y) 
-						&& (Plateau.nePasDeplacer() == false) && (joueur.getCoordChoisieADeplacer() == null)) {
+					if (Plateau.isInCartesJouees(btnCarte.getCoordonnees().x, btnCarte.getCoordonnees().y) && (Plateau.nePasDeplacer() == false)) {
+						ControleurTableDuJeu.setBorderColorToOrg();
 						
-						if (!Plateau.getPositionDeDeplacer().isEmpty()) ControleurTableDuJeu.setBorderColorToOrg();
-						
-						if (Plateau.estDeplacable(btnCarte.getCoordonnees().x, btnCarte.getCoordonnees().y)) {
+						if (Plateau.estDeplacable(btnCarte.getCoordonnees().x, btnCarte.getCoordonnees().y) && permettreDeDeplacer) {
 							joueur.setCoordChoisieADeplacer(btnCarte.getCoordonnees().x, btnCarte.getCoordonnees().y);
 							
 							for (int i = 0; i < Plateau.getPositionDeDeplacer().size(); i++) {
@@ -122,14 +122,15 @@ public class ControleurTableDuJeu {
 							}
 						}
 						
-						if (!Plateau.isInPositionDeDeplacer(btnCarte.getCoordonnees().x, btnCarte.getCoordonnees().y)) {
-							if (Plateau.isInCartesJouees(btnCarte.getCoordonnees().x, btnCarte.getCoordonnees().y) 
-									&& !Plateau.estDeplacable(btnCarte.getCoordonnees().x, btnCarte.getCoordonnees().y)) {
-								ControleurTableDuJeu.setBorderColorToOrg();
-							} else if (!Plateau.isInCartesJouees(btnCarte.getCoordonnees().x, btnCarte.getCoordonnees().y))
-								ControleurTableDuJeu.setBorderColorToOrg();
-						}
 						return;
+					}
+					
+					if (!Plateau.isInPositionDeDeplacer(btnCarte.getCoordonnees().x, btnCarte.getCoordonnees().y)) {
+						if (Plateau.isInCartesJouees(btnCarte.getCoordonnees().x, btnCarte.getCoordonnees().y) 
+								&& !Plateau.estDeplacable(btnCarte.getCoordonnees().x, btnCarte.getCoordonnees().y)) {
+							ControleurTableDuJeu.setBorderColorToOrg();
+						} else if (!Plateau.isInCartesJouees(btnCarte.getCoordonnees().x, btnCarte.getCoordonnees().y))
+							ControleurTableDuJeu.setBorderColorToOrg();
 					}
 				} catch (Exception err) {
 					System.out.println(err.toString());
@@ -147,7 +148,7 @@ public class ControleurTableDuJeu {
 							int x = joueur.getCoordChoisieADeplacer().x;
 							int y = joueur.getCoordChoisieADeplacer().y;
 							
-							if (Plateau.getListeDeCartesJouees().get(i).getCoordonnees().x == x 
+							if (permettreDeDeplacer && Plateau.getListeDeCartesJouees().get(i).getCoordonnees().x == x 
 								&& Plateau.getListeDeCartesJouees().get(i).getCoordonnees().y == y) {
 								
 								URL url = getClass().getResource("../images/" + Plateau.getListeDeCartesJouees().get(i).getCarteID() + ".png");
@@ -160,8 +161,9 @@ public class ControleurTableDuJeu {
 								cartesBtn[y][x].setBorder(new LineBorder(SystemColor.activeCaptionText, 1));
 								
 								ControleurTableDuJeu.setBorderColorToOrg();
+								permettreDeDeplacer = false;
 								
-								break;
+								return;
 							}
 								
 						}
@@ -190,6 +192,7 @@ public class ControleurTableDuJeu {
 				if (joueur.getId() == Partie.tourDeJoueur) {
 					if (joueur.aPiocheUneCarte == true) {
 						joueur.pouvoirFinirMonTour = true;
+						permettreDeDeplacer = true;
 					} 
 
 					/* 1) Change color of player in turn to green and the others to pink

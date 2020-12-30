@@ -70,7 +70,6 @@ public class Partie extends Observable {
 			for (int i = 0; i < InstallerJeu.getNombreDeJoueurs() && Partie.nombreDeCartesJouables > 0; i++) {
 				for (int k = 0; k < InstallerJeu.getNombreDeJoueurs(); k++) {
 					if (Partie.joueursEnJeu[k].getEnTour() == true) Partie.tourDeJoueur = Partie.joueursEnJeu[k].getId();
-					System.out.println("Tour de joueur "+ Partie.tourDeJoueur);
 				}
 				
 				System.out.println("Joueur " + joueursEnJeu[i].id);
