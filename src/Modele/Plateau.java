@@ -498,7 +498,6 @@ public class Plateau {
 			
 			if (estDeplacable == true) {
 				for (int i = 0; i < nombreEspace.length; i++) {
-//					System.out.print(nombreEspace[i] + "> ");
 					if (nombreEspace[i] >= 3 && 
 							((Plateau.xMaxDuTapis - Plateau.xMinDuTapis >= 2) || (Plateau.yMaxDuTapis - Plateau.yMinDuTapis >= 2))) {
 						Plateau.besoinAjouter = true;
@@ -546,10 +545,9 @@ public class Plateau {
 		if (x + 1 <= 6 && Partie.getTableDuJeu()[y][x + 1] == null) Plateau.supprimerCoordonnee(x + 1, y);
 		if (y - 1 >= 0 && Partie.getTableDuJeu()[y - 1][x] == null) Plateau.supprimerCoordonnee(x, y - 1);
 		if (y + 1 <= 4 && Partie.getTableDuJeu()[y + 1][x] == null) Plateau.supprimerCoordonnee(x, y + 1);
-		
 	}
 	
-	/* (10)
+	/* (10) 
 	 * Reload list of cards played
 	 */
 	public static void reloadListePossibilites() {
@@ -602,12 +600,18 @@ public class Plateau {
 	}
 	
 	/* (15)
-	 * get list of 'possibilites'
+	 * Get list of 'positionDeDeplacer'
 	 */
 	public static ArrayList<Coordonnees> getPositionDeDeplacer() {
 		return Plateau.positionDeDeplacer;
 	}
 	
+	/** (16)
+	 * Get list of 'possibilites'
+	 */
+	public static ArrayList<Coordonnees> getPossibilites() {
+		return Plateau.possibilites;
+	}
 	
 	/* (16)
 	 * Print table of game to screen

@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.imageio.ImageIO;
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -25,6 +26,8 @@ public class ButtonCard extends JButton {
 	private Image carteImage;
 	private boolean carteTiree = false;
 	
+	public static ButtonCard[][] cartesBtn;
+	
 	public ButtonCard(int x, int y) {
 		this.coordonnees = new Coordonnees(x, y);
 	}
@@ -35,10 +38,18 @@ public class ButtonCard extends JButton {
 	 */
 	public ButtonCard(JButton piocheCarte) {
 		piocheCarte.addActionListener(new ActionListener() {
-
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
+				
+				ControleurTableDuJeu.setBorderColorToOrg1();
+				
+				for (int i = 0; i < Plateau.getPossibilites().size(); i++) {
+					int x = Plateau.getPossibilites().get(i).x;
+					int y = Plateau.getPossibilites().get(i).y;
+					cartesBtn[y][x].setBorder(BorderFactory.createLineBorder(Color.green));
+				}
+				
 				if (recto == false) {
 					recto = true;
 
@@ -53,6 +64,7 @@ public class ButtonCard extends JButton {
 					
 				} else recto = false;
 				
+				ControleurTableDuJeu.setBorderColorToOrg();
 			}
 			
 		});

@@ -26,12 +26,10 @@ import Modele.Plateau;
 import Vue.ButtonCard;
 import Vue.FenetreTableDuJeu;
 
-public class ControleurTableDuJeu implements Runnable {
+public class ControleurTableDuJeu {
 	/**
 	 * @author Huu Khai NGUYEN (Alec), Pierre-Louis DAMBRAINE
 	 */
-
-	public Thread threadRepaint = new Thread(this);
 	
 	private static boolean permettreDeDeplacer;
 	private static FenetreTableDuJeu tableDuJeu;
@@ -43,7 +41,9 @@ public class ControleurTableDuJeu implements Runnable {
 	private int x, y;
 	
 	protected static boolean pouvoirPiocher = true;
-	private static Color color = new Color(107, 142, 35);
+	private static Color joueurBackg = new Color(107, 142, 35);
+	private LineBorder lineBorder = new LineBorder(SystemColor.activeCaptionText, 1);
+	
 	/**
 	 * Constructor
 	 * @param joueur
@@ -54,7 +54,10 @@ public class ControleurTableDuJeu implements Runnable {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				Coordonnees coord;
-
+				
+				if (!Plateau.isInPossibilites(btnCarte.getCoordonnees().x, btnCarte.getCoordonnees().y))
+					ControleurTableDuJeu.setBorderColorToOrg1();
+				
 				/*
 				 * Click the button in 'piocheCarte' zone to draw a card
 				 */
@@ -117,7 +120,7 @@ public class ControleurTableDuJeu implements Runnable {
 								cartesBtn[y][x].setBorder(BorderFactory.createLineBorder(Color.green));
 							}
 						}
-
+				
 						return;
 					} 
 						 
@@ -158,22 +161,20 @@ public class ControleurTableDuJeu implements Runnable {
 									imgRecto = imgRecto.getScaledInstance(btnCarte.getWidth(), btnCarte.getHeight(), Image.SCALE_DEFAULT);
 									
 									cartesBtn[y1][x1].setIcon(new ImageIcon(imgRecto));
-									cartesBtn[y1][x1].setBorder(new LineBorder(SystemColor.activeCaptionText, 1));
+									cartesBtn[y1][x1].setBorder(lineBorder);
 									cartesBtn[y][x].setIcon(null);
-									cartesBtn[y][x].setBorder(new LineBorder(SystemColor.activeCaptionText, 1));
+									cartesBtn[y][x].setBorder(lineBorder);
 									
 									permettreDeDeplacer = false;
 									
-									if (Plateau.estDeplacable(btnCarte.getCoordonnees().x, btnCarte.getCoordonnees().y)) {
-										joueur.setCoordChoisieADeplacer(btnCarte.getCoordonnees().x, btnCarte.getCoordonnees().y);
-										
-										for (int j = 0; j < Plateau.getPositionDeDeplacer().size(); j++) {
-											int x2 =  Plateau.getPositionDeDeplacer().get(j).x;
-											int y2 =  Plateau.getPositionDeDeplacer().get(j).y;
-											cartesBtn[y2][x2].setBorder(new LineBorder(SystemColor.activeCaptionText, 1));
-										}
-									}
-
+									ControleurTableDuJeu.setBorderColorToOrg();
+									
+									//If we play by click on GUI: After updating card's image, we update datas 
+									//in all necessary lists by using method "deplacerCarte" of player
+									joueur.deplacerCarte();
+									if (!joueur.aPiocheUneCarte) Plateau.determinerFormeDuTapis(Plateau.getListeDeCartesJouees());
+									
+									Thread.sleep(180);
 									return;
 								}
 									
@@ -187,12 +188,6 @@ public class ControleurTableDuJeu implements Runnable {
 			}
 			
 		});
-	}
-	
-	@Override
-	public void run() {
-		// TODO Auto-generated method stub
-		repaint(Partie.getTableDuJeu());
 	}
 	
 	/**
@@ -219,7 +214,7 @@ public class ControleurTableDuJeu implements Runnable {
 					
 					for (int i = 0; i < Partie.joueursEnJeu.length; i++) {
 						//1)
-						if (Partie.joueursEnJeu[i].getEnTour()) FenetreTableDuJeu.getJoueurPanel(i + 1).setBackground(color);
+						if (Partie.joueursEnJeu[i].getEnTour()) FenetreTableDuJeu.getJoueurPanel(i + 1).setBackground(joueurBackg);
 						else FenetreTableDuJeu.getJoueurPanel(i + 1).setBackground(UIManager.getColor("Button.select"));
 						
 						//2)
@@ -235,6 +230,8 @@ public class ControleurTableDuJeu implements Runnable {
 					}
 
 					pouvoirPiocher = true;		
+					joueur.coordChoisieADeplacer = null;
+					joueur.coordADeplacer = null;
 					
 					ControleurTableDuJeu.setBorderColorToOrg();
 				}
@@ -247,7 +244,7 @@ public class ControleurTableDuJeu implements Runnable {
 	
 	public boolean checkPossibilites(ButtonCard[][] tabBtnCarte) {
 		boolean isInPossibilites = true;
-		for (int i = 0; i<tabBtnCarte.length; i++) {
+		for (int i = 0; i < tabBtnCarte.length; i++) {
 			for (int j = 0; j < tabBtnCarte[i].length; j++) {
 				if (!Plateau.isInPossibilites(tabBtnCarte[i][j].getCoordonnees().x, tabBtnCarte[i][j].getCoordonnees().y)) {
 					isInPossibilites = false;
@@ -259,31 +256,33 @@ public class ControleurTableDuJeu implements Runnable {
 	}
 	
 	/*
-	 * Change border's color of card to origin
+	 * Change border's color of card to origin for card in list 'positionDeDeplacer'
 	 */
 	public static void setBorderColorToOrg() {
 		if (!Plateau.getPositionDeDeplacer().isEmpty()) {
+			LineBorder lineBorder = new LineBorder(SystemColor.activeCaptionText, 1);
 			for (int i = 0; i < Plateau.getPositionDeDeplacer().size(); i++) {
 				int x0 =  Plateau.getPositionDeDeplacer().get(i).x;
 				int y0 =  Plateau.getPositionDeDeplacer().get(i).y;
-				cartesBtn[y0][x0].setBorder(new LineBorder(SystemColor.activeCaptionText, 1));
+				cartesBtn[y0][x0].setBorder(lineBorder);
 			}
 			Plateau.getPositionDeDeplacer().clear();
 		}
+		
+		if (!pouvoirPiocher) ControleurTableDuJeu.setBorderColorToOrg1();
 	}
 	
-	/**
-	 * Repaint game's table
+	/*
+	 * Change border's color of card to origin for card in list 'positionDeDeplacer'
 	 */
-	public static void repaint(Carte[][] tableDuJeu) {
-		int x, y;
-		for (int i = 0; i < Plateau.getListeDeCartesJouees().size(); i++) {
-			x = Plateau.getListeDeCartesJouees().get(i).getCoordonnees().x;
-			y = Plateau.getListeDeCartesJouees().get(i).getCoordonnees().y;
+	public static void setBorderColorToOrg1() {
+		LineBorder lineBorder = new LineBorder(SystemColor.activeCaptionText, 1);
+		Plateau.determinerFormeDuTapis(Plateau.getListeDeCartesJouees());
+		for (int i = 0; i < Plateau.getPossibilites().size(); i++) {
+			int x = Plateau.getPossibilites().get(i).x;
+			int y = Plateau.getPossibilites().get(i).y;
 			
-			Image imgRecto = tableDuJeu[y][x].getCarteImageRecto();
-			imgRecto = imgRecto.getScaledInstance(cartesBtn[y][x].getWidth(), cartesBtn[y][x].getHeight(), Image.SCALE_DEFAULT);
-			cartesBtn[y][x].setIcon(new ImageIcon(imgRecto));
+			cartesBtn[y][x].setBorder(lineBorder);
 		}
 	}
 

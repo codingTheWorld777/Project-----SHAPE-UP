@@ -95,28 +95,11 @@ public class Partie extends Observable {
 					joueursEnJeu[i].pouvoirFinirMonTour = false;
 					
 				} else if (Partie.tour >= 1) {
-					System.out.println(Plateau.nePasDeplacer() + "!!!!");
-
-//					if (Partie.tour >= 3 && Plateau.nePasDeplacer() == false) {
-//						if (joueursEnJeu[i].coordChoisieADeplacer != null) {
-//							System.out.println("Commencer de deplacer");
-//							//Move a card: Yes/No. From turn 3 (there were already 3 card on the table and check...)
-//							joueursEnJeu[i].deplacerCarte();
-//						}
-//					}
-					
 					Partie.jouerSonTour(joueursEnJeu[i], joueursEnJeu[i].estEnTour, Partie.tour);		//draw and play a card
 					Partie.tour++;
 					
 					while (joueursEnJeu[i].pouvoirFinirMonTour == false) {
 						try {
-//							if (Partie.tour >= 3 && Plateau.nePasDeplacer() == false) {
-//								if (joueursEnJeu[i].coordChoisieADeplacer != null) {
-//									System.out.println("Commencer de deplacer");
-//									//Move a card: Yes/No. From turn 3 (there were already 3 card on the table and check...)
-//									joueursEnJeu[i].deplacerCarte();
-//								}
-//							}
 							Thread.sleep(2000);
 						} catch (InterruptedException e) {
 							e.printStackTrace();
