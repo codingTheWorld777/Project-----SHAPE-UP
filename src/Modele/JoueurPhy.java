@@ -269,7 +269,7 @@ public class JoueurPhy extends Joueur {
 						}
 						System.out.println();
 						
-						controleurJeu.threadRepaint.start();
+//						controleurJeu.threadRepaint.start();
 						Plateau.updateTableDuJeu();
 						return;
 					}

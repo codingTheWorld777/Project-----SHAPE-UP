@@ -5,7 +5,9 @@ import java.awt.Image;
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.URL;
 
+import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -31,7 +33,7 @@ public class ControleurTableDuJeu implements Runnable {
 
 	public Thread threadRepaint = new Thread(this);
 	
-	private static boolean aChoisiADeplacer = true;
+	private static boolean permettreDeDeplacer;
 	private static FenetreTableDuJeu tableDuJeu;
 	
 	protected static InstallerJeu installerJeu;
@@ -95,19 +97,14 @@ public class ControleurTableDuJeu implements Runnable {
 				
 				
 				/*
-				 * Click a card on game's table:
+				 * Click a card on game's table, we have 2 situations here: 
 				 * 1) 
 				 	* If the chosen card is moveable: Change border's color of all ButtonCard on game's table that the chosen card 
 				 	can move to these ButtonCard to green
 				 	* Else: Do nothing
-				 *2) 
-				 	* After choosing a card on game's table that is moveable:
-				 		* Click 'ButtonCard' on game's table to move this card to this position 
 				 */
-				
-				//1)
 				try {
-					if (aChoisiADeplacer && Plateau.isInCartesJouees(btnCarte.getCoordonnees().x, btnCarte.getCoordonnees().y) 
+					if (Plateau.isInCartesJouees(btnCarte.getCoordonnees().x, btnCarte.getCoordonnees().y) 
 							&& (Plateau.nePasDeplacer() == false)) {
 						ControleurTableDuJeu.setBorderColorToOrg();
 						
@@ -120,10 +117,9 @@ public class ControleurTableDuJeu implements Runnable {
 								cartesBtn[y][x].setBorder(BorderFactory.createLineBorder(Color.green));
 							}
 						}
-						aChoisiADeplacer = false;
+
 						return;
 					} 
-//					else ControleurTableDuJeu.setBorderColorToOrg();
 						 
 					if (!Plateau.isInPositionDeDeplacer(btnCarte.getCoordonnees().x, btnCarte.getCoordonnees().y)) {
 						if (Plateau.isInCartesJouees(btnCarte.getCoordonnees().x, btnCarte.getCoordonnees().y) 
@@ -138,7 +134,10 @@ public class ControleurTableDuJeu implements Runnable {
 				}
 					
 				
-				//2)
+				/**
+				 * 2) After choosing a card on game's table that is moveable:
+				 		* Click 'ButtonCard' on game's table to move this card to this position 
+				 */
 				try {
 					if (joueur.getCoordChoisieADeplacer() != null && Plateau.isInPositionDeDeplacer(btnCarte.getCoordonnees().x, btnCarte.getCoordonnees().y)) {
 						int x1 = btnCarte.getCoordonnees().x;
@@ -151,11 +150,29 @@ public class ControleurTableDuJeu implements Runnable {
 							int y = joueur.getCoordChoisieADeplacer().y;
 							
 							for (int i = 0; i < Plateau.getListeDeCartesJouees().size(); i++) {
-								if (Plateau.getListeDeCartesJouees().get(i).getCoordonnees().x == x 
+								if (permettreDeDeplacer && Plateau.getListeDeCartesJouees().get(i).getCoordonnees().x == x 
 									&& Plateau.getListeDeCartesJouees().get(i).getCoordonnees().y == y) {
 									
+									URL url = getClass().getResource("../images/" + Plateau.getListeDeCartesJouees().get(i).getCarteID() + ".png");
+									Image imgRecto = ImageIO.read(url);
+									imgRecto = imgRecto.getScaledInstance(btnCarte.getWidth(), btnCarte.getHeight(), Image.SCALE_DEFAULT);
+									
+									cartesBtn[y1][x1].setIcon(new ImageIcon(imgRecto));
+									cartesBtn[y1][x1].setBorder(new LineBorder(SystemColor.activeCaptionText, 1));
 									cartesBtn[y][x].setIcon(null);
 									cartesBtn[y][x].setBorder(new LineBorder(SystemColor.activeCaptionText, 1));
+									
+									permettreDeDeplacer = false;
+									
+									if (Plateau.estDeplacable(btnCarte.getCoordonnees().x, btnCarte.getCoordonnees().y)) {
+										joueur.setCoordChoisieADeplacer(btnCarte.getCoordonnees().x, btnCarte.getCoordonnees().y);
+										
+										for (int j = 0; j < Plateau.getPositionDeDeplacer().size(); j++) {
+											int x2 =  Plateau.getPositionDeDeplacer().get(j).x;
+											int y2 =  Plateau.getPositionDeDeplacer().get(j).y;
+											cartesBtn[y2][x2].setBorder(new LineBorder(SystemColor.activeCaptionText, 1));
+										}
+									}
 
 									return;
 								}
@@ -191,6 +208,7 @@ public class ControleurTableDuJeu implements Runnable {
 				if (joueur.getId() == Partie.tourDeJoueur) {
 					if (joueur.aPiocheUneCarte == true) {
 						joueur.pouvoirFinirMonTour = true;
+						permettreDeDeplacer = true;
 					} 
 
 					/* 1) Change color of player in turn to green and the others to pink
@@ -217,7 +235,6 @@ public class ControleurTableDuJeu implements Runnable {
 					}
 
 					pouvoirPiocher = true;		
-					aChoisiADeplacer = true;
 					
 					ControleurTableDuJeu.setBorderColorToOrg();
 				}
