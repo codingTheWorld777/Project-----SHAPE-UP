@@ -34,6 +34,10 @@ public class FenetreTableDuJeu extends JFrame implements Observer {
 	 * @author Huu Khai NGUYEN (Alec)
 	 */
 	
+	public static int round = 0;
+	public static JLabel roundLabel;
+	private static JButton tourSuivantBtn;
+	
 	private static JPanel zoneDeCartePanel;
 	private static JPanel joueur1Panel, joueur2Panel,joueur3Panel;
 	private JButton finirMonTour1, finirMonTour2, finirMonTour3;
@@ -119,7 +123,7 @@ public class FenetreTableDuJeu extends JFrame implements Observer {
 		this.getContentPane().add(joueur1Panel);
 		
 		JLabel joueur1Label = new JLabel("Joueur 1");
-		joueur1Label.setFont(new Font("Lucida Grande", Font.PLAIN, 14));
+		joueur1Label.setFont(new Font("Lucida Grande", Font.BOLD, 14));
 		joueur1Label.setBounds(52, 6, 63, 21);
 		joueur1Panel.add(joueur1Label);
 		
@@ -142,7 +146,7 @@ public class FenetreTableDuJeu extends JFrame implements Observer {
 		
 		
 		finirMonTour1 = new JButton("Finir mon tour");
-		finirMonTour1.setFont(new Font("Lucida Grande", Font.PLAIN, 14));
+		finirMonTour1.setFont(new Font("Lucida Grande", Font.BOLD, 14));
 		finirMonTour1.setBounds(21, 180, 120, 34);
 		joueur1Panel.add(finirMonTour1);
 		controleurJeu.finirMonTour(finirMonTour1, Partie.joueur1, 1);
@@ -170,7 +174,7 @@ public class FenetreTableDuJeu extends JFrame implements Observer {
 		this.getContentPane().add(joueur2Panel);
 		
 		JLabel joueur2Label = new JLabel();
-		joueur2Label.setFont(new Font("Lucida Grande", Font.PLAIN, 14));
+		joueur2Label.setFont(new Font("Lucida Grande", Font.BOLD, 14));
 		
 		try {
 			if (controleurJeu.getJoueur(1).getNom().equals("Joueur Virtuel")) joueur2Label.setBounds(37, 6, 104, 21);
@@ -200,7 +204,7 @@ public class FenetreTableDuJeu extends JFrame implements Observer {
 		}
 		
 		finirMonTour2 = new JButton("Finir mon tour");
-		finirMonTour2.setFont(new Font("Lucida Grande", Font.PLAIN, 14));
+		finirMonTour2.setFont(new Font("Lucida Grande", Font.BOLD, 14));
 		finirMonTour2.setBounds(21, 180, 120, 34);
 		
 		if (!controleurJeu.getJoueur(1).getNom().equals("Joueur Virtuel"))
@@ -219,7 +223,7 @@ public class FenetreTableDuJeu extends JFrame implements Observer {
 			
 			try {
 				JLabel joueur3Label = new JLabel(controleurJeu.getJoueur(2).getNom());
-				joueur3Label.setFont(new Font("Lucida Grande", Font.PLAIN, 14));
+				joueur3Label.setFont(new Font("Lucida Grande", Font.BOLD, 14));
 				
 				if (controleurJeu.getJoueur(2).getNom().equals("Joueur Virtuel")) joueur3Label.setBounds(37, 6, 104, 21);
 				else joueur3Label.setBounds(52, 6, 63, 21);
@@ -248,7 +252,7 @@ public class FenetreTableDuJeu extends JFrame implements Observer {
 			}
 			
 			finirMonTour3 = new JButton("Finir mon tour");
-			finirMonTour3.setFont(new Font("Lucida Grande", Font.PLAIN, 14));
+			finirMonTour3.setFont(new Font("Lucida Grande", Font.BOLD, 14));
 			finirMonTour3.setBounds(21, 180, 120, 34);
 			
 			if (!controleurJeu.getJoueur(2).getNom().equals("Joueur Virtuel")) 
@@ -275,19 +279,32 @@ public class FenetreTableDuJeu extends JFrame implements Observer {
 			System.out.println(e.toString());
 		}
 		
-		
 		carteJouee = new ButtonCard(piocheCarte);
 		carteJouee.setBounds(41, 27, 81, 100);
 		piochesCartesPanel.add(carteJouee);
 		
-		
-		
 		JLabel piocheLabel = new JLabel("Piocher une carte");
-		piocheLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 14));
+		piocheLabel.setFont(new Font("Lucida Grande", Font.BOLD, 14));
 		piocheLabel.setBounds(21, 144, 127, 17);
 		
 		piochesCartesPanel.add(piocheLabel);
 		piochesCartesPanel.add(piocheCarte);
+		
+		
+		
+		//******** "Next round" option: Click after finishing a round to pass to next round ********
+		roundLabel = new JLabel("Tour : " + round);
+		roundLabel.setForeground(Color.ORANGE);
+		roundLabel.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		roundLabel.setBounds(570, 28, 124, 36);
+		getContentPane().add(roundLabel);
+		
+		tourSuivantBtn = new JButton("Tour suivant");
+		tourSuivantBtn.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		tourSuivantBtn.setBounds(538, 660, 124, 36);
+		getContentPane().add(tourSuivantBtn);
+		
+		controleurJeu.tourSuivant(tourSuivantBtn);
 		
 		this.validate();
 	}

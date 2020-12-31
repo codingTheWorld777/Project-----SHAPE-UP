@@ -244,6 +244,21 @@ public class ControleurTableDuJeu {
 
 	}
 	
+	public void tourSuivant(JButton tourSuivantBtn) {
+		tourSuivantBtn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (Partie.nombreDeCartesJouables == 0) {
+					FenetreTableDuJeu.round++;
+					FenetreTableDuJeu.roundLabel.setText("Tour : " + FenetreTableDuJeu.round);
+					System.out.println("Repaint game!!");
+					
+					//Pass to next round: (Release memory + InstallerTour + new Partie() + Repaint GUI
+				}
+			}
+			
+		});
+	}
 	
 	public boolean checkPossibilites(ButtonCard[][] tabBtnCarte) {
 		boolean isInPossibilites = true;
