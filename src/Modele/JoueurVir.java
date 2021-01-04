@@ -40,6 +40,12 @@ public class JoueurVir extends Joueur implements Strategie {
 			PiocheCartes.getPiocheCartes().remove(Partie.nombreDeCartesJouables - 1);
 			Partie.nombreDeCartesJouables--;
 			
+			/*
+			 * Set changed and notify observer
+			 */
+			this.setChanged();
+			this.notifyObservers(null);
+			
 		} else if (this.niveau.compareTo("D") == 0) { //hard level
 			int X = 0;
 			int Y = 0;
@@ -86,6 +92,12 @@ public class JoueurVir extends Joueur implements Strategie {
 		System.out.println();
 		
 		Plateau.updateTableDuJeu();
+		
+		/*
+		 * Set changed and notify observer
+		 */
+		this.setChanged();
+		this.notifyObservers(null);
 		
 	}
 	
@@ -146,6 +158,13 @@ public class JoueurVir extends Joueur implements Strategie {
 				
 				Plateau.updateTableDuJeu();
 				System.out.println("Le joueur virtuel fini de deplacer une carte");
+				
+				/*
+				 * Set changed and notify observer
+				 */
+				this.setChanged();
+				this.notifyObservers(null);
+				
 			}
 			
 		} else if (this.niveau.compareTo("D") == 0) { 
@@ -408,6 +427,13 @@ public class JoueurVir extends Joueur implements Strategie {
 			
 			Plateau.updateTableDuJeu();
 			System.out.println("Le joueur virtuel fini de deplacer une carte");
+			
+			/*
+			 * Set changed and notify observer
+			 */
+			this.setChanged();
+			this.notifyObservers(this);
+			
 		}	
 	}
 	

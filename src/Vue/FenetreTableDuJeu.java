@@ -23,8 +23,8 @@ import Controleur.ControleurTableDuJeu;
 import Modele.Coordonnees;
 import Modele.Partie;
 
-import java.util.Observer;
-import java.util.Observable;
+import Modele.Observer;
+import Modele.Observable;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -46,16 +46,38 @@ public class FenetreTableDuJeu extends JFrame implements Observer {
 	private static ButtonCard carteCacheeBtn;
 	public static ButtonCard carteJouee;
 	
+	private ControleurTableDuJeu controleurJeu;
+	
 	protected ButtonCard[][] cartesBtn;
 	/**
 	 * Create the application.
 	 */
 	public FenetreTableDuJeu() {
+		controleurJeu = new ControleurTableDuJeu();
+		
 		initialize();
+		
+		if (controleurJeu.getJoueur(1).getNom().equals("Joueur Virtuel")) {
+			controleurJeu.getJoueur(1).addObserver(this);
+		} else if (ControleurTableDuJeu.paintJoueur3(controleurJeu.getInstallerJeu(), this) == true && controleurJeu.getJoueur(2).getNom().equals("Joueur Virtuel")) {
+			controleurJeu.getJoueur(2).addObserver(this);
+		}
 	}
 	
-	public void update(Observable instanceObservable, Object arg1) {
-		
+	@Override
+	public void update(Object arg1) {
+		for (int i = 0; i <Partie.getTableDuJeu().length; i++) {
+			for (int j = 0; j<Partie.getTableDuJeu()[i].length; j++) {
+				if (Partie.getTableDuJeu()[i][j] != null) {
+					Image imageRecto = Partie.getTableDuJeu()[i][j].getCarteImageRecto().getScaledInstance(getWidth(), getHeight(), Image.SCALE_DEFAULT);
+					imageRecto = imageRecto.getScaledInstance(cartesBtn[i][j].getWidth(), cartesBtn[i][j].getHeight(), Image.SCALE_DEFAULT);
+					cartesBtn[i][j].setIcon(new ImageIcon(imageRecto));
+				}
+				else {
+					cartesBtn[i][j].setIcon(null);
+				}
+			}
+		}
 	}
 
 	/**
