@@ -1,5 +1,10 @@
 package Vue;
 
+/**
+ * @author Huu Khai NGUYEN (Alec), Pierre-Louis DAMBRAINE
+ * Description: This class allows to dipslay a card on GUI in different situation
+ */
+
 import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridLayout;
@@ -116,7 +121,7 @@ public class ButtonCard extends JButton {
 		this.coordonnees = coordonnees;
 	}
 	
-	/*
+	/**
 	 * Get or set boolean carteTiree
 	 */
 	public boolean getCarteTiree() {

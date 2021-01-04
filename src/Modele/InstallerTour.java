@@ -2,21 +2,24 @@ package Modele;
 
 import java.util.ArrayList;
 
+/**
+ * @author Huu Khai NGUYEN (Alec)
+ * 
+ * Description: This class allows to set up a game based on the datas which is gotten from player (variation of game, number of player,..) 
+ */
+
 public class InstallerTour {
-	/**
-	 * @author Huu Khai NGUYEN (Alec)
-	 */
 	
 	public InstallerTour(int nombreDeJoueurs, boolean activerJoueurVir) {
 		PiocheCartes piocheCartes = new PiocheCartes();
 		Carte carteCachee = this.retirerCarteCachee(piocheCartes.getPiocheCartes());
 		
-		//Player 1 is always JoueurPhy
+		/** Player 1 is always JoueurPhy */
 		JoueurPhy joueur1 = new JoueurPhy("Joueur 1", 1);
 		Partie.joueur1 = joueur1;
 		Partie.joueur1 = (JoueurPhy) joueur1;
 		
-		if (nombreDeJoueurs == 2 && activerJoueurVir == false) {  //2 player and no virtual player
+		if (nombreDeJoueurs == 2 && activerJoueurVir == false) {  /** 2 player and no virtual player */
 			JoueurPhy joueur2 = new JoueurPhy("Joueur 2", 2);
 			Partie.joueur2 = joueur2;
 			Partie.joueur2 = (JoueurPhy) joueur2;
@@ -26,7 +29,7 @@ public class InstallerTour {
 			Partie.joueursEnJeu[0] = joueur1;
 			Partie.joueursEnJeu[1] = joueur2;
 			
-		} else if (nombreDeJoueurs == 2 && activerJoueurVir == true) {  //2 players with a virtual player
+		} else if (nombreDeJoueurs == 2 && activerJoueurVir == true) {  /** 2 players with a virtual player */
 			JoueurVir joueur2 = new JoueurVir("Joueur Virtuel", 2);
 			Partie.joueur2 = joueur2;
 			Partie.joueur2 = (JoueurVir) joueur2;
@@ -37,7 +40,7 @@ public class InstallerTour {
 			Partie.joueursEnJeu[0] = joueur1;
 			Partie.joueursEnJeu[1] = joueur2;
 			
-		} else if (nombreDeJoueurs == 3 && activerJoueurVir == false) { //3 players and no virtual player
+		} else if (nombreDeJoueurs == 3 && activerJoueurVir == false) { /** 3 players and no virtual player */
 			JoueurPhy joueur2 = new JoueurPhy("Joueur 2", 2);
 			Partie.joueur2 = joueur2;
 			Partie.joueur2 = (JoueurPhy) joueur2;
@@ -52,7 +55,7 @@ public class InstallerTour {
 			Partie.joueursEnJeu[1] = joueur2;
 			Partie.joueursEnJeu[2] = joueur3;
 			
-		} else if (nombreDeJoueurs == 3 && activerJoueurVir == true) {	//3 players with a virtual player
+		} else if (nombreDeJoueurs == 3 && activerJoueurVir == true) {	/** 3 players with a virtual player */
 			JoueurPhy joueur2 = new JoueurPhy("Joueur 2", 2);
 			Partie.joueur2 = joueur2;
 			Partie.joueur2 = (JoueurPhy) joueur2;
@@ -70,10 +73,13 @@ public class InstallerTour {
 		}
 	} 
 	
-	/*
+
+	/**
 	 * Choose one random card from 18 cards in order to set a "hidden card"
 	 * Remove this card out of the game
 	 * Return this hidden card
+	 * @param piocheCartes
+	 * @return
 	 */
 	public Carte retirerCarteCachee(ArrayList<Carte> piocheCartes) {
 		int pos = (int) (Math.random() * 18);
@@ -86,8 +92,9 @@ public class InstallerTour {
 		return carteCachee;
 	}
 	
-	/*
+	/**
 	 * Distribute victory card to each player (in the case of 2 players)
+	 * @param piocheCartes, @param joueur1, @param joueur2
 	 */
 	public void distribuerCarteVictoire(ArrayList<Carte> piocheCartes, Joueur joueur1, Joueur joueur2) {
 		int pos1 = 0, pos2 = 0;
@@ -97,14 +104,14 @@ public class InstallerTour {
 			pos2 = (int) (Math.random() * 17);
 		}
 		
-		/*
+		/**
 		 * Distribute victory card
 		 */
 		joueur1.setCarteVictoire(piocheCartes.get(pos1));
 		joueur2.setCarteVictoire(piocheCartes.get(pos2));
 		
 		
-		/*
+		/**
 		 * Update and get ready for the game
 		 */
 		if (pos1 > pos2) {
@@ -116,7 +123,7 @@ public class InstallerTour {
 		}
 	}
 	
-	/*
+	/**
 	 * Distribute card to each player (in the case for 2 players and 1 virtual player)
 	 */
 	public void distribuerCarteVictoire(ArrayList<Carte> piocheCartes, Joueur joueur1, Joueur joueur2, Joueur joueur3) {
@@ -128,14 +135,14 @@ public class InstallerTour {
 			x = (int) (Math.random() * 17);
 		}
 		
-		/*
+		/**
 		 * Distribute victory card to player
 		 */
 		joueur1.setCarteVictoire(piocheCartes.get(pos));
 		joueur2.setCarteVictoire(piocheCartes.get(pos + x));
 		joueur3.setCarteVictoire(piocheCartes.get(pos + 2 * x));
 		
-		/*
+		/**
 		 * Update and get ready for the game 
 		 */
 		piocheCartes.remove(pos + 2 * x);

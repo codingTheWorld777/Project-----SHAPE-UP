@@ -3,46 +3,44 @@ package Modele;
 import Controleur.ControleurParametre;
 import Controleur.ControleurTableDuJeu;
 
+/**
+ * @author Huu Khai NGUYEN (Alec), Pierre-Louis DAMBRAINE
+ */
+
 public class Partie extends Observable {
-	/**
-	 * @author Huu Khai NGUYEN (Alec)
-	 */
-	
 		
-	/*
+	/**
 	 * Player of game (from 2-3 players)
 	 */
 	public static Joueur joueur1;
 	public static Joueur joueur2;
 	public static Joueur joueur3;
 	
-	//Sets of players 
+	/** Sets of players */ 
 	public static Joueur[] joueursEnJeu;
 	
-	//Hidden card
+	/** Hidden card */
 	public static Carte carteCachee;
 	
-	/*
+	/**
 	 * Number of playable cards 
 	 */
 	public static int nombreDeCartesJouables;
 	
-	/*
-	 * Turn
-	 */
+	/** Turn */
 	public static int tour = 0;
 	public static int tourDeJoueur = 1;
 	
-	/*
+	/**
 	 * Board of game
 	 */
 	private static Carte[][] tableDuJeu = new Carte[5][7];
 	
-	//Constructor
+	/** Constructor */
 	public Partie() {
 		boolean deplacerUneCarte;
 		
-		/*
+		/**
 		 * Step 1:
 		 * Install game: choose number of players, activer virtual player(Yes or No) and choose its level
 		 */
@@ -50,7 +48,8 @@ public class Partie extends Observable {
 		ControleurParametre.setInstallerJeu(installerJeu);
 		ControleurTableDuJeu.setInstallerJeu(installerJeu);
 		
-		/*
+		
+		/**
 		 * Step 2:
 		 * Install a round:
 		 * 	+ Eliminate a card
@@ -59,13 +58,13 @@ public class Partie extends Observable {
 		InstallerTour installerTour = new InstallerTour(installerJeu.getNombreDeJoueurs(), installerJeu.getActiverJoueurVir());
 		ControleurTableDuJeu.setInstallerTour(installerTour);
 		
-		/*
+		
+		/**
 		 * Step 3:
 		 * All player in turn of game and play their turn:
 		 * + Move a card	[OK]
 		 * + Draw and put that card in a possible position 	[OK]
 		 */
-		
 		joueursEnJeu[0].setEnTour(true);  //Choosing Player 1 for the first turn
 		while (Partie.nombreDeCartesJouables > 0) {    
 			for (int i = 0; i < InstallerJeu.getNombreDeJoueurs() && Partie.nombreDeCartesJouables > 0; i++) {
@@ -112,9 +111,10 @@ public class Partie extends Observable {
 			}
 		}
 		
-		/* Step 4:
-		 * The game is now finish: 
-		 * 	+ Compter points of each player and print it on the screen
+		
+		/** 
+		 * Step 4: The game is now finish: 
+		 	* Compter points of each player and print it on the screen
 		 */
 		System.out.println("\n \n");
 		this.imprimerResult();
@@ -128,7 +128,7 @@ public class Partie extends Observable {
 		}
 	}
 	
-	/*
+	/**
 	 * Player play their turn:
 	 * 	+ Move a card
 	 * 	+ Draw ad put that card in a possible position
@@ -185,14 +185,14 @@ public class Partie extends Observable {
 		}
 	}
 	
-	/*
+	/**
 	 * Get table of game "tableDuJeu"
 	 */
 	public static Carte[][] getTableDuJeu() {
 		return Partie.tableDuJeu;
 	}
 	
-	/*
+	/**
 	 * Show the table of game with all features of cards
 	 */
 	public void imprimerResult() {

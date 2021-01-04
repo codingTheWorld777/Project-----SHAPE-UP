@@ -515,7 +515,7 @@ public class Plateau {
 	/* (7)
 	 * Check the game's table if it has at least 1 position that is moveable
 	 */
-	public static boolean nePasDeplacer() {
+	public static boolean nePasPouvoirDeplacer() {
 		for (int y = Plateau.yMinDuTapis; y <= Plateau.yMaxDuTapis; y++) {
 			for (int x = Plateau.xMinDuTapis; x <= Plateau.xMaxDuTapis; x++) {
 				if (Plateau.estDeplacable(x, y)) return false;

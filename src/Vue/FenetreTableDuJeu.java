@@ -1,6 +1,7 @@
 package Vue;
 
 import java.awt.Color;
+
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridLayout;
@@ -28,12 +29,12 @@ import Modele.Observable;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
+/**
+ * @author Huu Khai NGUYEN (Alec)
+ * Description: This class allows to display game's table that includes all players, game's table, cards...
+ */
 
 public class FenetreTableDuJeu extends JFrame implements Observer {
-	/**
-	 * @author Huu Khai NGUYEN (Alec)
-	 */
-	
 	public static int round = 0;
 	public static JLabel roundLabel;
 	private static JButton tourSuivantBtn;
@@ -49,6 +50,7 @@ public class FenetreTableDuJeu extends JFrame implements Observer {
 	private ControleurTableDuJeu controleurJeu;
 	
 	protected ButtonCard[][] cartesBtn;
+	
 	/**
 	 * Create the application.
 	 */
@@ -78,6 +80,12 @@ public class FenetreTableDuJeu extends JFrame implements Observer {
 				}
 			}
 		}
+		
+		try {
+			Thread.sleep(1700);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 	}
 
 	/**
@@ -87,7 +95,7 @@ public class FenetreTableDuJeu extends JFrame implements Observer {
 		ControleurTableDuJeu controleurJeu = new ControleurTableDuJeu();
 		
 		
-		//Set background for game's board
+		/** Set background for game's board */
 		try {
 			JLabel background = new JLabel(new ImageIcon(this.getClass().getResource("../images/background_of_desk.png")));
 			this.setContentPane(background);
@@ -103,7 +111,7 @@ public class FenetreTableDuJeu extends JFrame implements Observer {
 		this.getContentPane().setLayout(null);
 		this.setVisible(true);
 		
-		//Create a table that contains card of game
+		/** Create a table that contains card of game */
 		zoneDeCartePanel = new JPanel();
 		zoneDeCartePanel.setBounds(290, 110, 620, 520);
 		zoneDeCartePanel.setLayout(new GridLayout(5, 7, 7, 4));
@@ -136,8 +144,8 @@ public class FenetreTableDuJeu extends JFrame implements Observer {
 		controleurJeu.setCartesBtn(cartesBtn);
 		
 		
-		// ********Zone of player ********
-		//******** Player 1 ********
+		/** ********Zone of player ******** */
+		/** ******** Player 1 ******** */
 		joueur1Panel = new JPanel();
 		joueur1Panel.setBackground(new Color(107, 142, 35));
 		joueur1Panel.setBounds(50, 38, 164, 229);
@@ -154,7 +162,7 @@ public class FenetreTableDuJeu extends JFrame implements Observer {
 		point1.setBounds(12, 39, 113, 21);
 		joueur1Panel.add(point1);
 		
-		//Set image for victory card (faceDown-verso)
+		/** Set image for victory card (faceDown-verso) */
 		ButtonCard carteVictoire1 = new ButtonCard(controleurJeu.getJoueur(0).getCarteVictoire());;
 		carteVictoire1.setBounds(41, 72, 81, 100);
 		try {
@@ -174,7 +182,7 @@ public class FenetreTableDuJeu extends JFrame implements Observer {
 		controleurJeu.finirMonTour(finirMonTour1, Partie.joueur1, 1);
 		
 		
-		//******** Zone of hidden card ********
+		/** ******** Zone of hidden card ******** */
 		carteCacheeBtn = new ButtonCard(controleurJeu.getCarteCachee());
 		carteCacheeBtn.setBounds(89, 312, 81, 100);
 		 
@@ -188,7 +196,7 @@ public class FenetreTableDuJeu extends JFrame implements Observer {
 		this.getContentPane().add(carteCacheeBtn);
 		
 		
-		//******** Player 2 ********
+		/** ******** Player 2 ******** */
 		joueur2Panel = new JPanel();
 		joueur2Panel.setBackground(UIManager.getColor("Button.select"));
 		joueur2Panel.setBounds(50, 451, 164, 229);
@@ -213,7 +221,7 @@ public class FenetreTableDuJeu extends JFrame implements Observer {
 		point2.setBounds(12, 39, 113, 21);
 		joueur2Panel.add(point2);
 		
-		//Set image for victory card (faceDown-verso)
+		/** Set image for victory card (faceDown-verso) */
 		ButtonCard carteVictoire2 = new ButtonCard(controleurJeu.getJoueur(1).getCarteVictoire());
 		carteVictoire2.setBounds(41, 72, 81, 100);
 		joueur2Panel.add(carteVictoire2);
@@ -235,7 +243,7 @@ public class FenetreTableDuJeu extends JFrame implements Observer {
 		controleurJeu.finirMonTour(finirMonTour2, Partie.joueur2, 2);
 		
 		
-		//******** Player 3 ********
+		/** ******** Player 3 ******** */
 		if (ControleurTableDuJeu.paintJoueur3(controleurJeu.getInstallerJeu(), this) == true) {
 			joueur3Panel = new JPanel();
 			joueur3Panel.setBackground(UIManager.getColor("Button.select"));
@@ -261,7 +269,7 @@ public class FenetreTableDuJeu extends JFrame implements Observer {
 			point3.setBounds(12, 39, 113, 21);
 			joueur3Panel.add(point3);
 			
-			//Set image for victory card (faceDown-verso)
+			/** Set image for victory card (faceDown-verso) */
 			ButtonCard carteVictoire3 = new ButtonCard(controleurJeu.getJoueur(2).getCarteVictoire());
 			carteVictoire3.setBounds(41, 72, 81, 100);
 			joueur3Panel.add(carteVictoire3);
@@ -283,7 +291,7 @@ public class FenetreTableDuJeu extends JFrame implements Observer {
 			controleurJeu.finirMonTour(finirMonTour3, Partie.joueur3, 3);
 		}
 		
-		//******** Zone of card draw ********
+		/** ******** Zone of card draw ******** */
 		piochesCartesPanel = new JPanel();
 		piochesCartesPanel.setBackground(UIManager.getColor("Button.select"));
 		piochesCartesPanel.setBounds(986, 370, 164, 300);
@@ -311,10 +319,9 @@ public class FenetreTableDuJeu extends JFrame implements Observer {
 		
 		piochesCartesPanel.add(piocheLabel);
 		piochesCartesPanel.add(piocheCarte);
+			
 		
-		
-		
-		//******** "Next round" option: Click after finishing a round to pass to next round ********
+		/** ******** "Next round" option: Click after finishing a round to pass to next round ******** */
 		roundLabel = new JLabel("Tour : " + round);
 		roundLabel.setForeground(Color.ORANGE);
 		roundLabel.setFont(new Font("Lucida Grande", Font.BOLD, 15));
@@ -332,9 +339,7 @@ public class FenetreTableDuJeu extends JFrame implements Observer {
 	}
 	
 	
-	/*
-	 * Get player's JPanel (to change its color after finishing its move) 
-	 */
+	/** Get player's JPanel (to change its color after finishing its move)  */
 	public static JPanel getJoueurPanel(int id) {
 		if (id == 1) return joueur1Panel;
 		else if (id == 2) return joueur2Panel;

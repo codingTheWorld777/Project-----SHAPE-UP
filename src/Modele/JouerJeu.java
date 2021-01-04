@@ -5,6 +5,10 @@ import java.awt.EventQueue;
 import Controleur.ControleurParametre;
 import Vue.FenetreParametre;
 
+/**
+ * @author Huu Khai NGUYEN (Alec)
+ */
+
 public class JouerJeu {	
 	public JouerJeu() {
 		EventQueue.invokeLater(new Runnable() {

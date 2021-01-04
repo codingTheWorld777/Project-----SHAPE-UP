@@ -1,6 +1,7 @@
 package Vue;
 
 import java.awt.EventQueue;
+
 import java.awt.Font;
 
 import javax.swing.ButtonGroup;
@@ -14,11 +15,12 @@ import javax.swing.JTextArea;
 
 import Controleur.ControleurParametre;
 
-public class FenetreParametre {
-	/**
-	 * @author Huu Khai NGUYEN (Alec)
-	 */
+/**
+ * @author Huu Khai NGUYEN (Alec)
+ * Description: This class is a installation window that allows player to parameter the game 
+ */
 
+public class FenetreParametre {
 	private JFrame frame;
 	
 	/**
@@ -52,7 +54,7 @@ public class FenetreParametre {
 		
 		ControleurParametre controleurParametre = new ControleurParametre();
 		
-		//******************* Forme of game option {classique, carre, pyramide} *******************
+		/* ****************** Forme of game option {classique, carre, pyramide} ******************* */
 		variantePanel = new JPanel();
 		variantePanel.setBounds(20, 27, 677, 38);
 		frame.getContentPane().add(variantePanel);
@@ -65,7 +67,7 @@ public class FenetreParametre {
 		
 		String[] variantes = {"", "classique", "caree", "pyramide"};
 		
-		//**Handling event** >>ControleurParametre
+		/** Handling event** >>ControleurParametre */
 		JComboBox comboBoxVariante = new JComboBox(variantes);
 		controleurParametre.controleurParametre(ControleurParametre.getInstallerJeu(), comboBoxVariante); 	//Controleur: render variation
 		
@@ -73,7 +75,7 @@ public class FenetreParametre {
 		variantePanel.add(comboBoxVariante);
 		
 		
-		//******************* Number of player option (2-3) *******************
+		/** ******************* Number of player option (2-3) ******************* */
 		JPanel nombreDeJoueursPanel = new JPanel();
 		nombreDeJoueursPanel.setBounds(20, 107, 677, 38);
 		frame.getContentPane().add(nombreDeJoueursPanel);
@@ -87,14 +89,14 @@ public class FenetreParametre {
 		String[] nombreDeJoueurs = {"", "2", "3"};
 		JComboBox comboBoxNombreDeJoueurs = new JComboBox(nombreDeJoueurs);
 		
-		//**Handling event** >> ControleurParametre
+		/** Handling event** >> ControleurParametre */
 		controleurParametre.controleurParametre(ControleurParametre.getInstallerJeu(), comboBoxNombreDeJoueurs);	//Controleur: render number of player
 		
 		comboBoxNombreDeJoueurs.setBounds(292, 6, 62, 27);
 		nombreDeJoueursPanel.add(comboBoxNombreDeJoueurs);
 		
 		
-		//******************* Activate virtual player option (Oui/Non) *******************
+		/** ******************* Activate virtual player option (Oui/Non) ******************* */
 		JPanel activerJoueurVirPanel = new JPanel();
 		activerJoueurVirPanel.setBounds(20, 187, 677, 38);
 		frame.getContentPane().add(activerJoueurVirPanel);
@@ -121,7 +123,7 @@ public class FenetreParametre {
 		controleurParametre.controleurParametre(ControleurParametre.getInstallerJeu(), non);
 		
 		
-		//******************* Choose niveau of virtual player (Facile/Difficile) *******************
+		/** ******************* Choose niveau of virtual player (Facile/Difficile) ******************* */
 		niveauPanel = new JPanel();
 		niveauPanel.setBounds(57, 235, 637, 38);
 		frame.getContentPane().add(niveauPanel);
@@ -150,13 +152,13 @@ public class FenetreParametre {
 		controleurParametre.controleurParametre(controleurParametre.getInstallerJeu(), difficile);
 		
 		
-		//******************* Validate button *******************
+		/** ******************* Validate button ******************* */
 		valider = new JButton("Valider");
 		
 		valider.setBounds(300, 418, 118, 34);
 		frame.getContentPane().add(valider);
 		
-		//**Handling event** >>ControleurParametre
+		/** **Handling event** >>ControleurParametre** */
 		controleurParametre.controleurParametre(controleurParametre.getInstallerJeu(), valider);
 	}
 	

@@ -7,10 +7,13 @@ import java.net.URL;
 
 import javax.imageio.ImageIO;
 
+/**
+ * @author Huu Khai NGUYEN (Alec)
+ * 
+ * Description: This class defines card's properties
+ */
+
 public class Carte {
-	/**
-	 * @author Huu Khai NGUYEN (Alec)
-	 */
 	
 	/**
 	 * There are 3 possible shapes for a card: circle, triangle, square.
@@ -60,7 +63,7 @@ public class Carte {
 	public boolean estSurTableDuJeu;
 
 	/**
-	 * Constructor
+	 * Constructor: Define a card with its properties (shape, filling, color)
 	 * @param forme
 	 * @param nature
 	 * @param couleur

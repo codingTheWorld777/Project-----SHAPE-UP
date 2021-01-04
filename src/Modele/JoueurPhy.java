@@ -4,16 +4,24 @@ import java.util.Scanner;
 
 import Controleur.ControleurTableDuJeu;
 
+/**
+ * @author Huu Khai NGUYEN (Alec)
+ * Description: JoueurPhy class allows us to have a better view of what physics players might be able to have
+ * A real player can do: 
+ 	* Move a card 
+ 	* Place a card	 
+ */
+
 public class JoueurPhy extends Joueur {
-	/**
-	 *@author Huu Khai NGUYEN (Alec)
-	 */
+	/** Controler that control the game */
 	private ControleurTableDuJeu controleurJeu =  new ControleurTableDuJeu();
 	
+	/** Constructor JoueurPhy */
 	public JoueurPhy(String name, int id) {
 		super(name, id);
 	}
 	
+	/** Draw and place a card */
 	public void piocherCarte(Carte[][] tableDuJeu, int tour) {
 		Plateau.determinerFormeDuTapis(Plateau.cartesJouees);
 		System.out.println("Vous avez pioché la carte : " + PiocheCartes.getPiocheCartes().get(Partie.nombreDeCartesJouables - 1).getForme() + " " + PiocheCartes.getPiocheCartes().get(Partie.nombreDeCartesJouables - 1).getNature() + " " + PiocheCartes.getPiocheCartes().get(Partie.nombreDeCartesJouables - 1).getCouleur());
@@ -59,7 +67,7 @@ public class JoueurPhy extends Joueur {
 		}
 		
 		
-		/*
+		/**
 		 * First card on the table:
 		 	* Choose coordinates (x, y) 
 		 	* Add this card to table in order to print it on the screen
@@ -136,7 +144,8 @@ public class JoueurPhy extends Joueur {
 		}
 	}
 	
-	/*
+	/**
+	 * Move a card
 	 * Choose and move a card to a new position (if it's possible) by respecting the rule of mouvement
 	 */
 	public void deplacerCarte() {
@@ -172,7 +181,7 @@ public class JoueurPhy extends Joueur {
 			System.out.println("BesoinAjouter = " + Plateau.besoinAjouter);
 			
 			if (check) {
-				//Can delete this loop (If it's alright)
+				//Can delete this loop
 				System.out.print("Deplacer vers: ");
 				for (int k = 0; k < Plateau.positionDeDeplacer.size(); k++) {
 					System.out.print("(" + Plateau.positionDeDeplacer.get(k).x + ", " + Plateau.positionDeDeplacer.get(k).y + "), ");
@@ -206,7 +215,7 @@ public class JoueurPhy extends Joueur {
 				
 				for (Coordonnees positionDeDeplacer: Plateau.positionDeDeplacer) {
 					if (positionDeDeplacer.x == x1 && positionDeDeplacer.y == y1) {
-						/*
+						/**
 						 * if all conditions of mouvement are satisfied: 
 						 * 	+ Remove card (for example card X) out of the table of game
 						 * 	+ Delete its position out of Plateau.possibilites and update all possible position
@@ -223,7 +232,7 @@ public class JoueurPhy extends Joueur {
 						Partie.getTableDuJeu()[y1][x1] = carte;
 						if (Plateau.besoinAjouter == false) Plateau.ajouterCoordonneePossible(x1, y1);
 						
-						/*
+						/**
 						 * Check if there are some possible positions of mouvement of card that has the same possible position
 						 * 	with are positioned around this card 
 						 */

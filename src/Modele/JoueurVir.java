@@ -1,25 +1,29 @@
 package Modele;
 
 import java.util.ArrayList;
+
 import java.util.Collections;
 
+/**
+ * @author Huu Khai NGUYEN (Alec), Pierre-Louis DAMBRAINE
+ * Description: This class inludes all the features that a virtual player should have
+ */
+
 public class JoueurVir extends Joueur implements Strategie {
-	/**
-	 * @author Huu Khai NGUYEN (Alec), Pierre-Louis DAMBRAINE
-	 */
-	
+	/** Level of virtual player */
 	private String niveau;
 	
-	//constructor
+	/** Constructor JoueurVir */
 	public JoueurVir(String name, int id) {
 		super(name, id);
 		this.niveau = this.getNiveau();
 	}
 	
+	/** Draw and place a card automatically */
 	public void piocherCarte(Carte[][] tableDuJeu, int tour) {
 		Plateau.determinerFormeDuTapis(Plateau.cartesJouees);
 		
-		if (this.niveau.compareTo("F") == 0) { //easy level
+		if (this.niveau.compareTo("F") == 0) { 		/** Easy level */
 			int i = (int) (Math.random() * Plateau.possibilites.size());
 			int x = Plateau.possibilites.get(i).x;
 			int y = Plateau.possibilites.get(i).y;
@@ -40,7 +44,7 @@ public class JoueurVir extends Joueur implements Strategie {
 			PiocheCartes.getPiocheCartes().remove(Partie.nombreDeCartesJouables - 1);
 			Partie.nombreDeCartesJouables--;
 			
-			/*
+			/**
 			 * Set changed and notify observer
 			 */
 			this.setChanged();
@@ -48,7 +52,7 @@ public class JoueurVir extends Joueur implements Strategie {
 			
 			this.aPiocheUneCarte = true;
 			
-		} else if (this.niveau.compareTo("D") == 0) { //hard level
+		} else if (this.niveau.compareTo("D") == 0) {  	/** Hard level */
 			int X = 0;
 			int Y = 0;
 			
@@ -95,7 +99,7 @@ public class JoueurVir extends Joueur implements Strategie {
 		
 		Plateau.updateTableDuJeu();
 		
-		/*
+		/**
 		 * Set changed and notify observer
 		 */
 		this.setChanged();
@@ -105,6 +109,7 @@ public class JoueurVir extends Joueur implements Strategie {
 		
 	}
 	
+	/** Move a card automatically */
 	public void deplacerCarte() {
 		Plateau.determinerFormeDuTapis(Plateau.cartesJouees);
 		
@@ -118,7 +123,7 @@ public class JoueurVir extends Joueur implements Strategie {
 				x = (int) (Math.random() * Partie.getTableDuJeu()[y].length);
 			
 				check = Plateau.estDeplacable(x, y);
-			} // thus Plateau.tableDuJeu[y][x] is moveable
+			} /**  thus Plateau.tableDuJeu[y][x] is moveable */
 			
 			Plateau.estDeplacable(x, y);
 			if (Plateau.positionDeDeplacer.size() != 0) {
@@ -127,14 +132,14 @@ public class JoueurVir extends Joueur implements Strategie {
 				int y1 = Plateau.positionDeDeplacer.get(i).y;
 				
 				Carte carte = Partie.getTableDuJeu()[y][x];
-				carte.setCoordonnees(x1, y1); 	//reset coordinate of card
+				carte.setCoordonnees(x1, y1); 	/** reset coordinate of card */
 				Partie.getTableDuJeu()[y][x] = null;
 				Plateau.supprimerCoordonnee(x, y);
 				Plateau.misAJourListePossibilites(x, y);
 				Partie.getTableDuJeu()[y1][x1] = carte;
 				if (Plateau.besoinAjouter == false) Plateau.ajouterCoordonneePossible(x1, y1);
 				
-				/*
+				/**
 				 * Check if there are some possible positions of mouvement card that has the same possible position
 				 * 	with are positioned around this card 
 				 */
@@ -163,7 +168,7 @@ public class JoueurVir extends Joueur implements Strategie {
 				Plateau.updateTableDuJeu();
 				System.out.println("Le joueur virtuel fini de deplacer une carte");
 				
-				/*
+				/**
 				 * Set changed and notify observer
 				 */
 				this.setChanged();
@@ -187,10 +192,10 @@ public class JoueurVir extends Joueur implements Strategie {
 			 	*  with comparison of attributes
 			 */
 			
-			//1)
-			int X = -1, Y = -1;  		//X, Y: original position 
-			int X1 = -1, Y1 = -1;		//X1, Y1: position after moving
-			Coordonnees pos1, pos2;		//positions in case 2 options aren't sastified
+			/** 1) */
+			int X = -1, Y = -1;  		/** X, Y: original position */ 
+			int X1 = -1, Y1 = -1;		/** X1, Y1: position after moving */
+			Coordonnees pos1, pos2;		/** positions in case 2 options aren't sastified */
 			
 			ArrayList<Integer> setOfMaximumPoints = new ArrayList<Integer>();
 			ArrayList<Coordonnees> listPosDeCarteDeplacable = new ArrayList<Coordonnees>();
@@ -267,11 +272,8 @@ public class JoueurVir extends Joueur implements Strategie {
 				
 			}
 			
-			//2)
+			/** 2) */
 			if (!setOfMaximumPoints.isEmpty()) {
-//				for (int i = 0; !setOfMaximumPoints.isEmpty() && i < setOfMaximumPoints.size(); i++) {
-//					System.out.print("SetOfMaximumPoints: " + setOfMaximumPoints.get(i) + ", ");
-//				}
 				for (int i = 0; !setOfMaximumPoints.isEmpty() && i < setOfMaximumPoints.size(); i++) {
 					if (setOfMaximumPoints.get(i) == Collections.max(setOfMaximumPoints)) {
 						X = listPosDeCarteDeplacable.get(i).x;
@@ -285,11 +287,13 @@ public class JoueurVir extends Joueur implements Strategie {
 				}
 				
 			} else {
-				//In this case, the player's most beneficial ability is to move a card on the board to a position such that 
-				//exactly 1 adjacent card has the same nature (or color) as it and is the same as the winning card.
+				/**
+				 * In this case, the player's most beneficial ability is to move a card on the board to a position such that
+				 * exactly 1 adjacent card has the same nature (or color) as it and is the same as the winning card. 
+				 */
 				boolean check = false;
 				
-				outerLoop: //Label to break out the nested loops
+				outerLoop: /** Label to break out the nested loops */
 				for (int i = 0; i < Partie.getTableDuJeu().length; i++) {
 					for (int j = 0; j < Partie.getTableDuJeu()[i].length; j++) {
 						check = Plateau.estDeplacable(j, i);
@@ -375,7 +379,7 @@ public class JoueurVir extends Joueur implements Strategie {
 				} //end loops by i
 			} 
 			
-			//In case the first two steps aren't sastified 
+			/** In case the first two steps aren't sastified */ 
 			if (X < 0 && Y < 0) {
 				for (int i = 0; i < Plateau.cartesJouees.size(); i++) {
 					int x0 = Plateau.cartesJouees.get(i).getCoordonnees().x;
@@ -403,7 +407,7 @@ public class JoueurVir extends Joueur implements Strategie {
 			}
 			if (Plateau.besoinAjouter == false) Plateau.ajouterCoordonneePossible(X1, Y1);
 				
-			/*
+			/**
 			 * Check if there are some possible positions of mouvement of card that has the same possible position
 			 * 	with are positioned around this card 
 			 */
@@ -432,7 +436,7 @@ public class JoueurVir extends Joueur implements Strategie {
 			Plateau.updateTableDuJeu();
 			System.out.println("Le joueur virtuel fini de deplacer une carte");
 			
-			/*
+			/**
 			 * Set changed and notify observer
 			 */
 			this.setChanged();
@@ -441,7 +445,7 @@ public class JoueurVir extends Joueur implements Strategie {
 		}	
 	}
 	
-	/*
+	/**
 	 * Get level for virtuel player
 	 * There are two levels of this type of player: easy and difficult
 	 */
@@ -449,12 +453,12 @@ public class JoueurVir extends Joueur implements Strategie {
 		return this.niveau;
 	}
 	
-	// D or F
+	/**  D or F */
 	public void setStrategie(String niveau) {
 		this.niveau = niveau;
 	}
 	
-	//Condition in section 2) of method 'deplacerCarte' hard level
+	/** Condition in section 2) of method 'deplacerCarte' hard level */
 	public boolean conditionParcoursX(int X1, int Y1, Carte carteDeplacee) {
 		if (X1 - 1 >= 0 && Partie.getTableDuJeu()[Y1][X1 - 1] != null) {
 			boolean condition1 = (carteDeplacee.getNature() == Partie.getTableDuJeu()[Y1][X1 - 1].getNature())
@@ -477,7 +481,6 @@ public class JoueurVir extends Joueur implements Strategie {
 		} 
 		return false;
 	}
-	
 	
 	public boolean conditionParcoursY(int X1, int Y1, Carte carteDeplacee) {
 		if (Y1 - 1 >= 0 && Partie.getTableDuJeu()[Y1 - 1][X1] != null) {

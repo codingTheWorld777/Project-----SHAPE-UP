@@ -1,6 +1,7 @@
 package Controleur;
 
 import java.awt.EventQueue;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -17,10 +18,12 @@ import Modele.Partie;
 import Vue.FenetreParametre;
 import Vue.FenetreTableDuJeu;
 
+/**
+ * @author Huu Khai NGUYEN (Alec) 
+ * Description: This class allows to control the installation window
+ */
+
 public class ControleurParametre {
-	/**
-	 * @author Huu Khai NGUYEN (Alec) 
-	 */
 	
 	private static InstallerJeu installerJeu;
 	
@@ -109,7 +112,7 @@ public class ControleurParametre {
 							|| ControleurTableDuJeu.getInstallerJeu().getActiverJoueurVir() == false) {
 						ControleurParametre.fenetreParametreFrame.dispose();
 						
-						//Thread for game in CMD
+						/** Thread for game in CMD */
 						Thread threadCMD = new Thread() {
 							public void run() {
 								System.out.println("Start " + Thread.currentThread().getName());
@@ -119,8 +122,10 @@ public class ControleurParametre {
 						threadCMD.start();
 						
 						
-						//Thread for GUI
-						//Run this thread of "FenetreTableDuJeu" after 2 seconds to wait for "InstallerTour" is finish
+						/**
+						 * Thread for GUI
+						 * Run this thread of "FenetreTableDuJeu" after 2 seconds to wait for "InstallerTour" is finish
+						 */
 						try {
 							Thread.sleep(1800);
 						} catch (InterruptedException er) {
@@ -146,7 +151,7 @@ public class ControleurParametre {
 	}
 	
 	
-	/*
+	/**
 	 * Set and get installerJeu variable from Class InstallerJeu in package.Modele when it is created
 	 */
 	public static void setInstallerJeu(InstallerJeu installerJeu) {
@@ -158,7 +163,7 @@ public class ControleurParametre {
 	}
 	
 	
-	/*
+	/**
 	 * Set and get fenetreParametre's frame for handling event of JButton "valider"
 	 */
 	public static void setFenetreParametre(JFrame fenetreParametreFrame) {
