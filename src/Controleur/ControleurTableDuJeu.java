@@ -27,12 +27,13 @@ import Modele.Plateau;
 import Vue.ButtonCard;
 import Vue.FenetreTableDuJeu;
 
+/**
+ * @author Huu Khai NGUYEN (Alec), Pierre-Louis DAMBRAINE
+ * Description: This class allows to control the game (includes GUI and datas)
+ */
+
 public class ControleurTableDuJeu {
-	/**
-	 * @author Huu Khai NGUYEN (Alec), Pierre-Louis DAMBRAINE
-	 */
-	
-	
+
 	private static FenetreTableDuJeu tableDuJeu;
 	
 	protected static InstallerJeu installerJeu;
@@ -66,7 +67,7 @@ public class ControleurTableDuJeu {
 				 * Click the button in 'piocheCarte' zone to draw a card
 				 */
 				try {
-					if (FenetreTableDuJeu.carteJouee.getCarteTiree() && pouvoirPiocher) {
+					if (FenetreTableDuJeu.carteJouee.getCarteTiree() && pouvoirPiocher && !joueur.getNom().equals("Joueur Virtuel")) {
 						if (Partie.tour == 0 && joueur.getEnTour() == true) {
 							coord = btnCarte.getCoordonnees();
 							joueur.setCoordAPlacer(coord.x, coord.y);
@@ -112,9 +113,9 @@ public class ControleurTableDuJeu {
 				 */
 				try {
 					if (Plateau.isInCartesJouees(btnCarte.getCoordonnees().x, btnCarte.getCoordonnees().y) 
-							&& (Plateau.nePasDeplacer() == false)) {
+							&& (Plateau.nePasPouvoirDeplacer() == false) && !joueur.getNom().equals("Joueur Virtuel")) {
 						ControleurTableDuJeu.setBorderColorToOrg();
-						
+
 						if (Plateau.estDeplacable(btnCarte.getCoordonnees().x, btnCarte.getCoordonnees().y)) {
 							joueur.setCoordChoisieADeplacer(btnCarte.getCoordonnees().x, btnCarte.getCoordonnees().y);
 							
@@ -147,7 +148,9 @@ public class ControleurTableDuJeu {
 				 		* Click 'ButtonCard' on game's table to move this card to this position 
 				 */
 				try {
-					if (joueur.getCoordChoisieADeplacer() != null && Plateau.isInPositionDeDeplacer(btnCarte.getCoordonnees().x, btnCarte.getCoordonnees().y)) {
+					if (!joueur.getNom().equals("Joueur Virtuel") && joueur.getCoordChoisieADeplacer() != null 
+						&& Plateau.isInPositionDeDeplacer(btnCarte.getCoordonnees().x, btnCarte.getCoordonnees().y)) {
+						
 						int x1 = btnCarte.getCoordonnees().x;
 						int y1 = btnCarte.getCoordonnees().y;
 						
@@ -246,15 +249,17 @@ public class ControleurTableDuJeu {
 		
 	}
 	
-	/*
-	 * finish a round of a virtual player
+	/**
+	 * Finish a round of a virtual player
 	 * Activate the next player
 	 */
 	public static void finirVirtualTour(JoueurVir joueur, int id) {
 		if (joueur.getId() == Partie.tourDeJoueur) {
-				joueur.pouvoirFinirMonTour = true;		
+			joueur.pouvoirFinirMonTour = true;
+			permettreDeDeplacer = true;
 				
-			/* 1) Change color of player in turn to green and the others to pink
+			/* *
+			 * 1) Change color of player in turn to green and the others to pink
 			 * 2) Count scores of each player after 1 turn and show its in screen
 			 */
 			Compteur compteurPoint = new Compteur();
@@ -285,6 +290,7 @@ public class ControleurTableDuJeu {
 		}
 	}
 	
+	/** Pass to next round after finishing a round */
 	public void tourSuivant(JButton tourSuivantBtn) {
 		tourSuivantBtn.addActionListener(new ActionListener() {
 			@Override
@@ -315,7 +321,7 @@ public class ControleurTableDuJeu {
 	}
 	
 	
-	/*
+	/**
 	 * Change border's color of card to origin for card in list 'positionDeDeplacer'
 	 */
 	public static void setBorderColorToOrg() {
@@ -332,7 +338,7 @@ public class ControleurTableDuJeu {
 		if (!pouvoirPiocher) ControleurTableDuJeu.setBorderColorToOrg1();
 	}
 	
-	/*
+	/**
 	 * Change border's color of card to origin for card in list 'positionDeDeplacer'
 	 */
 	public static void setBorderColorToOrg1() {
@@ -375,28 +381,28 @@ public class ControleurTableDuJeu {
 		this.cartesBtn = cartesBtn;
 	}
 	
-	/*
+	/**
 	 * Get hidden card from "Partie"
 	 */
 	public Carte getCarteCachee() {
 		return Partie.carteCachee;
 	}
 	
-	/*
+	/**
 	 * Get the drawn card from "PiocheCartes"
 	 */
 	public static Carte getCartePiochee() {
 		return PiocheCartes.getPiocheCartes().get(PiocheCartes.getPiocheCartes().size() - 1);
 	}
 	
-	/*
+	/**
 	 * Get the number of playable cards
 	 */
 	public int getNombreCarteJouable() {
 		return PiocheCartes.getPiocheCartes().size();
 	}
 	
-	/*
+	/**
 	 * Set and get installerJeu variable from class Partie in package.Modele when it is created
 	 */
 	public static void setInstallerJeu(InstallerJeu installerJeu) {
@@ -407,7 +413,7 @@ public class ControleurTableDuJeu {
 		return ControleurTableDuJeu.installerJeu;
 	}
 	
-	/*
+	/**
 	 * Set and get installerTour variable from class Partie in package,Modele when it is created
 	 */
 	public static void setInstallerTour(InstallerTour installerTour) {
