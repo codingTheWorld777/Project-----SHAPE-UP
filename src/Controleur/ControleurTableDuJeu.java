@@ -70,11 +70,28 @@ public class ControleurTableDuJeu {
 					if (FenetreTableDuJeu.carteJouee.getCarteTiree() && pouvoirPiocher && !joueur.getNom().equals("Joueur Virtuel")) {
 						if (Partie.tour == 0 && joueur.getEnTour() == true) {
 							coord = btnCarte.getCoordonnees();
-							joueur.setCoordAPlacer(coord.x, coord.y);
 							
-							Image imgRecto = ControleurTableDuJeu.getCartePiochee().getCarteImageRecto();
-							imgRecto = imgRecto.getScaledInstance(btnCarte.getWidth(), btnCarte.getHeight(), Image.SCALE_DEFAULT);
-							btnCarte.setIcon(new ImageIcon(imgRecto));
+							if (installerJeu.getVarianteDuTapis().equals("P")) {
+								if (coord.x == 0 || coord.x == 6) {
+									joueur.setCoordAPlacer(coord.x, coord.y);
+									
+									Image imgRecto = ControleurTableDuJeu.getCartePiochee().getCarteImageRecto();
+									imgRecto = imgRecto.getScaledInstance(btnCarte.getWidth(), btnCarte.getHeight(), Image.SCALE_DEFAULT);
+									btnCarte.setIcon(new ImageIcon(imgRecto));
+								} else {
+									for (int y = 0; y < 7; y++) {
+										cartesBtn[y][0].setBorder(BorderFactory.createLineBorder(Color.green));
+										cartesBtn[y][6].setBorder(BorderFactory.createLineBorder(Color.green));
+									}
+								}
+								
+							} else {
+								joueur.setCoordAPlacer(coord.x, coord.y);
+								
+								Image imgRecto = ControleurTableDuJeu.getCartePiochee().getCarteImageRecto();
+								imgRecto = imgRecto.getScaledInstance(btnCarte.getWidth(), btnCarte.getHeight(), Image.SCALE_DEFAULT);
+								btnCarte.setIcon(new ImageIcon(imgRecto));							
+							}
 							
 							FenetreTableDuJeu.carteJouee.setCarteTiree(false);
 							ControleurTableDuJeu.getCartePiochee().estSurTableDuJeu = true;

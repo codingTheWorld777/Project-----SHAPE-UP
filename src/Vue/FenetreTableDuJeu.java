@@ -35,7 +35,7 @@ import java.awt.event.ActionEvent;
  */
 
 public class FenetreTableDuJeu extends JFrame implements Observer {
-	public static int round = 0;
+	public static int round = 1;
 	public static JLabel roundLabel;
 	private static JButton tourSuivantBtn;
 	
@@ -82,7 +82,7 @@ public class FenetreTableDuJeu extends JFrame implements Observer {
 		}
 		
 		try {
-			Thread.sleep(1700);
+			Thread.sleep(1400);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}

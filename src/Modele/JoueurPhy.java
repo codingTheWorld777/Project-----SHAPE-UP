@@ -53,6 +53,7 @@ public class JoueurPhy extends Joueur {
 
 		
 		while (tour == 0 && InstallerJeu.getVarianteDuTapis() == "P") {
+			if (x == 0 || x == 6) break;
 			System.out.println("Choisir l'abscisse x de carte parmis 0 et 6 pour la premiere fois (Pyramide): ");
 			x = src.nextInt();
 			if (x == 0 || x == 6) break;
