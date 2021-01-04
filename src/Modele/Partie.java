@@ -142,6 +142,9 @@ public class Partie extends Observable {
 					joueur.setEnTour(false);
 					joueursEnJeu[joueur.id].setEnTour(true);
 				} else if (joueur.id == 2) {
+					if (joueur.getNom().equals("Joueur Virtuel") && tour >= 3) {
+						joueur.deplacerCarte();
+					}
 					joueur.piocherCarte(Partie.tableDuJeu, tour);
 					
 					joueur.setEnTour(false);
@@ -166,10 +169,17 @@ public class Partie extends Observable {
 					joueursEnJeu[2].setEnTour(true);
 					
 				} else if (joueur.id == 3) {
+					if (joueur.getNom().equals("Joueur Virtuel") && tour >= 3) {
+						joueur.deplacerCarte();
+					}
 					joueur.piocherCarte(Partie.tableDuJeu, tour);
 					
 					joueur.setEnTour(false);
 					joueursEnJeu[0].setEnTour(true);
+					
+					if (joueur.getNom().equals("Joueur Virtuel")) {
+						ControleurTableDuJeu.finirVirtualTour((JoueurVir) joueur, joueur.getId());;
+					}
 				}
 			}
 		}
