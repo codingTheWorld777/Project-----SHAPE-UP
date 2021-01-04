@@ -20,6 +20,7 @@ import Modele.Coordonnees;
 import Modele.InstallerJeu;
 import Modele.InstallerTour;
 import Modele.Joueur;
+import Modele.JoueurVir;
 import Modele.Partie;
 import Modele.PiocheCartes;
 import Modele.Plateau;
@@ -227,7 +228,7 @@ public class ControleurTableDuJeu {
 						
 						if (i == 1) 
 							FenetreTableDuJeu.point2.setText("Point: " + compteurPoint.getPointsJoueurs(Partie.joueursEnJeu[i].getId()));
-						
+					
 						if (Partie.joueursEnJeu.length == 3 && i == 2) 
 							FenetreTableDuJeu.point3.setText("Point: " + compteurPoint.getPointsJoueurs(Partie.joueursEnJeu[i].getId()));
 
@@ -236,12 +237,52 @@ public class ControleurTableDuJeu {
 					pouvoirPiocher = true;		
 					joueur.coordChoisieADeplacer = null;
 					joueur.coordADeplacer = null;
-					
+						
 					ControleurTableDuJeu.setBorderColorToOrg();
 				}
 			}
 		});
 
+		
+	}
+	
+	/*
+	 * finish a round of a virtual player
+	 * Activate the next player
+	 */
+	public static void finirVirtualTour(JoueurVir joueur, int id) {
+		if (joueur.getId() == Partie.tourDeJoueur) {
+				joueur.pouvoirFinirMonTour = true;		
+				
+			/* 1) Change color of player in turn to green and the others to pink
+			 * 2) Count scores of each player after 1 turn and show its in screen
+			 */
+			Compteur compteurPoint = new Compteur();
+			compteurPoint.compter(Partie.getTableDuJeu());
+			
+			for (int i = 0; i < Partie.joueursEnJeu.length; i++) {
+				//1)
+				if (Partie.joueursEnJeu[i].getEnTour()) FenetreTableDuJeu.getJoueurPanel(i + 1).setBackground(joueurBackg);
+				else FenetreTableDuJeu.getJoueurPanel(i + 1).setBackground(UIManager.getColor("Button.select"));
+				
+				//2)
+				if (i == 0) 
+					FenetreTableDuJeu.point1.setText("Point: " + compteurPoint.getPointsJoueurs(Partie.joueursEnJeu[i].getId()));
+				
+				if (i == 1) 
+					FenetreTableDuJeu.point2.setText("Point: " + compteurPoint.getPointsJoueurs(Partie.joueursEnJeu[i].getId()));
+			
+				if (Partie.joueursEnJeu.length == 3 && i == 2) 
+					FenetreTableDuJeu.point3.setText("Point: " + compteurPoint.getPointsJoueurs(Partie.joueursEnJeu[i].getId()));
+
+			}
+
+			pouvoirPiocher = true;		
+			joueur.coordChoisieADeplacer = null;
+			joueur.coordADeplacer = null;
+				
+			ControleurTableDuJeu.setBorderColorToOrg();
+		}
 	}
 	
 	public void tourSuivant(JButton tourSuivantBtn) {

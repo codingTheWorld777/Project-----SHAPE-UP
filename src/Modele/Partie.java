@@ -146,6 +146,10 @@ public class Partie extends Observable {
 					
 					joueur.setEnTour(false);
 					joueursEnJeu[0].setEnTour(true);
+					
+					if (joueur.getNom().equals("Joueur Virtuel")) {
+						ControleurTableDuJeu.finirVirtualTour((JoueurVir) joueur, joueur.getId());;
+					}
 				}
 
 			} else if (InstallerJeu.getNombreDeJoueurs() == 3) {

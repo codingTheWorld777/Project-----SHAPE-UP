@@ -46,6 +46,8 @@ public class JoueurVir extends Joueur implements Strategie {
 			this.setChanged();
 			this.notifyObservers(null);
 			
+			this.aPiocheUneCarte = true;
+			
 		} else if (this.niveau.compareTo("D") == 0) { //hard level
 			int X = 0;
 			int Y = 0;
@@ -98,6 +100,8 @@ public class JoueurVir extends Joueur implements Strategie {
 		 */
 		this.setChanged();
 		this.notifyObservers(null);
+		
+		this.aPiocheUneCarte = true;
 		
 	}
 	
