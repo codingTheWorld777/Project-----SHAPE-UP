@@ -63,7 +63,7 @@ public class ControleurParametre {
 				AbstractButton selectedValue = (AbstractButton) e.getSource();
 				
 				try {
-					//In case activerJoueurVirRadioBtn is selected
+					/** In case activerJoueurVirRadioBtn is selected */
 					if (selectedValue.getText().equals("Oui")) {
 						InstallerJeu.setActiverJoueurVir(true);
 						InstallerJeu.activerJoueurVirValidation = 1;
@@ -77,7 +77,7 @@ public class ControleurParametre {
 						FenetreParametre.getNiveauPanel().setVisible(false);
 					}
 						
-					//In case niveauRaidoBtn is selected
+					/** In case niveauRaidoBtn is selected */
 					if (selectedValue.getText().equals("Facile")) {
 						InstallerJeu.setNiveau("F");
 						InstallerJeu.niveauValidation = 1;
@@ -112,7 +112,7 @@ public class ControleurParametre {
 							|| ControleurTableDuJeu.getInstallerJeu().getActiverJoueurVir() == false) {
 						ControleurParametre.fenetreParametreFrame.dispose();
 						
-						/** Thread for game in CMD */
+						/** Thread for game in CMD. Thread's name: Thread-0 */
 						Thread threadCMD = new Thread() {
 							public void run() {
 								System.out.println("Start " + Thread.currentThread().getName());
@@ -125,6 +125,7 @@ public class ControleurParametre {
 						/**
 						 * Thread for GUI
 						 * Run this thread of "FenetreTableDuJeu" after 2 seconds to wait for "InstallerTour" is finish
+						 * Thread's name: AWT-EventQueue-0
 						 */
 						try {
 							Thread.sleep(1800);
@@ -136,9 +137,8 @@ public class ControleurParametre {
 							public void run() {
 								try {								
 									FenetreTableDuJeu tableDuJeu = new FenetreTableDuJeu();
-									ControleurTableDuJeu controleurJeu = new ControleurTableDuJeu();
-									controleurJeu.setFenetreTableDuJeu(tableDuJeu);
-								
+									ControleurTableDuJeu.setFenetreTableDuJeu(tableDuJeu);
+		
 								} catch (Exception e) {
 									e.printStackTrace();
 								}

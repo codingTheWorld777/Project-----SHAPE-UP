@@ -1,6 +1,7 @@
 package Controleur;
 
 import java.awt.Color;
+import java.awt.EventQueue;
 import java.awt.Image;
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
@@ -33,7 +34,8 @@ import Vue.FenetreTableDuJeu;
  */
 
 public class ControleurTableDuJeu {
-
+	private static Thread threadCMD;
+	
 	private static FenetreTableDuJeu tableDuJeu;
 	
 	protected static InstallerJeu installerJeu;
@@ -221,7 +223,7 @@ public class ControleurTableDuJeu {
 	 * @param finirMonTour
 	 */
 	public static void finirMonTour(JButton finirMonTourBtn, Joueur joueur, int id) {
-		boolean finirMonTour = false;
+		
 		finirMonTourBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -257,7 +259,7 @@ public class ControleurTableDuJeu {
 					pouvoirPiocher = true;		
 					joueur.coordChoisieADeplacer = null;
 					joueur.coordADeplacer = null;
-						
+					
 					ControleurTableDuJeu.setBorderColorToOrg();
 				}
 			}
@@ -310,14 +312,94 @@ public class ControleurTableDuJeu {
 	/** Pass to next round after finishing a round */
 	public void tourSuivant(JButton tourSuivantBtn) {
 		tourSuivantBtn.addActionListener(new ActionListener() {
+			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (Partie.nombreDeCartesJouables == 0) {
+				if (Partie.nombreDeCartesJouables == 0 && ControleurTableDuJeu.tableDuJeu.round <= 4) {
 					FenetreTableDuJeu.round++;
 					FenetreTableDuJeu.roundLabel.setText("Tour : " + FenetreTableDuJeu.round);
-					System.out.println("Repaint game!!");
+					System.out.println("\n \nRepaint game!!");
 					
-					//Pass to next round: (Release memory + InstallerTour + new Partie() + Repaint GUI
+					/** Pass to next round: (Release memory + InstallerTour + new Partie() + Repaint GUI */
+					Plateau.getListeDeCartesJouees().clear();
+					Plateau.getPossibilites().clear();
+					Plateau.setBesoinAjouter(false);
+					
+					threadCMD = new Thread() {
+						public void run() {
+							InstallerTour installerTour = new InstallerTour(InstallerJeu.getNombreDeJoueurs(), InstallerJeu.getActiverJoueurVir());
+							ControleurTableDuJeu.setInstallerTour(installerTour);
+							
+							while (Partie.nombreDeCartesJouables > 0) {    
+								for (int i = 0; i < InstallerJeu.getNombreDeJoueurs() && Partie.nombreDeCartesJouables > 0; i++) {
+									for (int k = 0; k < InstallerJeu.getNombreDeJoueurs(); k++) {
+										if (Partie.joueursEnJeu[k].getEnTour() == true) {
+											Partie.tourDeJoueur = Partie.joueursEnJeu[k].getId();;
+											break;
+										}
+									}
+									
+									System.out.println(Partie.joueursEnJeu[i].getNom());
+									if (Partie.tour == 0) {
+										Partie.jouerSonTour(Partie.joueursEnJeu[i], Partie.joueursEnJeu[i].getEnTour(), Partie.tour);		//draw and play a card
+										Partie.tour++;
+										
+										while (Partie.joueursEnJeu[i].pouvoirFinirMonTour == false) {
+											try {
+												Thread.sleep(2000);
+											} catch (InterruptedException e) {
+												e.printStackTrace();
+											}
+										} 
+										
+										Partie.joueursEnJeu[i].aPiocheUneCarte = false;
+										Partie.joueursEnJeu[i].pouvoirFinirMonTour = false;
+										
+									} else if (Partie.tour >= 1) {
+										Partie.jouerSonTour(Partie.joueursEnJeu[i], Partie.joueursEnJeu[i].getEnTour(), Partie.tour);		//draw and play a card
+										Partie.tour++;
+										
+										while (Partie.joueursEnJeu[i].pouvoirFinirMonTour == false) {
+											try {
+												Thread.sleep(2000);
+											} catch (InterruptedException e) {
+												e.printStackTrace();
+											}
+										} 
+										
+										Partie.joueursEnJeu[i].aPiocheUneCarte = false;
+										Partie.joueursEnJeu[i].pouvoirFinirMonTour = false;
+										
+									}
+									Plateau.determinerFormeDuTapis(Plateau.getListeDeCartesJouees());
+									System.out.println("Carte restant: " + Partie.nombreDeCartesJouables);
+								}
+							}
+						}
+					};
+					threadCMD.start();
+
+					while (Partie.joueursEnJeu[0] == null) {
+						try {
+							Thread.sleep(2000);
+						} catch (InterruptedException er) {
+							System.out.println(er.toString());
+						}
+					}
+					
+					ControleurTableDuJeu.tableDuJeu.dispose();
+					
+					EventQueue.invokeLater(new Runnable() {
+						public void run() {
+							try {								
+								FenetreTableDuJeu tableDuJeu = new FenetreTableDuJeu();
+								ControleurTableDuJeu.setFenetreTableDuJeu(tableDuJeu);
+	
+							} catch (Exception e) {
+								e.printStackTrace();
+							}
+						}
+					});
 				}
 			}
 			
@@ -371,7 +453,7 @@ public class ControleurTableDuJeu {
 	 * Set and get game's table for controler
 	 */
 	public static void setFenetreTableDuJeu(FenetreTableDuJeu tableDuJeu) {
-		tableDuJeu = tableDuJeu;
+		ControleurTableDuJeu.tableDuJeu = tableDuJeu;
 	}
 	
 	public static FenetreTableDuJeu getFenetreTableDuJeu() {

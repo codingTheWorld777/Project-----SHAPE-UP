@@ -92,8 +92,7 @@ public class FenetreTableDuJeu extends JFrame implements Observer {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		ControleurTableDuJeu controleurJeu = new ControleurTableDuJeu();
-		
+		controleurJeu = new ControleurTableDuJeu();
 		
 		/** Set background for game's board */
 		try {
@@ -163,7 +162,7 @@ public class FenetreTableDuJeu extends JFrame implements Observer {
 		joueur1Panel.add(point1);
 		
 		/** Set image for victory card (faceDown-verso) */
-		ButtonCard carteVictoire1 = new ButtonCard(controleurJeu.getJoueur(0).getCarteVictoire());;
+		ButtonCard carteVictoire1 = new ButtonCard(ControleurTableDuJeu.getJoueur(0).getCarteVictoire());
 		carteVictoire1.setBounds(41, 72, 81, 100);
 		try {
 			Image imgVerso = controleurJeu.getJoueur(0).getCarteVictoire().getCarteImageVerso();
@@ -338,7 +337,6 @@ public class FenetreTableDuJeu extends JFrame implements Observer {
 		this.validate();
 	}
 	
-	
 	/** Get player's JPanel (to change its color after finishing its move)  */
 	public static JPanel getJoueurPanel(int id) {
 		if (id == 1) return joueur1Panel;
@@ -347,4 +345,5 @@ public class FenetreTableDuJeu extends JFrame implements Observer {
 		
 		return new JPanel();
 	}
+
 }

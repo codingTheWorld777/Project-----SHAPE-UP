@@ -2,36 +2,42 @@ package Modele;
 
 import java.util.ArrayList;
 
+/**
+ * @author Huu Khai NGUYEN (Alec)
+ * Description: This class includes all methods that control the heart and the flow of program
+ */
+
 public class Plateau {
-	/**
-	 * @author Huu Khai NGUYEN (Alec)
-	 */
+	/** 1) Check a position if it can be chosen to place a card */
 	
-	//1) Check a position if it can be chosen to place a card
-	/*
+	/**
 	 * Add and save all cards that were played
 	 */
 	protected static ArrayList<Carte> cartesJouees = new ArrayList<Carte>();
 	
-	/*
+	/**
 	 * Save all possibilities of the position that player can put a card in it
 	 */
 	protected static ArrayList<Coordonnees> possibilites = new ArrayList<Coordonnees>();
 	
-	/*
+	/**
 	 * Coordinates of 4 vertex of rectangle 5x3 final
 	 */
 	protected static int xMinDuTapis, xMaxDuTapis, yMinDuTapis, yMaxDuTapis;
 	
 	
-	//2) Check if a card can move to another position and choose the position that player want to move the card to...
+	/** 2) Check if a card can move to another position and choose the position that player want to move the card to... */
 	protected static ArrayList<Coordonnees> positionDeDeplacer = new ArrayList<Coordonnees>();
 	
-	//If a card can be moved but after moving it, cards around it doesn't respect the rule of game
-	//so we need to add(draw) next card to the position of this card before moving to the new one
+	/** 
+	 * If a card can be moved but after moving it, cards around it doesn't respect the rule of game
+	 * so we need to add(draw) next card to the position of this card before moving to the new one
+	 */
 	protected static boolean besoinAjouter = false;
 	
-	/* (1)
+	
+	/** 
+	 * (1)
 	 * If player can add card to one position, add new possible position that player can choose for next turn
 	 	 * Compare with list before (in possibilities[])
 		 * Compare with position of each card (in cartesJouees[])
@@ -70,15 +76,12 @@ public class Plateau {
 			
 			compteur++;
 		}
-		 
-//		for (int k = 0; k < possibilites.size(); k++) {
-//			System.out.print("(" + possibilites.get(k).x + ", " + possibilites.get(k).y + "), ");
-//		}
-//		System.out.println();
+	
 	}
 	
 	
-	/* (2)
+	/** 
+	 * (2)
 	 * Remove coordinates that is similar in the list
 	 */
 	public static void supprimerCoordonnee(int x, int y) {
@@ -91,8 +94,8 @@ public class Plateau {
 	}
 	
 	
-	/* (3) 
-	 * 
+	/**
+	 * (3) 
 	 * Check with all possibilities defined if the position is available
 	 */
 	public static boolean verifierPos(int x, int y) {	
@@ -104,7 +107,8 @@ public class Plateau {
 	}
 	
 	
-	/* (4)
+	/** 
+	 * (4)
 	 * Check position chosen with position of card played
 	 */
 	public static boolean verifierAvecCartesJouees(int x, int y) {
@@ -116,7 +120,8 @@ public class Plateau {
 		return false;
 	}
 	
-	/* (5) : If the variation of game is classic (Rectangle 5x3)
+	/** 
+	 * (5) : If the variation of game is classic (Rectangle 5x3)
 	 * Reduce the selection of the card's table once you have determined the edge of the rectangle
 	 * Determine the shape of the final rectangle 5x3 base on cards played 
 	 	* We determine this rectangle by its coordinates (x, y)
@@ -142,10 +147,10 @@ public class Plateau {
 		Plateau.yMinDuTapis = yMin;
 		Plateau.yMaxDuTapis = yMax;
 		
-		/*
+		/**
 		 * Determination of the form of game based on the variation which was chosen by player from the beginning of game
 		 */
-		if (InstallerJeu.getVarianteDuTapis().equals("R")) {	// *forme du tapis est rectangle 5x3*
+		if (InstallerJeu.getVarianteDuTapis().equals("R")) {	/** forme du tapis est rectangle 5x3 */
 			if (xMax - xMin + 1 >= 4) {
 				if (xMax - xMin + 1 == 5) {
 					for (int j = 0; j < possibilites.size(); j++) {
@@ -181,7 +186,7 @@ public class Plateau {
 				}
 			}
 			
-		} else if (InstallerJeu.getVarianteDuTapis().equals("C")) {	// *forme du tapis est un carre 4x4*
+		} else if (InstallerJeu.getVarianteDuTapis().equals("C")) {	/** forme du tapis est un carre 4x4 */
 			if (xMax - xMin + 1 == 4) {
 				for (int j = 0; j < possibilites.size(); j++) {
 					if (possibilites.get(j).x < xMin || possibilites.get(j).x > xMax) {
@@ -198,8 +203,8 @@ public class Plateau {
 				}
 			}
 			
-		} else if (InstallerJeu.getVarianteDuTapis().equals("P")) {  //*forme du tapis: pyramide
-			// Check the number of card in each row for variation "Escalade" (nombre de cartes par colonne)
+		} else if (InstallerJeu.getVarianteDuTapis().equals("P")) {  /** forme du tapis: pyramide */
+			/**  Check the number of card in each row for variation "Escalade" (nombre de cartes par colonne) */
 			ArrayList<Integer> nombreDeCartesParCol = new ArrayList<Integer>();
 			for (int i = 0; i < 7; i++)
 				nombreDeCartesParCol.add(i, 0);
@@ -216,7 +221,7 @@ public class Plateau {
 				if (compteur > 0) nombreDeCartesParCol.set(j, compteur);
 			}
 			
-			//Delete position (x, y) = (3, 2) - center of table
+			/** Delete position (x, y) = (3, 2) - center of table */
 			for (int i = 0; i < possibilites.size(); i++) {
 				if (possibilites.get(i).x == 3 && possibilites.get(i).y == 2) {
 					possibilites.remove(i);
@@ -224,7 +229,7 @@ public class Plateau {
 				}
 			}		
 			
-			/*
+			/**
 			 * Determine the form based on the fisrt card on the table (column 0 or column 6)
 			 * -> We force the player to place the first card in the column 0 (or 6) at the beginning
 			 */
@@ -337,7 +342,8 @@ public class Plateau {
 	}
 	
 
-	/* (6)
+	/**
+	 * (6)
 	 * Check a position (x, y) of a card if it is moveable
 	 */
 	public static boolean estDeplacable(int x, int y) {
@@ -346,7 +352,8 @@ public class Plateau {
 		boolean besoinAjouter = false;
 		byte[] nombreEspace = new byte[4];
 		
-		/* 1) Check if this card is movable
+		/**
+		 * 1) Check if this card is movable
 		 * 2) Check the cards around the cards you want to move
 			 * 	if there exists at least one of them does not satisfy the movement condition
 			 	* when the selected card changes positions: -> Must add 1 card to the position of selected card 
@@ -357,7 +364,7 @@ public class Plateau {
 		
 		if (Partie.getTableDuJeu()[y][x] != null) {
 			if (x + 1 <= 6) {
-				//1)
+				/** 1) */
 				if (Partie.getTableDuJeu()[y][x + 1] == null) {
 					Y = y;
 					X = x + 1;
@@ -372,7 +379,7 @@ public class Plateau {
 						}
 					}
 				}
-				//2)
+				/** 2) */
 				else if (Partie.getTableDuJeu()[y][x + 1] != null) {
 					if (y - 1 >= 0 && Partie.getTableDuJeu()[y - 1][x + 1] == null && Plateau.isInPossibilites(x + 1, y - 1) == true) 
 						nombreEspace[0]++;
@@ -391,7 +398,7 @@ public class Plateau {
 			}
 			
 			if (x - 1 >= 0) {
-				//1)
+				/** 1) */
 				if (Partie.getTableDuJeu()[y][x - 1] == null) {
 					Y = y;
 					X = x - 1;
@@ -406,7 +413,7 @@ public class Plateau {
 						}
 					}
 				}
-				//2)
+				/** 2) */
 				else if (Partie.getTableDuJeu()[y][x - 1] != null) {
 					
 					if (y - 1 >= 0 && Partie.getTableDuJeu()[y - 1][x - 1] == null && Plateau.isInPossibilites(x - 1, y - 1) == true) 
@@ -493,7 +500,7 @@ public class Plateau {
 				}
 			}
 			
-			//1)
+			/** 1) */
 			if (!Plateau.positionDeDeplacer.isEmpty()) estDeplacable = true;
 			
 			if (estDeplacable == true) {
@@ -506,13 +513,14 @@ public class Plateau {
 				}
 			}
 			
-			//2) use in deplacerCarte() method	
+			/** 2) use in deplacerCarte() method */	
 		}
 		
 		return estDeplacable;
 	}
 	
-	/* (7)
+	/**
+	 * (7)
 	 * Check the game's table if it has at least 1 position that is moveable
 	 */
 	public static boolean nePasPouvoirDeplacer() {
@@ -526,7 +534,8 @@ public class Plateau {
 	}
 	
 	
-	/* (8)
+	/** 
+	 * (8)
 	 * Update list of cards played 
 	 */
 	public static void misAJourListeCartesJouees(Carte carte, int x, int y) {
@@ -535,7 +544,8 @@ public class Plateau {
 	}
 	
 	
-	/* (9)
+	/** 
+	 * (9)
 	 * Update list of possible positions for drawing a card to a position
 	 * -> (this method is used after moving (déplacer) a card in order to eliminate some possible position
 	 * 	that is related to this card's position)
@@ -547,7 +557,8 @@ public class Plateau {
 		if (y + 1 <= 4 && Partie.getTableDuJeu()[y + 1][x] == null) Plateau.supprimerCoordonnee(x, y + 1);
 	}
 	
-	/* (10) 
+	/**
+	 * (10) 
 	 * Reload list of cards played
 	 */
 	public static void reloadListePossibilites() {
@@ -559,7 +570,8 @@ public class Plateau {
 		Plateau.determinerFormeDuTapis(cartesJouees);
 	}
 	
-	/* (11)
+	/**
+	 * (11)
 	 * Check if a coordinate is in possibilites list
 	 */
 	public static boolean isInPossibilites(int x, int y) {
@@ -570,7 +582,8 @@ public class Plateau {
 		return false;
 	}
 	
-	/* (12)
+	/**
+	 *  (12)
 	 * Check if a coordinate is in 'positionDeDeplacer' list
 	 */
 	public static boolean isInPositionDeDeplacer(int x, int y) {
@@ -581,7 +594,8 @@ public class Plateau {
 		return false;
 	}
 	
-	/* (13)
+	/**
+	 * (13)
 	 * Check if a card is in 'cartesJouees' list
 	 */
 	public static boolean isInCartesJouees(int x, int y) {
@@ -592,28 +606,32 @@ public class Plateau {
 		return false;
 	}
 	
-	/* (14)
+	/**
+	 * (14)
 	 * Get list of drawed cards 
 	 */
 	public static ArrayList<Carte> getListeDeCartesJouees() {
 		return Plateau.cartesJouees;
 	}
 	
-	/* (15)
+	/** 
+	 * (15)
 	 * Get list of 'positionDeDeplacer'
 	 */
 	public static ArrayList<Coordonnees> getPositionDeDeplacer() {
 		return Plateau.positionDeDeplacer;
 	}
 	
-	/** (16)
+	/** 
+	 * (16)
 	 * Get list of 'possibilites'
 	 */
 	public static ArrayList<Coordonnees> getPossibilites() {
 		return Plateau.possibilites;
 	}
 	
-	/* (16)
+	/** 
+	 * (17)
 	 * Print table of game to screen
 	 */
 	public static void updateTableDuJeu() {
@@ -630,5 +648,7 @@ public class Plateau {
 		System.out.println();
 	}
 	
+	public static void setBesoinAjouter(boolean besoinAjouter) {
+		Plateau.besoinAjouter = besoinAjouter;
+	}
 }
-

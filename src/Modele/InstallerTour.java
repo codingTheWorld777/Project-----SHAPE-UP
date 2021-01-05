@@ -13,11 +13,12 @@ public class InstallerTour {
 	public InstallerTour(int nombreDeJoueurs, boolean activerJoueurVir) {
 		PiocheCartes piocheCartes = new PiocheCartes();
 		Carte carteCachee = this.retirerCarteCachee(piocheCartes.getPiocheCartes());
-		
+	
 		/** Player 1 is always JoueurPhy */
 		JoueurPhy joueur1 = new JoueurPhy("Joueur 1", 1);
 		Partie.joueur1 = joueur1;
 		Partie.joueur1 = (JoueurPhy) joueur1;
+		Partie.joueursEnJeu[0] = joueur1;
 		
 		if (nombreDeJoueurs == 2 && activerJoueurVir == false) {  /** 2 player and no virtual player */
 			JoueurPhy joueur2 = new JoueurPhy("Joueur 2", 2);
@@ -26,7 +27,6 @@ public class InstallerTour {
 			
 			this.distribuerCarteVictoire(piocheCartes.getPiocheCartes(), Partie.joueur1, Partie.joueur2);
 			
-			Partie.joueursEnJeu[0] = joueur1;
 			Partie.joueursEnJeu[1] = joueur2;
 			
 		} else if (nombreDeJoueurs == 2 && activerJoueurVir == true) {  /** 2 players with a virtual player */
@@ -37,7 +37,6 @@ public class InstallerTour {
 			
 			this.distribuerCarteVictoire(piocheCartes.getPiocheCartes(), Partie.joueur1, Partie.joueur2);
 			
-			Partie.joueursEnJeu[0] = joueur1;
 			Partie.joueursEnJeu[1] = joueur2;
 			
 		} else if (nombreDeJoueurs == 3 && activerJoueurVir == false) { /** 3 players and no virtual player */
@@ -51,7 +50,6 @@ public class InstallerTour {
 
 			this.distribuerCarteVictoire(piocheCartes.getPiocheCartes(), Partie.joueur1, Partie.joueur2, Partie.joueur3);
 			
-			Partie.joueursEnJeu[0] = joueur1;
 			Partie.joueursEnJeu[1] = joueur2;
 			Partie.joueursEnJeu[2] = joueur3;
 			
@@ -67,7 +65,6 @@ public class InstallerTour {
 			
 			this.distribuerCarteVictoire(piocheCartes.getPiocheCartes(), Partie.joueur1, Partie.joueur2, Partie.joueur3);
 			
-			Partie.joueursEnJeu[0] = joueur1;
 			Partie.joueursEnJeu[1] = joueur2;
 			Partie.joueursEnJeu[2] = joueur3;
 		}

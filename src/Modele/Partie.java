@@ -75,7 +75,7 @@ public class Partie extends Observable {
 					}
 				}
 				
-				System.out.println("Joueur " + joueursEnJeu[i].id);
+				System.out.println(joueursEnJeu[i].getNom());
 				if (Partie.tour == 0) {
 					Partie.jouerSonTour(joueursEnJeu[i], joueursEnJeu[i].estEnTour, Partie.tour);		//draw and play a card
 					Partie.tour++;
@@ -107,6 +107,7 @@ public class Partie extends Observable {
 					joueursEnJeu[i].pouvoirFinirMonTour = false;
 					
 				}
+				Plateau.determinerFormeDuTapis(Plateau.cartesJouees);
 				System.out.println("Carte restant: " + Partie.nombreDeCartesJouables);
 			}
 		}
