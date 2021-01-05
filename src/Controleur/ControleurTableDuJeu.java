@@ -315,86 +315,41 @@ public class ControleurTableDuJeu {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (Partie.nombreDeCartesJouables == 0 && ControleurTableDuJeu.tableDuJeu.round <= 4) {
+				if (Partie.nombreDeCartesJouables == 0 && ControleurTableDuJeu.tableDuJeu.round < 8) {
 					FenetreTableDuJeu.round++;
-					FenetreTableDuJeu.roundLabel.setText("Tour : " + FenetreTableDuJeu.round);
-					System.out.println("\n \nRepaint game!!");
 					
+					System.out.println("ROUND " + FenetreTableDuJeu.round);
 					/** Pass to next round: (Release memory + InstallerTour + new Partie() + Repaint GUI */
-					Plateau.getListeDeCartesJouees().clear();
-					Plateau.getPossibilites().clear();
-					Plateau.setBesoinAjouter(false);
 					
-					threadCMD = new Thread() {
+					/** Thread for game in CMD. Thread's name: Thread-0 */
+					Thread threadCMD = new Thread() {
 						public void run() {
-							InstallerTour installerTour = new InstallerTour(InstallerJeu.getNombreDeJoueurs(), InstallerJeu.getActiverJoueurVir());
-							ControleurTableDuJeu.setInstallerTour(installerTour);
-							
-							while (Partie.nombreDeCartesJouables > 0) {    
-								for (int i = 0; i < InstallerJeu.getNombreDeJoueurs() && Partie.nombreDeCartesJouables > 0; i++) {
-									for (int k = 0; k < InstallerJeu.getNombreDeJoueurs(); k++) {
-										if (Partie.joueursEnJeu[k].getEnTour() == true) {
-											Partie.tourDeJoueur = Partie.joueursEnJeu[k].getId();;
-											break;
-										}
-									}
-									
-									System.out.println(Partie.joueursEnJeu[i].getNom());
-									if (Partie.tour == 0) {
-										Partie.jouerSonTour(Partie.joueursEnJeu[i], Partie.joueursEnJeu[i].getEnTour(), Partie.tour);		//draw and play a card
-										Partie.tour++;
-										
-										while (Partie.joueursEnJeu[i].pouvoirFinirMonTour == false) {
-											try {
-												Thread.sleep(2000);
-											} catch (InterruptedException e) {
-												e.printStackTrace();
-											}
-										} 
-										
-										Partie.joueursEnJeu[i].aPiocheUneCarte = false;
-										Partie.joueursEnJeu[i].pouvoirFinirMonTour = false;
-										
-									} else if (Partie.tour >= 1) {
-										Partie.jouerSonTour(Partie.joueursEnJeu[i], Partie.joueursEnJeu[i].getEnTour(), Partie.tour);		//draw and play a card
-										Partie.tour++;
-										
-										while (Partie.joueursEnJeu[i].pouvoirFinirMonTour == false) {
-											try {
-												Thread.sleep(2000);
-											} catch (InterruptedException e) {
-												e.printStackTrace();
-											}
-										} 
-										
-										Partie.joueursEnJeu[i].aPiocheUneCarte = false;
-										Partie.joueursEnJeu[i].pouvoirFinirMonTour = false;
-										
-									}
-									Plateau.determinerFormeDuTapis(Plateau.getListeDeCartesJouees());
-									System.out.println("Carte restant: " + Partie.nombreDeCartesJouables);
-								}
-							}
+							System.out.println("Start " + Thread.currentThread().getName());
+							new Partie();
 						}
 					};
 					threadCMD.start();
-
-					while (Partie.joueursEnJeu[0] == null) {
-						try {
-							Thread.sleep(2000);
-						} catch (InterruptedException er) {
-							System.out.println(er.toString());
-						}
-					}
 					
-					ControleurTableDuJeu.tableDuJeu.dispose();
 					
+					/**
+					 * Thread for GUI
+					 * Run this thread of "FenetreTableDuJeu" after 2 seconds to wait for "InstallerTour" is finish
+					 * Thread's name: AWT-EventQueue-0
+					 */
 					EventQueue.invokeLater(new Runnable() {
 						public void run() {
-							try {								
+							while (Partie.joueursEnJeu[0] == null) {
+								try {
+									Thread.sleep(1000);
+								} catch (Exception err) {
+									System.out.println(err.toString());
+								}
+							}
+							
+							try {			
+								ControleurTableDuJeu.tableDuJeu.dispose();
 								FenetreTableDuJeu tableDuJeu = new FenetreTableDuJeu();
 								ControleurTableDuJeu.setFenetreTableDuJeu(tableDuJeu);
-	
 							} catch (Exception e) {
 								e.printStackTrace();
 							}

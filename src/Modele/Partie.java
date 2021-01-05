@@ -55,7 +55,7 @@ public class Partie extends Observable {
 		 * 	+ Eliminate a card
 		 * 	+ Draw victory card to each player
 		 */
-		InstallerTour installerTour = new InstallerTour(installerJeu.getNombreDeJoueurs(), installerJeu.getActiverJoueurVir());
+		InstallerTour installerTour = new InstallerTour(InstallerJeu.getNombreDeJoueurs(), InstallerJeu.getActiverJoueurVir());
 		ControleurTableDuJeu.setInstallerTour(installerTour);
 		
 		
@@ -127,6 +127,17 @@ public class Partie extends Observable {
 			System.out.print(Partie.joueursEnJeu[i].nom 
 					+ ": " + compteurPoint.getPointsJoueurs()[i] + " points." + "\t");
 		}
+		System.out.println();
+		
+		
+		/**
+		 * Step 5: Release memory for next round
+		 */
+		PiocheCartes.getPiocheCartes().clear();
+		Partie.tour = 0;
+		Partie.tableDuJeu = new Carte[5][7];
+		Plateau.getListeDeCartesJouees().clear();
+		Plateau.getPossibilites().clear();
 	}
 	
 	/**

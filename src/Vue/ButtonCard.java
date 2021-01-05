@@ -27,7 +27,6 @@ import Controleur.ControleurTableDuJeu;
 public class ButtonCard extends JButton {
 	private boolean recto = false;
 	private Coordonnees coordonnees;
-	private boolean disponible = false;
 	private Image carteImage;
 	private boolean carteTiree = false;
 	

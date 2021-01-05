@@ -55,8 +55,6 @@ public class FenetreTableDuJeu extends JFrame implements Observer {
 	 * Create the application.
 	 */
 	public FenetreTableDuJeu() {
-		controleurJeu = new ControleurTableDuJeu();
-		
 		initialize();
 		
 		if (controleurJeu.getJoueur(1).getNom().equals("Joueur Virtuel")) {
@@ -68,8 +66,8 @@ public class FenetreTableDuJeu extends JFrame implements Observer {
 	
 	@Override
 	public void update(Object arg1) {
-		for (int i = 0; i <Partie.getTableDuJeu().length; i++) {
-			for (int j = 0; j<Partie.getTableDuJeu()[i].length; j++) {
+		for (int i = 0; i < Partie.getTableDuJeu().length; i++) {
+			for (int j = 0; j< Partie.getTableDuJeu()[i].length; j++) {
 				if (Partie.getTableDuJeu()[i][j] != null) {
 					Image imageRecto = Partie.getTableDuJeu()[i][j].getCarteImageRecto().getScaledInstance(getWidth(), getHeight(), Image.SCALE_DEFAULT);
 					imageRecto = imageRecto.getScaledInstance(cartesBtn[i][j].getWidth(), cartesBtn[i][j].getHeight(), Image.SCALE_DEFAULT);
@@ -206,7 +204,7 @@ public class FenetreTableDuJeu extends JFrame implements Observer {
 		joueur2Label.setFont(new Font("Lucida Grande", Font.BOLD, 14));
 		
 		try {
-			if (controleurJeu.getJoueur(1).getNom().equals("Joueur Virtuel")) joueur2Label.setBounds(37, 6, 104, 21);
+			if (controleurJeu.getJoueur(1).getNom().equals("Joueur Virtuel")) joueur2Label.setBounds(32, 6, 104, 21);
 			else joueur2Label.setBounds(52, 6, 63, 21);
 			
 			joueur2Label.setText(controleurJeu.getJoueur(1).getNom());
@@ -254,7 +252,7 @@ public class FenetreTableDuJeu extends JFrame implements Observer {
 				JLabel joueur3Label = new JLabel(controleurJeu.getJoueur(2).getNom());
 				joueur3Label.setFont(new Font("Lucida Grande", Font.BOLD, 14));
 				
-				if (controleurJeu.getJoueur(2).getNom().equals("Joueur Virtuel")) joueur3Label.setBounds(37, 6, 104, 21);
+				if (controleurJeu.getJoueur(2).getNom().equals("Joueur Virtuel")) joueur3Label.setBounds(32, 6, 104, 21);
 				else joueur3Label.setBounds(52, 6, 63, 21);
 				
 				joueur3Panel.add(joueur3Label);

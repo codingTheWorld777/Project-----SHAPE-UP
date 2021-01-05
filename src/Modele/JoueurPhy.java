@@ -238,17 +238,6 @@ public class JoueurPhy extends Joueur {
 						 * 	with are positioned around this card 
 						 */
 						if (Plateau.besoinAjouter == false)  {
-//							for (int compteur = x1; compteur < 7; compteur++) {
-//								if (y1 + 1 <= 4 && Partie.getTableDuJeu()[y1 + 1][x1] != null) Plateau.ajouterCoordonneePossible(x1, y1 + 1);
-//								
-//								if (y1 - 1 >= 0 && Partie.getTableDuJeu()[y1 - 1][x1] != null) Plateau.ajouterCoordonneePossible(x1, y1 - 1);	
-//							}
-//							
-//							for (int compteur = x1; compteur >= 0; compteur--) {
-//								if (y1 + 1 <= 4 && Partie.getTableDuJeu()[y1 + 1][x1] != null) Plateau.ajouterCoordonneePossible(x1, y1 + 1);
-//								
-//								if (y1 - 1 >= 0 && Partie.getTableDuJeu()[y1 - 1][x1] != null) Plateau.ajouterCoordonneePossible(x1, y1 - 1);
-//							}
 							Plateau.reloadListePossibilites();
 							
 						} else if (Plateau.besoinAjouter == true) {

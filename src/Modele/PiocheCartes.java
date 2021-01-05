@@ -13,7 +13,7 @@ import Modele.Carte.naturePossible;
 
 public class PiocheCartes {
 	private static ArrayList<Carte> piocheCartes = new ArrayList<Carte>();
-	private static Carte[] cartesOrg = new Carte[18];
+	private Carte[] cartesOrg = new Carte[18];
 	
 	public PiocheCartes() {
 		this.creerCartes();

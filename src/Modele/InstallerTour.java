@@ -13,7 +13,7 @@ public class InstallerTour {
 	public InstallerTour(int nombreDeJoueurs, boolean activerJoueurVir) {
 		PiocheCartes piocheCartes = new PiocheCartes();
 		Carte carteCachee = this.retirerCarteCachee(piocheCartes.getPiocheCartes());
-	
+		
 		/** Player 1 is always JoueurPhy */
 		JoueurPhy joueur1 = new JoueurPhy("Joueur 1", 1);
 		Partie.joueur1 = joueur1;
