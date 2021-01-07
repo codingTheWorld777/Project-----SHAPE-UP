@@ -92,6 +92,12 @@ public class JoueurPhy extends Joueur {
 			System.out.println();
 			
 			Plateau.updateTableDuJeu();
+			
+			/*
+			 * Notify observers
+			 */
+			this.setChanged();
+			this.notifyObservers(this);
 		} 
 		
 		/**
@@ -133,6 +139,12 @@ public class JoueurPhy extends Joueur {
 				Plateau.updateTableDuJeu();
 				
 				this.aPiocheUneCarte = true;
+				
+				/*
+				 * Notify observers
+				 */
+				this.setChanged();
+				this.notifyObservers(this);
 
 				return;
 				
@@ -261,6 +273,12 @@ public class JoueurPhy extends Joueur {
 						System.out.println();
 						
 						Plateau.updateTableDuJeu();
+						
+						/*
+						 * Notify observers
+						 */
+						this.setChanged();
+						this.notifyObservers(this);
 
 						return;
 					}

@@ -44,13 +44,13 @@ public class JoueurVir extends Joueur implements Strategie {
 			PiocheCartes.getPiocheCartes().remove(Partie.nombreDeCartesJouables - 1);
 			Partie.nombreDeCartesJouables--;
 			
+			this.aPiocheUneCarte = true;
+			
 			/**
 			 * Set changed and notify observer
 			 */
 			this.setChanged();
-			this.notifyObservers(null);
-			
-			this.aPiocheUneCarte = true;
+			this.notifyObservers(this);
 			
 		} else if (this.niveau.compareTo("D") == 0) {  	/** Hard level */
 			int X = 0;
@@ -99,13 +99,13 @@ public class JoueurVir extends Joueur implements Strategie {
 		
 		Plateau.updateTableDuJeu();
 		
+		this.aPiocheUneCarte = true;
+		
 		/**
 		 * Set changed and notify observer
 		 */
 		this.setChanged();
-		this.notifyObservers(null);
-		
-		this.aPiocheUneCarte = true;
+		this.notifyObservers(this);
 		
 	}
 	
@@ -172,7 +172,7 @@ public class JoueurVir extends Joueur implements Strategie {
 				 * Set changed and notify observer
 				 */
 				this.setChanged();
-				this.notifyObservers(null);
+				this.notifyObservers(this);
 				
 			}
 			
