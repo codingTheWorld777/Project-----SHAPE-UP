@@ -8,7 +8,10 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import javax.swing.ImageIcon;
+import javax.swing.UIManager;
 
+import Controleur.ControleurTableDuJeu;
+import Modele.Compteur;
 import Modele.Coordonnees;
 import Modele.Observer;
 import Modele.Partie;
@@ -20,8 +23,9 @@ public class VueText extends Thread implements Observer, Runnable {
 	public static String PROMPT = ">";
 	public static String QUITTER = "Quit";
 	public static String ENTRERCOORDONNEES = "enter coord";
+	public static String FINIRTOUR = "end tour";
 	
-	public VueText(Partie partie) {
+	public VueText() {
 		for (int i = 0; i<Partie.joueursEnJeu.length; i++) {
 			Partie.joueursEnJeu[i].addObserver(this);
 		}
@@ -40,9 +44,65 @@ public class VueText extends Thread implements Observer, Runnable {
 		    saisie = this.lireChaine();
 
 		    if (saisie != null) {
+		  
+		    	/*
+		    	 * Player's round
+		    	 */
 		    	if (saisie.equals(VueText.ENTRERCOORDONNEES) == true) {
-		    		this.entrerCoord();
-		    		// faire jouer le joueur ici (placer ou déplacer une carte)
+		    		Coordonnees coord = this.entrerCoord();
+		    		for (int k = 0; k < Partie.joueursEnJeu.length; k++) {
+		    			if (Partie.joueursEnJeu[k].getEnTour() == true && Partie.joueursEnJeu[k].aPiocheUneCarte == true) {
+		    				Partie.joueursEnJeu[k].setCoordAPlacer(coord.x, coord.y);
+		    				Partie.joueursEnJeu[k].piocherCarte(Partie.getTableDuJeu(), Partie.tour);
+		    			}
+		    		}
+		    	
+		    	/*
+		    	 * Finish a player round
+		    	 */
+		    	} else if (saisie.equals(VueText.FINIRTOUR) == true) {
+		    		for (int k = 0; k < Partie.joueursEnJeu.length; k++) {
+		    			Joueur joueur = Partie.joueursEnJeu[k];
+		    		if (joueur.getId() == Partie.tourDeJoueur) {
+						if (joueur.aPiocheUneCarte == true) {
+							joueur.pouvoirFinirMonTour = true;
+							ControleurTableDuJeu.setPermettreDeDeplacer(true);
+						} 
+
+						/* 1) Change color of player in turn to green and the others to pink
+						 * 2) Count scores of each player after 1 turn and show its in screen
+						 */
+						Compteur compteurPoint = new Compteur();
+						compteurPoint.compter(Partie.getTableDuJeu());
+						
+						for (int i = 0; i < Partie.joueursEnJeu.length; i++) {
+							//1)
+							if (Partie.joueursEnJeu[i].getEnTour()) FenetreTableDuJeu.getJoueurPanel(i + 1).setBackground(ControleurTableDuJeu.getJoueurBackg());
+							else FenetreTableDuJeu.getJoueurPanel(i + 1).setBackground(UIManager.getColor("Button.select"));
+							
+							//2)
+							if (i == 0) 
+								FenetreTableDuJeu.point1.setText("Point: " + compteurPoint.getPointsJoueurs(Partie.joueursEnJeu[i].getId()));
+							
+							if (i == 1) 
+								FenetreTableDuJeu.point2.setText("Point: " + compteurPoint.getPointsJoueurs(Partie.joueursEnJeu[i].getId()));
+						
+							if (Partie.joueursEnJeu.length == 3 && i == 2) 
+								FenetreTableDuJeu.point3.setText("Point: " + compteurPoint.getPointsJoueurs(Partie.joueursEnJeu[i].getId()));
+
+						}
+
+						ControleurTableDuJeu.setPouvoirPiocher(true);;		
+						joueur.coordChoisieADeplacer = null;
+						joueur.coordADeplacer = null;
+						
+						ControleurTableDuJeu.setBorderColorToOrg();
+					}
+		    		}
+		    		
+		    	/*
+		    	 * Exit game
+		    	 */
 		    	} else if (saisie.equals(VueText.QUITTER) == true) {
 		    		quitter = true;		    
 		    		} else {

@@ -478,4 +478,29 @@ public class ControleurTableDuJeu {
 		return ControleurTableDuJeu.installerTour;
 	}
 	
+	/*
+	 * Get and set permettreDeDeplacer
+	 */
+	public static boolean getPermettreDeDeplacer() {
+		return ControleurTableDuJeu.permettreDeDeplacer;
+	}
+	
+	public static void setPermettreDeDeplacer(boolean bool) {
+		ControleurTableDuJeu.permettreDeDeplacer = bool;
+	}
+	
+	/*
+	 * Set pouvoirPiocher
+	 */
+	public static void setPouvoirPiocher(boolean bool) {
+		ControleurTableDuJeu.pouvoirPiocher = bool;
+	}
+	
+	/*
+	 * Get the color joueur Backg
+	 */
+	public static Color getJoueurBackg() {
+		return ControleurTableDuJeu.joueurBackg;
+	}
+	
 }
