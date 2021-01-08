@@ -51,7 +51,7 @@ public class VueText extends Thread implements Observer, Runnable {
 		    	if (saisie.equals(VueText.ENTRERCOORDONNEES) == true) {
 		    		Coordonnees coord = this.entrerCoord();
 		    		for (int k = 0; k < Partie.joueursEnJeu.length; k++) {
-		    			if (Partie.joueursEnJeu[k].getEnTour() == true && Partie.joueursEnJeu[k].aPiocheUneCarte == true) {
+		    			if (Partie.joueursEnJeu[k].getEnTour() == true && Partie.joueursEnJeu[k].aPiocheUneCarte == false) {
 		    				Partie.joueursEnJeu[k].setCoordAPlacer(coord.x, coord.y);
 		    				Partie.joueursEnJeu[k].piocherCarte(Partie.getTableDuJeu(), Partie.tour);
 		    			}
