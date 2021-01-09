@@ -10,12 +10,13 @@ See my repository at: [Huu Khai NGUYEN's Project-----SHAPE UP](https://github.co
 - Créer les joueurs (Choisir les joueurs réels et virtuels) **[OK]** *(mais sans joueur - virtuel)*
 - Créer toutes les cartes pour le jeu (en créant un tableau contenant toutes les cartes) et les distribuer (distribuer les carte victoires pour chaque joueur et éliminer la carte cachée, mis à jour le tableau) -> **Huu Khai [OK]** *(peut-être mettre à jour après)*
 - Définir l'algorithme de choisir les positions possibles (pour le joueurPhy et le joueurVir) et de former la forme du rectangle 5x3 -> **Huu Khai [OK]**  *done with joueurPhy (sans joueurVir)*
+- Implémenter la classe Plateau.java qui est le coeur du programme et qui va controller toutes opérations du jeu (déterminer la forme du tapis,...) -> **Huu Khai [OK]**
 - Définir l'algorithme de déplacer une carte pour joueurPhy vers une position possible -> **Huu Khai [OK]**
 - Définir toutes les méthodes dans le fichier Partie.java -> **Huu Khai [OK]**
 - Définir les méthodes dans la classe ** *JoueurVir* **: stratégie, fonctionnalités du joueurVir (déplacer, piocher une carte automatiquement) -> **Louis**
-- Implémenter un patron de conception “Stratégie" compris tous les algorithmes importants du jeu: 
+- Implémenter un patron de conception “Stratégie" comprend tous les algorithmes importants du jeu: 
     + Écrire un algorithme qui permet de déplacer la carte -> **Huu Khai [OK]**
-    + Régler le niveau du joueur virtuel
+    + Régler le niveau du joueur virtuel **[OK]**
     + Compter les points de chacun basés sur sa carte victoire -> **Louis [OK]**
     + …
 

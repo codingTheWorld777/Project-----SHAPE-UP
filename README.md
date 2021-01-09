@@ -30,9 +30,17 @@ Clique sur le bouton **"Valider"** pour afficher l'interface graphique du jeu.
 - Lorsque vous cliquez sur le bouton de sélection mais qu'il y a des endroits où la carte ne devient pas verte, veuillez cliquer sur ce bouton au moins une fois pour mettre à jour l'interface graphique.
 - Lorsque vous ne parvenez pas à placer une carte après en avoir déplacée (bien que les emplacements deviennent verts), cliquez sur votre bouton "Finir mon tour" si vous êtes actuellement à votre tour.
 
+<h2>Remarque:</h2> 
+- Vous pouvez jouer le jeu sur l'interface graphique au même temps que sur la console. Pour le faire, vous devez avoir l'IDE qui peut compiler et exécuter un Java programme (Eclipse, NetBeans,...). Après avoir installé et paramétré Java environnement, vous devez cloner les codes sources en utilisant cette commande de git: </br>
+		
+		$ git clone https://github.com/codingTheWorld777/Project-----SHAPE-UP.git
+		
+</br>
+Ouvrez votre IDE et profitez le jeu! 😎
+
 # Screenshots
 ![Screenshot-Window selection](https://imgur.com/qoYsd8V.png)
-![Screenshot-SHAPE UP game](https://imgur.com/ly8JobM.png)
+![Screenshot-SHAPE UP game](https://i.imgur.com/ohEA6bd.png)
 
 <details><summary><b>[EN-Description]</b></summary>
 <p>
@@ -59,5 +67,12 @@ If the game is over, click on the "Next round" button to move on to the new roun
 - When you click the select button in the **"Draw Card"** area but there are maybe some places where the possible position(s) does not turn green, please click this button at least once to update the GUI.
 - When you are unable to place a card after moving one (although the spaces turn green), click your **"End my turn"** button if you are currently on your turn.
 
+<h2>Remark:</h2> 
+- You can play this game in the GUI at the same time in the console. To do it, firstly you need an IDE that can compile and run a Java program. After installing the IDE and its environment, to play this game, you need to clone the source codes from my repository into one of your folder's directory: </br>
+		
+		$ git clone https://github.com/codingTheWorld777/Project-----SHAPE-UP.git
+		
+</br>
+Open your IDE and enjoy the game! 😎
 </p>
 </details>
