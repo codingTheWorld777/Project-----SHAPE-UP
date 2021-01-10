@@ -20,6 +20,7 @@ import javax.swing.JPanel;
 import javax.swing.UIManager;
 import javax.swing.border.LineBorder;
 
+import Controleur.ControleurParametre;
 import Controleur.ControleurTableDuJeu;
 import Modele.Coordonnees;
 import Modele.Partie;
@@ -57,17 +58,25 @@ public class FenetreTableDuJeu extends JFrame implements Observer {
 	public FenetreTableDuJeu() {
 		initialize();
 		
-		if (controleurJeu.getJoueur(1).getNom().equals("Joueur Virtuel")) {
-			controleurJeu.getJoueur(1).addObserver(this);
-		} else if (ControleurTableDuJeu.paintJoueur3(controleurJeu.getInstallerJeu(), this) == true && controleurJeu.getJoueur(2).getNom().equals("Joueur Virtuel")) {
-			controleurJeu.getJoueur(2).addObserver(this);
+		if (ControleurParametre.getInstallerJeu().getConsoleOption()) {
+			for (int i = 0; i < ControleurTableDuJeu.getInstallerJeu().getNombreDeJoueurs(); i++) {
+				controleurJeu.getJoueur(i).addObserver(this);
+			}
+			
+		} else {
+			if (controleurJeu.getJoueur(1).getNom().equals("Joueur Virtuel")) {
+				controleurJeu.getJoueur(1).addObserver(this);
+			} else if (ControleurTableDuJeu.paintJoueur3(controleurJeu.getInstallerJeu(), this) == true && controleurJeu.getJoueur(2).getNom().equals("Joueur Virtuel")) {
+				controleurJeu.getJoueur(2).addObserver(this);
+			}
 		}
+
 	}
 	
 	@Override
 	public void update(Object arg1) {
 		for (int i = 0; i < Partie.getTableDuJeu().length; i++) {
-			for (int j = 0; j< Partie.getTableDuJeu()[i].length; j++) {
+			for (int j = 0; j < Partie.getTableDuJeu()[i].length; j++) {
 				if (Partie.getTableDuJeu()[i][j] != null) {
 					Image imageRecto = Partie.getTableDuJeu()[i][j].getCarteImageRecto().getScaledInstance(getWidth(), getHeight(), Image.SCALE_DEFAULT);
 					imageRecto = imageRecto.getScaledInstance(cartesBtn[i][j].getWidth(), cartesBtn[i][j].getHeight(), Image.SCALE_DEFAULT);
@@ -319,13 +328,13 @@ public class FenetreTableDuJeu extends JFrame implements Observer {
 			
 		
 		/** ******** "Next round" option: Click after finishing a round to pass to next round ******** */
-		roundLabel = new JLabel("Tour : " + round);
+		roundLabel = new JLabel("Round : " + round);
 		roundLabel.setForeground(Color.ORANGE);
 		roundLabel.setFont(new Font("Lucida Grande", Font.BOLD, 15));
 		roundLabel.setBounds(570, 28, 124, 36);
 		getContentPane().add(roundLabel);
 		
-		tourSuivantBtn = new JButton("Tour suivant");
+		tourSuivantBtn = new JButton("Next round");
 		tourSuivantBtn.setFont(new Font("Lucida Grande", Font.BOLD, 15));
 		tourSuivantBtn.setBounds(538, 660, 124, 36);
 		getContentPane().add(tourSuivantBtn);

@@ -22,6 +22,7 @@ import Modele.Carte;
 import Modele.Coordonnees;
 import Modele.Partie;
 import Modele.Plateau;
+import Controleur.ControleurParametre;
 import Controleur.ControleurTableDuJeu;
 
 public class ButtonCard extends JButton {
@@ -47,6 +48,15 @@ public class ButtonCard extends JButton {
 				// TODO Auto-generated method stub
 				
 				ControleurTableDuJeu.setBorderColorToOrg1();
+				
+				for (int i = 0; i < ControleurParametre.getInstallerJeu().getNombreDeJoueurs(); i++) {
+					if (ControleurTableDuJeu.getJoueur(i).getEnTour()) {
+						if (ControleurTableDuJeu.getJoueur(i).aPiocheUneCarte == false) 
+							ControleurTableDuJeu.setPouvoirPiocher(true);
+						
+						break;
+					}
+				}
 				
 				for (int i = 0; i < Plateau.getPossibilites().size(); i++) {
 					int x = Plateau.getPossibilites().get(i).x;

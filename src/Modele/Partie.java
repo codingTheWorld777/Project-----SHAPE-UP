@@ -70,7 +70,7 @@ public class Partie extends Observable {
 			for (int i = 0; i < InstallerJeu.getNombreDeJoueurs() && Partie.nombreDeCartesJouables > 0; i++) {
 				for (int k = 0; k < InstallerJeu.getNombreDeJoueurs(); k++) {
 					if (Partie.joueursEnJeu[k].getEnTour() == true) {
-						Partie.tourDeJoueur = Partie.joueursEnJeu[k].getId();;
+						Partie.tourDeJoueur = Partie.joueursEnJeu[k].getId();
 						break;
 					}
 				}
@@ -82,7 +82,7 @@ public class Partie extends Observable {
 					
 					while (joueursEnJeu[i].pouvoirFinirMonTour == false) {
 						try {
-							Thread.sleep(2000);
+							Thread.sleep(1400);
 						} catch (InterruptedException e) {
 							e.printStackTrace();
 						}
@@ -97,7 +97,7 @@ public class Partie extends Observable {
 					
 					while (joueursEnJeu[i].pouvoirFinirMonTour == false) {
 						try {
-							Thread.sleep(2000);
+							Thread.sleep(1400);
 						} catch (InterruptedException e) {
 							e.printStackTrace();
 						}
@@ -108,7 +108,7 @@ public class Partie extends Observable {
 					
 				}
 				Plateau.determinerFormeDuTapis(Plateau.cartesJouees);
-				System.out.println("Carte restant: " + Partie.nombreDeCartesJouables);
+				System.out.println("Carte restant: " + Partie.nombreDeCartesJouables + "\n");
 			}
 		}
 		
@@ -117,7 +117,7 @@ public class Partie extends Observable {
 		 * Step 4: The game is now finish: 
 		 	* Compter points of each player and print it on the screen
 		 */
-		System.out.println("\n \n");
+		System.out.println("\n \n **************************** RESULTAT FINAL ****************************");
 		this.imprimerResult();
 		
 		Compteur compteurPoint = new Compteur();

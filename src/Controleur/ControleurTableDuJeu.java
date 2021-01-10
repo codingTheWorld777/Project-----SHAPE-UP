@@ -115,7 +115,7 @@ public class ControleurTableDuJeu {
 								
 							} else System.out.println("réessayez");						
 						}
-						
+
 					}
 					
 				} catch (Exception err) {
@@ -196,8 +196,10 @@ public class ControleurTableDuJeu {
 									
 									ControleurTableDuJeu.setBorderColorToOrg();
 									
-									//If we play by click on GUI: After updating card's image, we update datas 
-									//in all necessary lists by using method "deplacerCarte" of player
+									/** 
+									 * If we play by click on GUI: After updating card's image, we update datas 
+									 * in all necessary lists by using method "deplacerCarte" of player
+									*/
 									joueur.deplacerCarte();
 									if (!joueur.aPiocheUneCarte) Plateau.determinerFormeDuTapis(Plateau.getListeDeCartesJouees());
 									
@@ -321,7 +323,7 @@ public class ControleurTableDuJeu {
 					System.out.println("ROUND " + FenetreTableDuJeu.round);
 					/** Pass to next round: (Release memory + InstallerTour + new Partie() + Repaint GUI */
 					
-					/** Thread for game in CMD. Thread's name: Thread-0 */
+					/** Thread for game in CMD. Thread's name: Thread-index */
 					Thread threadCMD = new Thread() {
 						public void run() {
 							System.out.println("Start " + Thread.currentThread().getName());
@@ -427,8 +429,8 @@ public class ControleurTableDuJeu {
 		return false;
 	}
 	
-	public static Joueur getJoueur(int id) {
-		return Partie.joueursEnJeu[id];
+	public static Joueur getJoueur(int index) {
+		return Partie.joueursEnJeu[index];
 	}
 	
 	public void setCartesBtn(ButtonCard[][] cartesBtn) {
@@ -478,9 +480,7 @@ public class ControleurTableDuJeu {
 		return ControleurTableDuJeu.installerTour;
 	}
 	
-	/*
-	 * Get and set permettreDeDeplacer
-	 */
+	/** Get and set permettreDeDeplacer */
 	public static boolean getPermettreDeDeplacer() {
 		return ControleurTableDuJeu.permettreDeDeplacer;
 	}
@@ -489,18 +489,24 @@ public class ControleurTableDuJeu {
 		ControleurTableDuJeu.permettreDeDeplacer = bool;
 	}
 	
-	/*
-	 * Set pouvoirPiocher
-	 */
+	/** Set pouvoirPiocher */
 	public static void setPouvoirPiocher(boolean bool) {
 		ControleurTableDuJeu.pouvoirPiocher = bool;
 	}
 	
-	/*
-	 * Get the color joueur Backg
-	 */
+	/** Get the color joueur Backg */
 	public static Color getJoueurBackg() {
 		return ControleurTableDuJeu.joueurBackg;
+	}
+	
+	/** Check if a card is moveable */
+	public static boolean estDeplacable(int x, int y) {
+		return Plateau.estDeplacable(x, y);
+	}
+	
+	/** Check if a position chosen by player is moveable */
+	public static boolean isInPositionDeDeplacer(int x, int y) {
+		return Plateau.isInPositionDeDeplacer(x, y);
 	}
 	
 }

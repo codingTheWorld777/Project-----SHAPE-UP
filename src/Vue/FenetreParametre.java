@@ -30,9 +30,9 @@ public class FenetreParametre {
 	private static JPanel nombreDeJoueursPanel;
 	private static JPanel activerJoueurVirPanel;
 	private static JPanel niveauPanel;
-	private static JPanel nommmerJoueurPanel;
+	private static JPanel activerLeJeuSurConsolePnl;
 	private static JButton valider;
-
+	
 
 	/**
 	 * Create the application.
@@ -150,6 +150,38 @@ public class FenetreParametre {
 		//**Handling event** >>ControleurParametre
 		controleurParametre.controleurParametre(controleurParametre.getInstallerJeu(), facile);
 		controleurParametre.controleurParametre(controleurParametre.getInstallerJeu(), difficile);
+		
+		
+		/** Activate the option "Play on the console" */
+		activerLeJeuSurConsolePnl = new JPanel();
+		activerLeJeuSurConsolePnl.setLayout(null);
+		activerLeJeuSurConsolePnl.setBounds(20, 307, 677, 74);
+		frame.getContentPane().add(activerLeJeuSurConsolePnl);
+		
+		JLabel activerLeJeuSurConsoleLbl = new JLabel("Activer le jeu sur la console:");
+		activerLeJeuSurConsoleLbl.setFont(new Font("SansSerif", Font.BOLD, 18));
+		activerLeJeuSurConsoleLbl.setBounds(0, 6, 275, 30);
+		activerLeJeuSurConsolePnl.add(activerLeJeuSurConsoleLbl);
+		
+		JRadioButton oui_1 = new JRadioButton("Oui");
+		oui_1.setBounds(285, 11, 57, 23);
+		activerLeJeuSurConsolePnl.add(oui_1);
+		
+		JRadioButton non_1 = new JRadioButton("Non");
+		non_1.setBounds(366, 11, 69, 23);
+		activerLeJeuSurConsolePnl.add(non_1);
+		
+		ButtonGroup group2 = new ButtonGroup();
+		group2.add(oui_1);
+		group2.add(non_1);
+		//**Handling event** >> ControleurParametre
+		controleurParametre.controleurParametre(ControleurParametre.getInstallerJeu(), oui_1, "Oui");
+		controleurParametre.controleurParametre(ControleurParametre.getInstallerJeu(), non_1, "Oui");
+		
+		JLabel lblNewLabel = new JLabel("(A utiliser uniquement lors du text du jeu)");
+		lblNewLabel.setFont(new Font("Lucida Grande", Font.ITALIC, 13));
+		lblNewLabel.setBounds(40, 36, 314, 16);
+		activerLeJeuSurConsolePnl.add(lblNewLabel);
 		
 		
 		/** ******************* Validate button ******************* */

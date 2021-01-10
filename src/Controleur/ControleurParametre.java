@@ -1,7 +1,6 @@
 package Controleur;
 
 import java.awt.EventQueue;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -17,6 +16,7 @@ import Modele.InstallerJeu;
 import Modele.Partie;
 import Vue.FenetreParametre;
 import Vue.FenetreTableDuJeu;
+import Vue.VueText;
 
 /**
  * @author Huu Khai NGUYEN (Alec) 
@@ -95,6 +95,37 @@ public class ControleurParametre {
 	}
 	
 	/**
+	 * overloading 
+	 * Render activerLeJeuSurConsole 
+	 * @param installerJeu
+	 * @param radioBtn
+	 */
+	public void controleurParametre(InstallerJeu installerJeu, JRadioButton radioBtn, String consoleOption) {
+		radioBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				AbstractButton selectedValue = (AbstractButton) e.getSource();
+				
+				if (consoleOption.equals("Oui")) {
+					try {
+						/** In case activerLeJeuSurConsole is selected */
+						if (selectedValue.getText().equals("Oui")) {
+							InstallerJeu.setConsoleOption(true);
+							InstallerJeu.activerLeJeuSurConsoleValidation = 1;
+
+						} else if ((selectedValue.getText().equals("Non"))) {
+							InstallerJeu.setConsoleOption(false);
+							InstallerJeu.activerLeJeuSurConsoleValidation = 1;
+						}
+
+					} catch (Exception err) {
+						System.out.println("Some errors happened...");
+					}
+				}
+			}
+		});
+	}
+	
+	/**
 	 * overloading
 	 * Validate options from players -> Close parameted window -> Open SHAPE UP's GUI
 	 * @param installerJeu
@@ -121,7 +152,7 @@ public class ControleurParametre {
 						};
 						threadCMD.start();
 						
-						
+
 						/**
 						 * Thread for GUI
 						 * Run this thread of "FenetreTableDuJeu" after 2 seconds to wait for "InstallerTour" is finish
@@ -144,6 +175,16 @@ public class ControleurParametre {
 								}
 							}
 						});
+						
+					
+						/** Thread of VueText */
+						if (InstallerJeu.getConsoleOption()) {
+							try {
+								new VueText();
+							} catch (NullPointerException err) {
+								System.out.println(err.toString());
+							}
+						}
 					}
 				}
 			}

@@ -32,7 +32,7 @@ public class JoueurPhy extends Joueur {
 			System.out.println();
 		}
 		
-		System.out.println("Choisir l'abscisse x de carte sur la table du jeu: ");
+		System.out.print("Choisir l'abscisse x de carte sur la table du jeu: ");
 		Scanner src = new Scanner(System.in);
 		int x, y;
 		
@@ -59,7 +59,7 @@ public class JoueurPhy extends Joueur {
 			if (x == 0 || x == 6) break;
 		}
 		
-		System.out.println("Choisir l'ordonnée y de carte sur le table du jeu: ");
+		System.out.print("Choisir l'ordonnée y de carte sur le table du jeu: ");
 		if (this.coordAPlacer == null) {
 			y = src.nextInt();
 		} else {
@@ -164,7 +164,6 @@ public class JoueurPhy extends Joueur {
 	public void deplacerCarte() {
 		Plateau.determinerFormeDuTapis(Plateau.cartesJouees);
 		
-		System.out.print("Voulez-vous déplacer une carte?: (0/1): ");
 		Scanner src = new Scanner(System.in);
 		
 		System.out.println(coordChoisieADeplacer.x + ", " + coordChoisieADeplacer.y);
@@ -191,7 +190,6 @@ public class JoueurPhy extends Joueur {
 			
 			boolean check = Plateau.estDeplacable(x, y);
 			System.out.println("La carte sur cette position est deplacable? " + check);
-			System.out.println("BesoinAjouter = " + Plateau.besoinAjouter);
 			
 			if (check) {
 				//Can delete this loop
@@ -229,7 +227,7 @@ public class JoueurPhy extends Joueur {
 				for (Coordonnees positionDeDeplacer: Plateau.positionDeDeplacer) {
 					if (positionDeDeplacer.x == x1 && positionDeDeplacer.y == y1) {
 						/**
-						 * if all conditions of mouvement are satisfied: 
+						 * If all conditions of mouvement are satisfied: 
 						 * 	+ Remove card (for example card X) out of the table of game
 						 * 	+ Delete its position out of Plateau.possibilites and update all possible position
 						 * 		which are related to this card's position

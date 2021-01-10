@@ -29,6 +29,10 @@ public class InstallerJeu {
 	private static String niveau;
 	public static int niveauValidation;
 	
+	/** Activate the game on console */
+	private static boolean activerLeJeuSurConsole;
+	public static int activerLeJeuSurConsoleValidation;
+	
 	/** Constructor InstallerJeu */
 	public InstallerJeu() {
 		this.getDonnees(); 
@@ -60,7 +64,13 @@ public class InstallerJeu {
 			if (this.niveauValidation == 0) this.niveau = src.next();
 			else System.out.println(this.niveau);
 		} else System.out.println(this.activerJoueurVir);
-
+		
+		/** Set the game on console */
+		if (this.activerLeJeuSurConsole == true) {
+			System.out.println("Vous pouvez jouer le jeu sur la console !");
+		} 
+		
+		System.out.println();
 		
 		Partie.nombreDeCartesJouables = 17 - this.nombreDeJoueurs;
 		Partie.joueursEnJeu = new Joueur[this.nombreDeJoueurs];
@@ -120,6 +130,22 @@ public class InstallerJeu {
 	 */
 	public static void setNiveau(String niveau) {
 		InstallerJeu.niveau = niveau;
+	}
+	
+	/**
+	 * Get console option
+	 * @return
+	 */
+	public static boolean getConsoleOption() {
+		return InstallerJeu.activerLeJeuSurConsole;
+	}
+	
+	/**
+	 * Set option "Activate the console"
+	 * @param option
+	 */
+	public static void setConsoleOption(boolean option) {
+		InstallerJeu.activerLeJeuSurConsole = option;
 	}
 
 }
