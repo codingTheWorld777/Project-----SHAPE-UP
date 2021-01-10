@@ -4,13 +4,15 @@ import java.util.Scanner;
 
 /**
  * @author Huu Khai NGUYEN (Alec)
- * 
- * Description: This class allows to install a game. 
+ * <br>
+ * Description: This class allows to install a game. <br>
  * We divide this function into 3 main phases:
-	 * 	- Choose the variation for game (Rectangle 5x3 / Square 4x4 /Pyramid)
-	 * 	- Choose the number of player (2 or 3)
-	 * 	- Activate virtual player (yes or no)
-	 * 	- Choose level of virtual player (easy ot difficult)
+ * <ul>
+	 <li>Choose the variation for game (Rectangle 5x3 / Square 4x4 /Pyramid)</li>
+	 <li> Choose the number of player (2 or 3)</li>
+	 <li> Activate virtual player (yes or no)</li>
+	 <li>Choose level of virtual player (easy ot difficult)</li>
+ * </ul>
  */
 
 public class InstallerJeu {
@@ -39,7 +41,7 @@ public class InstallerJeu {
 	}
 	
 	
-	/** Get datas from player */
+	/** Get datas from player concerning the game (variation of game, number of player, etc...) */
 	public void getDonnees() {
 		Scanner src = new Scanner(System.in);
 		
@@ -78,6 +80,7 @@ public class InstallerJeu {
 	
 	/**
 	 * Get variation of game
+	 * @return game's variation : String
 	 */
 	public static String getVarianteDuTapis() {
 		return varianteDuTapis;
@@ -85,6 +88,7 @@ public class InstallerJeu {
 	
 	/**
 	 * Set variation for game
+	 * @param varianteDuTapis : String
 	 */
 	public static void setVarianteDuTapis(String varianteDuTapis) {
 		InstallerJeu.varianteDuTapis = varianteDuTapis;
@@ -92,6 +96,7 @@ public class InstallerJeu {
 	
 	/**
 	 * Get number of players
+	 * @return number of player
 	 */
 	public static int getNombreDeJoueurs() {
 		return nombreDeJoueurs;
@@ -99,6 +104,7 @@ public class InstallerJeu {
 	
 	/**
 	 * Set number for players
+	 * @param nombreDeJoueurs : int
 	 */
 	public static void setNombreDeJoueurs(int nombreDeJoueurs) {
 		InstallerJeu.nombreDeJoueurs = nombreDeJoueurs;
@@ -106,6 +112,7 @@ public class InstallerJeu {
 	
 	/**
 	 * Get option: Activate virtual player
+	 * @return boolean
 	 */
 	public static boolean getActiverJoueurVir() {
 		return activerJoueurVir;
@@ -113,6 +120,7 @@ public class InstallerJeu {
 	
 	/**
 	 * Set option: Activate virtual player
+	 * @param activerJoueurVir : boolean
 	 */
 	public static void setActiverJoueurVir(boolean activerJoueurVir) {
 		InstallerJeu.activerJoueurVir = activerJoueurVir;
@@ -120,6 +128,7 @@ public class InstallerJeu {
 	
 	/**
 	 * Get level of virtual player
+	 * @return level: String
 	 */
 	public static String getNiveau() {
 		return niveau;
@@ -127,6 +136,7 @@ public class InstallerJeu {
 	
 	/**
 	 * Set level for virtual player
+	 * @param niveau : String
 	 */
 	public static void setNiveau(String niveau) {
 		InstallerJeu.niveau = niveau;
@@ -134,7 +144,7 @@ public class InstallerJeu {
 	
 	/**
 	 * Get console option
-	 * @return
+	 * @return boolean
 	 */
 	public static boolean getConsoleOption() {
 		return InstallerJeu.activerLeJeuSurConsole;
@@ -142,10 +152,9 @@ public class InstallerJeu {
 	
 	/**
 	 * Set option "Activate the console"
-	 * @param option
+	 * @param option : boolean
 	 */
 	public static void setConsoleOption(boolean option) {
 		InstallerJeu.activerLeJeuSurConsole = option;
 	}
-
 }

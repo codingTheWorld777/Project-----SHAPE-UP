@@ -6,10 +6,13 @@ import Controleur.ControleurTableDuJeu;
 
 /**
  * @author Huu Khai NGUYEN (Alec)
- * Description: JoueurPhy class allows us to have a better view of what physics players might be able to have
+ * <br>
+ * Description: JoueurPhy class allows us to have a better view of what physics players might be able to have. 
  * A real player can do: 
- 	* Move a card 
- 	* Place a card	 
+ * <ul>
+ 	<li> Move a card </li> 
+ 	<li> Place a card </li>	 
+ * </ul>
  */
 
 public class JoueurPhy extends Joueur {
@@ -21,7 +24,11 @@ public class JoueurPhy extends Joueur {
 		super(name, id);
 	}
 	
-	/** Draw and place a card */
+	/**
+	 * Draw and place a card
+	 * @param tableDuJeu : Carte[][]
+	 * @param tour : int
+	 */
 	public void piocherCarte(Carte[][] tableDuJeu, int tour) {
 		Plateau.determinerFormeDuTapis(Plateau.cartesJouees);
 		System.out.println("Vous avez pioché la carte : " + PiocheCartes.getPiocheCartes().get(Partie.nombreDeCartesJouables - 1).getForme() + " " + PiocheCartes.getPiocheCartes().get(Partie.nombreDeCartesJouables - 1).getNature() + " " + PiocheCartes.getPiocheCartes().get(Partie.nombreDeCartesJouables - 1).getCouleur());
@@ -158,7 +165,7 @@ public class JoueurPhy extends Joueur {
 	}
 	
 	/**
-	 * Move a card
+	 * Move a card <nr>
 	 * Choose and move a card to a new position (if it's possible) by respecting the rule of mouvement
 	 */
 	public void deplacerCarte() {
@@ -290,13 +297,6 @@ public class JoueurPhy extends Joueur {
 			} else return;
 
 		}
-//		Plateau.positionDeDeplacer.clear();
 	}
 	
-
-	@Override
-	public void update(Object o) {
-		// TODO Auto-generated method stub
-		
-	}
 }

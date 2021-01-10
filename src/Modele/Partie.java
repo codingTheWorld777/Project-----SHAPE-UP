@@ -5,6 +5,8 @@ import Controleur.ControleurTableDuJeu;
 
 /**
  * @author Huu Khai NGUYEN (Alec), Pierre-Louis DAMBRAINE
+ * <br>
+ * Description: A place where the game occurs
  */
 
 public class Partie extends Observable {
@@ -199,6 +201,7 @@ public class Partie extends Observable {
 	
 	/**
 	 * Get table of game "tableDuJeu"
+	 * @return tableDuJeu : Carte[][]
 	 */
 	public static Carte[][] getTableDuJeu() {
 		return Partie.tableDuJeu;

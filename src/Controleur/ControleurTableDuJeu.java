@@ -30,6 +30,7 @@ import Vue.FenetreTableDuJeu;
 
 /**
  * @author Huu Khai NGUYEN (Alec), Pierre-Louis DAMBRAINE
+ * <br>
  * Description: This class allows to control the game (includes GUI and datas)
  */
 
@@ -53,8 +54,8 @@ public class ControleurTableDuJeu {
 	
 	/**
 	 * Constructor
-	 * @param joueur
-	 * @param btnCarte
+	 * @param joueur Player
+	 * @param btnCarte Card button
 	 */
 	public void ControleurTableDuJeu(Joueur joueur, ButtonCard btnCarte) {
 		btnCarte.addActionListener(new ActionListener() {
@@ -220,9 +221,9 @@ public class ControleurTableDuJeu {
 	}
 	
 	/**
-	 * Finish a round of player
+	 * Finish a round of player <br>
 	 * Activate the next player
-	 * @param finirMonTour
+	 * @param finirMonTour : Button 'Finish my turn'
 	 */
 	public static void finirMonTour(JButton finirMonTourBtn, Joueur joueur, int id) {
 		
@@ -273,6 +274,8 @@ public class ControleurTableDuJeu {
 	/**
 	 * Finish a round of a virtual player
 	 * Activate the next player
+	 * @param joueur
+	 * @param id
 	 */
 	public static void finirVirtualTour(JoueurVir joueur, int id) {
 		if (joueur.getId() == Partie.tourDeJoueur) {
@@ -311,7 +314,10 @@ public class ControleurTableDuJeu {
 		}
 	}
 	
-	/** Pass to next round after finishing a round */
+	/**
+	 * Pass to next round after finishing a round
+	 * @param tourSuivantBtn
+	 */
 	public void tourSuivant(JButton tourSuivantBtn) {
 		tourSuivantBtn.addActionListener(new ActionListener() {
 			
@@ -363,6 +369,11 @@ public class ControleurTableDuJeu {
 		});
 	}
 	
+	/**
+	 * Check if a coordinate of a card is in list of possiblities
+	 * @param tabBtnCarte
+	 * @return
+	 */
 	public boolean checkPossibilites(ButtonCard[][] tabBtnCarte) {
 		boolean isInPossibilites = true;
 		for (int i = 0; i < tabBtnCarte.length; i++) {
@@ -429,6 +440,7 @@ public class ControleurTableDuJeu {
 		return false;
 	}
 	
+	/** Get player */
 	public static Joueur getJoueur(int index) {
 		return Partie.joueursEnJeu[index];
 	}

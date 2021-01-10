@@ -20,6 +20,8 @@ import Vue.VueText;
 
 /**
  * @author Huu Khai NGUYEN (Alec) 
+ * 
+ * <br>
  * Description: This class allows to control the installation window
  */
 
@@ -31,8 +33,8 @@ public class ControleurParametre {
 	
 	/**
 	 * Render variation/numberOfPlayer option
-	 * @param installerJeu
-	 * @param comboBox
+	 * @param installerJeu : InstallerJeu variable
+	 * @param comboBox : component JComboBox
 	 */
 	public void controleurParametre(InstallerJeu installerJeu, JComboBox comboBox) {
 		comboBox.addItemListener(new ItemListener() {
@@ -52,10 +54,10 @@ public class ControleurParametre {
 	}
 	
 	/**
-	 * overloading 
+	 * @Overload
 	 * Render activerJoueurVir / Niveau option
-	 * @param installerJeu
-	 * @param radioBtn
+	 * @param installerJeu : InstallerJeu varibale
+	 * @param radioBtn : component JRadioButton
 	 */
 	public void controleurParametre(InstallerJeu installerJeu, JRadioButton radioBtn) {
 		radioBtn.addActionListener(new ActionListener() {
@@ -95,10 +97,10 @@ public class ControleurParametre {
 	}
 	
 	/**
-	 * overloading 
+	 * @Overload
 	 * Render activerLeJeuSurConsole 
-	 * @param installerJeu
-	 * @param radioBtn
+	 * @param installerJeu : InstallerJeu variale
+	 * @param radioBtn : component JRadioButton
 	 */
 	public void controleurParametre(InstallerJeu installerJeu, JRadioButton radioBtn, String consoleOption) {
 		radioBtn.addActionListener(new ActionListener() {
@@ -126,10 +128,10 @@ public class ControleurParametre {
 	}
 	
 	/**
-	 * overloading
+	 * @Overload
 	 * Validate options from players -> Close parameted window -> Open SHAPE UP's GUI
-	 * @param installerJeu
-	 * @param button
+	 * @param installerJeu : Installer variable
+	 * @param button : component JButton
 	 */
 	public void controleurParametre(InstallerJeu installerJeu, JButton button) {
 		button.addActionListener(new ActionListener() {
@@ -194,23 +196,32 @@ public class ControleurParametre {
 	
 	/**
 	 * Set and get installerJeu variable from Class InstallerJeu in package.Modele when it is created
+	 * @param installerJeu : Installer variable
 	 */
 	public static void setInstallerJeu(InstallerJeu installerJeu) {
 		ControleurParametre.installerJeu = installerJeu;
 	}
 	
+	/**
+	 * Get InstallerJeu object
+	 * @return InstallerJeu object
+	 */
 	public static InstallerJeu getInstallerJeu() {
 		return ControleurParametre.installerJeu;
 	}
 	
-	
 	/**
-	 * Set and get fenetreParametre's frame for handling event of JButton "valider"
+	 * Set fenetreParametre's frame for handling event of JButton "valider"
+	 * @param fenetreParametreFrame : JFrame-settings window frame
 	 */
 	public static void setFenetreParametre(JFrame fenetreParametreFrame) {
 		ControleurParametre.fenetreParametreFrame = fenetreParametreFrame;
 	}
 	
+	/**
+	 * Get fenetreParametre's frame for handling event of JButton "valider"
+	 * @return fenetreParametre object
+	 */
 	public static JFrame getFenetreParametre() {
 		return ControleurParametre.fenetreParametreFrame;
 	}

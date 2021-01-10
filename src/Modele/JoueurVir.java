@@ -6,6 +6,7 @@ import java.util.Collections;
 
 /**
  * @author Huu Khai NGUYEN (Alec), Pierre-Louis DAMBRAINE
+ * <br>
  * Description: This class inludes all the features that a virtual player should have
  */
 
@@ -13,13 +14,21 @@ public class JoueurVir extends Joueur implements Strategie {
 	/** Level of virtual player */
 	private String niveau;
 	
-	/** Constructor JoueurVir */
+	/**
+	 * Constructor JoueurVir 
+	 * @param name : String
+	 * @param id : int
+	 */
 	public JoueurVir(String name, int id) {
 		super(name, id);
 		this.niveau = this.getNiveau();
 	}
-	
-	/** Draw and place a card automatically */
+
+	/**
+	 * Draw and place a card automatically
+	 * @param tableDuJeu : carte[][]
+	 * @param tour : int
+	 */
 	public void piocherCarte(Carte[][] tableDuJeu, int tour) {
 		Plateau.determinerFormeDuTapis(Plateau.cartesJouees);
 		
@@ -503,11 +512,5 @@ public class JoueurVir extends Joueur implements Strategie {
 			if ((condition1 && condition2) || (condition2 || condition1)) return true; 
 		}
 		return false;
-	}
-
-	@Override
-	public void update(Object o) {
-		// TODO Auto-generated method stub
-		
 	}
 }

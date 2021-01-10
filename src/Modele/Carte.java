@@ -9,7 +9,7 @@ import javax.imageio.ImageIO;
 
 /**
  * @author Huu Khai NGUYEN (Alec)
- * 
+ * <br>
  * Description: This class defines card's properties
  */
 
@@ -84,15 +84,14 @@ public class Carte {
 			url = getClass().getResource("../images/dos.png");
 			this.carteImageVerso = ImageIO.read(url);
 			
-//			this.setBounds(0, 0, 100, 50);
-			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 	
 	/**
-	 * get card's form
+	 * Get card's form
+	 * @return card's form
 	 */
 	public formePossible getForme() {
 		return this.forme;
@@ -100,27 +99,31 @@ public class Carte {
 	
 	/**
 	 * Set card's form
+	 * @param forme : card's form
 	 */
 	public void setForme(formePossible forme) {
 		this.forme = forme;
 	}
 	
 	/**
-	 * get card's color
+	 * Get card's color
+	 * @return card's color
 	 */
 	public couleurPossible getCouleur() {
 		return this.couleur;
 	}
 	
 	/**
-	 * Set card's color
+	 * Set color for card
+	 * @param couleur: color
 	 */
 	public void setCouleur(couleurPossible couleur) {
 		this.couleur = couleur;
 	}
 	
 	/**
-	 * get card's nature
+	 * Get nature (filling) of card
+	 * @return card's nature
 	 */
 	public naturePossible getNature() {
 		return this.nature;
@@ -128,44 +131,53 @@ public class Carte {
 	
 	/**
 	 * Set card's nature
+	 * @param nature : card's nature
 	 */
 	public void setNature(naturePossible nature) {
 		this.nature = nature;
 	}
 	
 	/**
-	 * Change the face of card
+	 * Change the face of card to face-up
 	 */
 	public void toRecto() {
 		this.recto = true;
 	}
 	
+	/**
+	 * Change the face of card to face-down
+	 */
 	public void toVerso() {
 		this.recto = false;
 	}
 	
+	/**
+	 * Get state of card (up or down)
+	 * @return card's state
+	 */
 	public boolean getFace() {
 		return this.recto;
 	}
 	
 	/**
-	 * Set image to card: Face up OR Face down
-	 */
-	public void setCarteImage(boolean recto) {}
-	
-	/*
-	 * Get card's image (faceUp-recto or faceDown-verso)
+	 * Get card's image (faceUp-recto)
+	 * @return card's image (face-up)
 	 */
 	public Image getCarteImageRecto() {
 		return this.carteImageRecto;
 	}
 	
+	/**
+	 * Get card's image (faceDown-verso)
+	 * @return card's image (face-down)
+	 */
 	public Image getCarteImageVerso() {
 		return this.carteImageVerso;
 	}
 	
 	/**
 	 * Set number for card
+	 * @param nombreDeCarte : int
 	 */
 	public static void setNombreDeCarte(int nombreDeCarte) {
 		Carte.nombreDeCarte = nombreDeCarte;
@@ -173,24 +185,32 @@ public class Carte {
 	
 	/**
 	 * Get number of card to render image 
+	 * @return card's number
 	 */
 	public static int getNombreDeCarte() {
 		return Carte.nombreDeCarte;
 	}
 	
 	/**
-	 * Set and Get ID of card
+	 * Get card's id
+	 * @return card's id
 	 */
 	public int getCarteID() {
 		return this.ID;
 	}
 	
+	/**
+	 * Set card's id
+	 * @param ID : int
+	 */
 	public void setCarteID(int ID) {
 		this.ID = ID;
 	}
 	
 	/**
 	 * Set coordinates for card
+	 * @param x : int
+	 * @param y : int
 	 */
 	public void setCoordonnees(int x, int y) {
 		this.coordonnesDeCarte = new Coordonnees(x, y);
@@ -198,6 +218,7 @@ public class Carte {
 	
 	/**
 	 * Get coordinates for card
+	 * @return card's coordinates
 	 */
 	public Coordonnees getCoordonnees() {
 		return this.coordonnesDeCarte;

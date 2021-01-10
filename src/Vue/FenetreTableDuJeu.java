@@ -32,6 +32,7 @@ import java.awt.event.ActionEvent;
 
 /**
  * @author Huu Khai NGUYEN (Alec)
+ * <br>
  * Description: This class allows to display game's table that includes all players, game's table, cards...
  */
 
@@ -40,6 +41,7 @@ public class FenetreTableDuJeu extends JFrame implements Observer {
 	public static JLabel roundLabel;
 	private static JButton tourSuivantBtn;
 	
+	/** Sets of elements (includes container and component) of game's window */
 	private static JPanel zoneDeCartePanel;
 	private static JPanel joueur1Panel, joueur2Panel,joueur3Panel;
 	private JButton finirMonTour1, finirMonTour2, finirMonTour3;

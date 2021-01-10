@@ -4,12 +4,17 @@ import java.util.ArrayList;
 
 /**
  * @author Huu Khai NGUYEN (Alec)
- * 
+ * <br>
  * Description: This class allows to set up a game based on the datas which is gotten from player (variation of game, number of player,..) 
  */
 
 public class InstallerTour {
 	
+	/**
+	 * Constructor InstallerTour
+	 * @param nombreDeJoueurs : int
+	 * @param activerJoueurVir : boolean
+	 */
 	public InstallerTour(int nombreDeJoueurs, boolean activerJoueurVir) {
 		PiocheCartes piocheCartes = new PiocheCartes();
 		Carte carteCachee = this.retirerCarteCachee(piocheCartes.getPiocheCartes());
@@ -72,11 +77,11 @@ public class InstallerTour {
 	
 
 	/**
-	 * Choose one random card from 18 cards in order to set a "hidden card"
-	 * Remove this card out of the game
-	 * Return this hidden card
-	 * @param piocheCartes
-	 * @return
+	 * Choose one random card from 18 cards in order to set a "hidden card".
+	 * Remove this card out of the game.
+	 * Return this hidden card.
+	 * @param piocheCartes : ArrayList<Carte>
+	 * @return hidden card
 	 */
 	public Carte retirerCarteCachee(ArrayList<Carte> piocheCartes) {
 		int pos = (int) (Math.random() * 18);
@@ -91,7 +96,9 @@ public class InstallerTour {
 	
 	/**
 	 * Distribute victory card to each player (in the case of 2 players)
-	 * @param piocheCartes, @param joueur1, @param joueur2
+	 * @param piocheCartes : ArrayList<Carte>
+	 * @param joueur1 : Joueur
+	 * @param joueur2 : Joueur
 	 */
 	public void distribuerCarteVictoire(ArrayList<Carte> piocheCartes, Joueur joueur1, Joueur joueur2) {
 		int pos1 = 0, pos2 = 0;
@@ -122,6 +129,10 @@ public class InstallerTour {
 	
 	/**
 	 * Distribute card to each player (in the case for 2 players and 1 virtual player)
+	 * @param piocheCartes : ArrayList<Carte> 
+	 * @param joueur1 : Joueur
+	 * @param joueur2 : Joueur
+	 * @param joueur3 : Joueur
 	 */
 	public void distribuerCarteVictoire(ArrayList<Carte> piocheCartes, Joueur joueur1, Joueur joueur2, Joueur joueur3) {
 		int pos = (int) (Math.random() * 17);
@@ -146,5 +157,4 @@ public class InstallerTour {
 		piocheCartes.remove(pos + x);
 		piocheCartes.remove(pos);
 	}
-	
 }

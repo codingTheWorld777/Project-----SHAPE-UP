@@ -20,7 +20,7 @@ import Modele.Observable;
 
 /** 
  * @author Huu Khai NGUYEN (Alec), Pierre-Louis DAMBRAINE
- *
+ * <br>
  * Description: This class allows players to play on the console at the same time on the GUI
  */
 
@@ -163,7 +163,7 @@ public class VueText extends Thread implements Observer, Runnable {
 	
 	/** 
 	 * Read input of player's option
-	 * @return
+	 * @return String
 	 */
 	private String lireChaine() {
 		BufferedReader br = new BufferedReader (new InputStreamReader(System.in));
@@ -181,7 +181,7 @@ public class VueText extends Thread implements Observer, Runnable {
 	
 	/**
 	 * Enter a value of type 'int'
-	 * @return
+	 * @return int
 	 */
 	public int saisirInt() {
 		 Scanner src = new Scanner(System.in);
@@ -200,7 +200,7 @@ public class VueText extends Thread implements Observer, Runnable {
 	
 	/**
 	 * Enter a value of type 'boolean'
-	 * @return
+	 * @return boolean
 	 */
 	public boolean saisirBoolean() {
 		Scanner src = new Scanner(System.in);
@@ -217,8 +217,9 @@ public class VueText extends Thread implements Observer, Runnable {
 		return choix;
 	}
 	
-	/*
+	/**
 	 * Enter a value of type 'coord'
+	 * @return coordinates
 	 */
 	public Coordonnees entrerCoord() {
 		int x, y;

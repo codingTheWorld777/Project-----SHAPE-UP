@@ -2,18 +2,17 @@ package Modele;
 
 /**
  * @author Pierre-Louis DAMBRAINE, Huu Khai NGUYEN (Alec)
- * 
+ * <nr>
  * Description: This class allows to calculate scores of player by using method compter
  */
 
 public class Compteur {
-
 	/** Array of scores: Include scores of each player based on his status */
 	private int[] pointsJoueurs;
 	
 	/**
 	 * This method is to count the score of player
-	 * @param tableDuJeu
+	 * @param tableDuJeu : Carte[][]
 	 */
 	public void compter(Carte[][] tableDuJeu) {
 		/** Initialization of pointsJoueurs  */
@@ -183,7 +182,8 @@ public class Compteur {
 	
 	
 	/**
-	 * Get scores of players
+	 * Get array of scores of all players
+	 * @return player's score array
 	 */
 	public int[] getPointsJoueurs() {
 		return this.pointsJoueurs;
@@ -191,12 +191,10 @@ public class Compteur {
 	
 	/**
 	 * Get score of a player
-	 * @param joueur_id
-	 * @return
+	 * @param joueur_id : int
+	 * @return player's score (based on his id)
 	 */
 	public int getPointsJoueurs(int joueur_id) {
 		return this.pointsJoueurs[joueur_id - 1];
 	}
 }
-			
-

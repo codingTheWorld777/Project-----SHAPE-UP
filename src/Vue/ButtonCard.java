@@ -2,6 +2,7 @@ package Vue;
 
 /**
  * @author Huu Khai NGUYEN (Alec), Pierre-Louis DAMBRAINE
+ * <br>
  * Description: This class allows to dipslay a card on GUI in different situation
  */
 
@@ -39,7 +40,7 @@ public class ButtonCard extends JButton {
 	
 	/**
 	 * Players click this type of button to draw one card
-	 * @param carteJouee
+	 * @param carteJouee : JButton
 	 */
 	public ButtonCard(JButton piocheCarte) {
 		piocheCarte.addActionListener(new ActionListener() {
@@ -86,7 +87,7 @@ public class ButtonCard extends JButton {
 	
 	/**
 	 * Players click button to show their card or hidden card (of course at the end...)
-	 * @param carteVictoire
+	 * @param carteVictoire : Carte
 	 */
 	public ButtonCard(Carte carte) {
 		this.addActionListener(new ActionListener() {
@@ -120,23 +121,32 @@ public class ButtonCard extends JButton {
 	}
 	
 	/**
-	 * Get or set coordinates of card in boardgame
+	 * Get coordinates of card in boardgame
+	 * @return coordinates
 	 */
 	public Coordonnees getCoordonnees() {
 		return this.coordonnees;
 	}
 	
+	/**
+	 * set coordinates of card in boardgame
+	 * @param coordonnees : Coordonnees
+	 */
 	public void setCoordonnees(Coordonnees coordonnees) {
 		this.coordonnees = coordonnees;
 	}
 	
 	/**
 	 * Get or set boolean carteTiree
+	 * @return card
 	 */
 	public boolean getCarteTiree() {
 		return this.carteTiree;
 	}
 	
+	/**
+	 * @param b : boolean
+	 */
 	public void setCarteTiree(boolean b) {
 		this.carteTiree = b;
 	}

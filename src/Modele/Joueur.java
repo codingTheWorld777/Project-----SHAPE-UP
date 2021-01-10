@@ -1,15 +1,12 @@
 package Modele;
 
 /**
- * @author macbook
- * Description: This class describes all properties and actions that a player has
+ * @author Huu Khai NGUYEN (Alec)
+ * <br>
+ * Description: This class describes all properties and actions that a player has (-> Designation of player)
  */
 
-public abstract class Joueur extends Observable implements Observer{
-	/**
-	 * Designation of player 
-	 */
-	
+public abstract class Joueur extends Observable {
 	/**
 	 * To show if player is taking their turn of not
 	 */
@@ -49,6 +46,8 @@ public abstract class Joueur extends Observable implements Observer{
 	
 	/**
 	 * Constructor of Player
+	 * @param nom : String
+	 * @param id : int
 	 */
 	public Joueur(String nom, int id) {
 		this.nom = nom;
@@ -57,17 +56,20 @@ public abstract class Joueur extends Observable implements Observer{
 	}
 	
 	/**
-	 * Draw a card
+	 * Player draws a card
+	 * @param tableDuJeu : Carte[][]
+	 * @param tour : int
 	 */
 	public abstract void piocherCarte(Carte[][] tableDuJeu, int tour);
 	
 	/**
-	 * Move a card
+	 *  Player moves a card
 	 */
 	public abstract void deplacerCarte();
 	
 	/**
 	 * Get player's name
+	 * @return player's name
 	 */
 	public String getNom() {
 		return this.nom;
@@ -75,6 +77,7 @@ public abstract class Joueur extends Observable implements Observer{
 	
 	/**
 	 * Set victory card for player
+	 * @param carteVictoire : Carte
 	 */
 	public void setCarteVictoire(Carte carteVictoire) {
 		this.carteVictoire = carteVictoire;
@@ -82,6 +85,7 @@ public abstract class Joueur extends Observable implements Observer{
 	
 	/**
 	 * Get victory card of player
+	 * @return player's victory card
 	 */
 	public Carte getCarteVictoire() {
 		return this.carteVictoire; 
@@ -89,6 +93,7 @@ public abstract class Joueur extends Observable implements Observer{
 	
 	/**
 	 * Set score for player
+	 * @param score : int
 	 */
 	public void setScore(int score) {
 		this.score = score;
@@ -96,6 +101,7 @@ public abstract class Joueur extends Observable implements Observer{
 	
 	/**
 	 * Get score of one player
+	 * @return player's score
 	 */
 	public int getScore() {
 		return this.score;
@@ -103,6 +109,7 @@ public abstract class Joueur extends Observable implements Observer{
 	
 	/**
 	 * Set player's status (in turn or not)
+	 * @param estEnTour : boolean
 	 */
 	public void setEnTour(boolean estEnTour) {
 		this.estEnTour = estEnTour;
@@ -110,6 +117,8 @@ public abstract class Joueur extends Observable implements Observer{
 	
 	/**
 	 * Set player's coordAPlacer
+	 * @param x : int
+	 * @param y : int
 	 */
 	public void setCoordAPlacer(int x, int y) {
 		this.coordAPlacer = new Coordonnees(x, y);
@@ -117,21 +126,33 @@ public abstract class Joueur extends Observable implements Observer{
 	
 	/**
 	 * Set and get player's coordChoisieADeplacer et coordADeplacer
+	 * @param x : int
+	 * @param y : int
 	 */
 	public void setCoordChoisieADeplacer(int x, int y) {
 		this.coordChoisieADeplacer = new Coordonnees(x, y);
 	}
 	
+	/**
+	 * Get card's coordinate that player want to move
+	 * @return card's coordinate
+	 */
 	public Coordonnees getCoordChoisieADeplacer() {
 		return this.coordChoisieADeplacer;
 	}
 	
+	/**
+	 * Set card's coordinate that player want to move to
+	 * @param x
+	 * @param y
+	 */
 	public void setCoordADeplacer(int x, int y) {
 		this.coordADeplacer = new Coordonnees(x, y);
 	}
 	
 	/**
 	 * Check if player is in turn or not
+	 * @return boolean
 	 */
 	public boolean getEnTour() {
 		return this.estEnTour;
@@ -139,8 +160,10 @@ public abstract class Joueur extends Observable implements Observer{
 	
 	/**
 	 * Get player's id
+	 * @return player's id
 	 */
 	public int getId() {
 		return this.id;
 	}
 }
+

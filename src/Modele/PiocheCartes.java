@@ -8,6 +8,7 @@ import Modele.Carte.naturePossible;
 
 /**
  * @author Huu Khai NGUYEN (Alec)
+ * <br>
  * Description: This class allows to create, shuffle all cards to prepare for game
  */
 
@@ -64,6 +65,7 @@ public class PiocheCartes {
 	
 	/**
 	 * Get the set of cards that we have just created
+	 * @return list of cards
 	 */
 	public static ArrayList<Carte> getPiocheCartes() {
 		return PiocheCartes.piocheCartes;

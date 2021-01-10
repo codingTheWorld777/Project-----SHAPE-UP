@@ -17,6 +17,7 @@ import Controleur.ControleurParametre;
 
 /**
  * @author Huu Khai NGUYEN (Alec)
+ * <br>
  * Description: This class is a installation window that allows player to parameter the game 
  */
 
@@ -194,10 +195,18 @@ public class FenetreParametre {
 		controleurParametre.controleurParametre(controleurParametre.getInstallerJeu(), valider);
 	}
 	
+	/**
+	 * Get level Panel
+	 * @return JPanel
+	 */
 	public static JPanel getNiveauPanel() {
 		return FenetreParametre.niveauPanel;
 	}
 	
+	/**
+	 * Get setting Frame
+	 * @return JFrame
+	 */
 	public JFrame getFrame() {
 		return this.frame;
 	}
