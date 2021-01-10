@@ -30,16 +30,22 @@ Clique sur le bouton **"Valider"** pour afficher l'interface graphique du jeu.
 - Lorsque vous cliquez sur le bouton de sélection mais qu'il y a des endroits où la carte ne devient pas verte, veuillez cliquer sur ce bouton au moins une fois pour mettre à jour l'interface graphique.
 - Lorsque vous ne parvenez pas à placer une carte après en avoir déplacée (bien que les emplacements deviennent verts), cliquez sur votre bouton "Finir mon tour" si vous êtes actuellement à votre tour.
 
+👉 Télecharger **project.jar** et profiter le jeu.
+
 <h2>Remarque:</h2> 
-- Vous pouvez jouer le jeu sur l'interface graphique au même temps que sur la console. Pour le faire, vous devez avoir l'IDE qui peut compiler et exécuter un Java programme (Eclipse, NetBeans,...). Après avoir installé et paramétré Java environnement, vous devez cloner les codes sources en utilisant cette commande de git: </br>
+📛 Vous pouvez jouer le jeu sur l'interface graphique au même temps que sur la console. Pour le faire, vous devez avoir l'IDE qui peut compiler et exécuter un Java programme (Eclipse, NetBeans,...). Après avoir installé et paramétré Java environnement, vous devez cloner les codes sources en utilisant cette commande de git: </br>
 		
 		$ git clone https://github.com/codingTheWorld777/Project-----SHAPE-UP.git
 		
 </br>
-Ouvrez votre IDE et profitez le jeu! 😎
+
+📛 Démarrer le programme et dans la dernière option, choisissez **"Oui"**. ATTENTION, cette option c'est juste pour tester le programme!! </br>
+📛 Si vous activez le jeu sur la console: Si vous voulez jouer sur l'interface graphique dans ce cas, après avoir pioché et placé une carte, si vous voulez finir votre tour en cliquant sur le bouton **Finir mon tour**, vous devez attendre de 3-4 secondes et puis le cliquer pour passer sur le tour du joueur suivant.
+
+🤘 Ouvrez votre IDE et profitez le jeu! 😎
 
 # Screenshots
-![Screenshot-Window selection](https://imgur.com/qoYsd8V.png)
+![Screenshot-Window selection](https://i.imgur.com/VIdFaqf.png)
 ![Screenshot-SHAPE UP game](https://i.imgur.com/ohEA6bd.png)
 
 <details><summary><b>[EN-Description]</b></summary>
@@ -67,12 +73,18 @@ If the game is over, click on the "Next round" button to move on to the new roun
 - When you click the select button in the **"Draw Card"** area but there are maybe some places where the possible position(s) does not turn green, please click this button at least once to update the GUI.
 - When you are unable to place a card after moving one (although the spaces turn green), click your **"End my turn"** button if you are currently on your turn.
 
+👉 Download **project.jar** to enjoy the game
+
 <h2>Remark:</h2> 
-- You can play this game in the GUI at the same time in the console. To do it, firstly you need an IDE that can compile and run a Java program. After installing the IDE and its environment, to play this game, you need to clone the source codes from my repository into one of your folder's directory: </br>
+📛 You can play this game in the GUI at the same time in the console. To do it, firstly you need an IDE that can compile and run a Java program. After installing the IDE and its environment, to play this game, you need to clone the source codes from my repository into one of your folder's directory: </br>
 		
 		$ git clone https://github.com/codingTheWorld777/Project-----SHAPE-UP.git
 		
 </br>
-Open your IDE and enjoy the game! 😎
+
+📛 Start the program and in the last option, choose **"Yes"**. BE CAREFUL, this option is just to test the program !! </br>
+📛 If you activate the game on the console: If you want to play on the graphical interface in this case, after drawing and placing a card, if you want to end your turn by clicking on the ** End my turn ** button, you have to wait 3-4 seconds and then click it to move on to the next player's turn.
+
+🤘 Open your IDE and enjoy the game! 😎
 </p>
 </details>

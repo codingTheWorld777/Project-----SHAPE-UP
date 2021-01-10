@@ -37,7 +37,7 @@ See my repository at: [Huu Khai NGUYEN's Project-----SHAPE UP](https://github.co
 
 - Implémenter ‘Observable et Observer' avec les Controleurs qui vont controler et mettre à jour le changement et puis repeindre l'interface du jeu -> **Louis et Huu Khai [OK]**
 
-- Écrire la classe VueText.java qui permet de jouer au jeu sur l’interface graphique en même temps que sur la ligne de commande -> **Louis et Huu Khai []**
+- Écrire la classe VueText.java qui permet de jouer au jeu sur l’interface graphique en même temps que sur la ligne de commande -> **Huu Khai et Louis [OK]**
 
 
 
