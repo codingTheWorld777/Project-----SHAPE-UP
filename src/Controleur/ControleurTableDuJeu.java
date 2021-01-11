@@ -26,6 +26,7 @@ import Modele.PiocheCartes;
 import Modele.Plateau;
 import Vue.ButtonCard;
 import Vue.FenetreTableDuJeu;
+import Vue.VueText;
 
 /**
  * @author Huu Khai NGUYEN (Alec), Pierre-Louis DAMBRAINE
@@ -344,11 +345,25 @@ public class ControleurTableDuJeu {
 					 * Run this thread of "FenetreTableDuJeu" after 2 seconds to wait for "InstallerTour" is finish
 					 * Thread's name: AWT-EventQueue-0
 					 */
+					while (Partie.joueur2 == null) {
+						try {
+							Thread.sleep(1000);
+						} catch (InterruptedException e1) {
+							e1.printStackTrace();
+						}
+					}
+					
+					try {
+						Thread.sleep(1400);
+					} catch (InterruptedException er) {
+						System.out.println(er.toString());
+					}
+					
 					EventQueue.invokeLater(new Runnable() {
 						public void run() {
 							while (Partie.joueursEnJeu[0] == null) {
 								try {
-									Thread.sleep(1000);
+									Thread.sleep(1800);
 								} catch (Exception err) {
 									System.out.println(err.toString());
 								}
@@ -363,6 +378,16 @@ public class ControleurTableDuJeu {
 							}
 						}
 					});
+					
+					/** Thread of VueText */
+					if (InstallerJeu.getConsoleOption()) {
+						try {
+							Thread.sleep(700);
+							new VueText();
+						} catch (NullPointerException | InterruptedException err) {
+							System.out.println(err.toString());
+						}
+					}
 				}
 			}
 			
