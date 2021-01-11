@@ -141,7 +141,7 @@ public class Plateau {
 	 		<li>We determine this rectangle by its coordinates (x, y)</li>
 	 		<li>Minimize zone of cards that can be put into table, Check with all possibilities defined if the position is available</li>
 	 * </ul> 
-	 * @param cartesJouees : ArrayList<Carte>
+	 * @param cartesJouees : List of cards in turn
 	 */
 	public static void determinerFormeDuTapis(ArrayList<Carte> cartesJouees) {
 		int xMin = (int) Double.POSITIVE_INFINITY, xMax = -1;
@@ -569,7 +569,7 @@ public class Plateau {
 	/**
 	 * (9)
 	 * Update list of possible positions for drawing a card to a position <br>
-	 * -> (this method is used after moving (déplacer) a card in order to eliminate some possible position
+	 * - (this method is used after moving (déplacer) a card in order to eliminate some possible position
 	 * 	that is related to this card's position)
 	 * @param x : int
 	 * @param y : int
@@ -642,7 +642,7 @@ public class Plateau {
 	/**
 	 * (14) <br>
 	 * Get list of drawed cards 
-	 * @return ArrayList<Carte>
+	 * @return list of card in turn
 	 */
 	public static ArrayList<Carte> getListeDeCartesJouees() {
 		return Plateau.cartesJouees;
@@ -651,7 +651,7 @@ public class Plateau {
 	/**
 	 * (15) <br>
 	 * Get list of 'positionDeDeplacer'
-	 * @return ArrayList<Coordonnees> 
+	 * @return list of moveable positions 
 	 */
 	public static ArrayList<Coordonnees> getPositionDeDeplacer() {
 		return Plateau.positionDeDeplacer;
@@ -660,7 +660,7 @@ public class Plateau {
 	/**
 	 * (16) <br>
 	 * Get list of 'possibilites'
-	 * @return ArrayList<Coordonnees> 
+	 * @return list of possibilities
 	 */
 	public static ArrayList<Coordonnees> getPossibilites() {
 		return Plateau.possibilites;

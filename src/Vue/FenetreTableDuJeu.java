@@ -346,7 +346,11 @@ public class FenetreTableDuJeu extends JFrame implements Observer {
 		this.validate();
 	}
 	
-	/** Get player's JPanel (to change its color after finishing its move)  */
+	/**
+	 * Get player's JPanel (to change its color after finishing its move)  
+	 * @param id int
+	 * @return JPanel
+	 */
 	public static JPanel getJoueurPanel(int id) {
 		if (id == 1) return joueur1Panel;
 		else if (id == 2) return joueur2Panel;

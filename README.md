@@ -2,6 +2,8 @@
 
 See my repository at: [Huu Khai NGUYEN's Project-----SHAPE UP](https://github.com/codingTheWorld777/Project-----SHAPE-UP)
 
+See API's document of this project at [SHAPE UP-API's document](https://codingtheworld777.github.io/doc)
+
 ## --[FR-Description]--
 ### 1) Introduction
 - Dans le cadre d'un [cours de branche sur la programmation orienté-objet en Java (LO02)](https://moodle.utt.fr/course/search.php?search=lo02) dirigé par **Guillaume DOYEN** à l'[Université de Technologie de Troyes](https://www.utt.fr), j'ai réalisé en binôme avec **Pierre-Louis DAMBRAINE** un jeu appelé **SHAPE UP**. 
@@ -29,6 +31,8 @@ Clique sur le bouton **"Valider"** pour afficher l'interface graphique du jeu.
 **Petit note:** </u> Comme nous ne savons pas quelle action le joueur choisissira en premier (il peut choisir de déplacer premièrement une carte ou de piocher et de placer une carte avant d'en déplacer), donc comme le joueur change continuellement son choix. Pour cette raison, le jeu peut prendre 1 à 2 secondes à traiter, il peut donc ne pas être en mesure de mettre à jour l'interface graphique immédiatement. Nous avons 2 situations qui pourraient se produire ici:
 - Lorsque vous cliquez sur le bouton de sélection mais qu'il y a des endroits où la carte ne devient pas verte, veuillez cliquer sur ce bouton au moins une fois pour mettre à jour l'interface graphique.
 - Lorsque vous ne parvenez pas à placer une carte après en avoir déplacée (bien que les emplacements deviennent verts), cliquez sur votre bouton "Finir mon tour" si vous êtes actuellement à votre tour.
+
+Pour plus informations, voir @Vue/VueText.java .
 
 👉 Télecharger **project.jar** et profiter le jeu.
 
@@ -84,6 +88,8 @@ If the game is over, click on the "Next round" button to move on to the new roun
 
 📛 Start the program and in the last option, choose **"Yes"**. BE CAREFUL, this option is just to test the program !! </br>
 📛 If you activate the game on the console: If you want to play on the graphical interface in this case, after drawing and placing a card, if you want to end your turn by clicking on the ** End my turn ** button, you have to wait 3-4 seconds and then click it to move on to the next player's turn.
+
+For more informations, see @Vue/VueText .
 
 🤘 Open your IDE and enjoy the game! 😎
 </p>

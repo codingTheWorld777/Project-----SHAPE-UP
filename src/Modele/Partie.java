@@ -144,8 +144,13 @@ public class Partie extends Observable {
 	
 	/**
 	 * Player play their turn:
-	 * 	+ Move a card
-	 * 	+ Draw ad put that card in a possible position
+	 * <ul>
+	 * 		<li>Move a card</li>
+	 * 		<li>Draw ad put that card in a possible position</li>
+	 * </ul>
+	 * @param joueur Joueur
+	 * @param estEnTour boolean
+	 * @param tour int
 	 */
 	public static void jouerSonTour(Joueur joueur, boolean estEnTour, int tour) {
 		if (estEnTour) {

@@ -13,7 +13,7 @@ See my repository at: [Huu Khai NGUYEN's Project-----SHAPE UP](https://github.co
 - Implémenter la classe Plateau.java qui est le coeur du programme et qui va controller toutes opérations du jeu (déterminer la forme du tapis,...) -> **Huu Khai [OK]**
 - Définir l'algorithme de déplacer une carte pour joueurPhy vers une position possible -> **Huu Khai [OK]**
 - Définir toutes les méthodes dans le fichier Partie.java -> **Huu Khai [OK]**
-- Définir les méthodes dans la classe ** *JoueurVir* **: stratégie, fonctionnalités du joueurVir (déplacer, piocher une carte automatiquement) -> **Louis**
+- Définir les méthodes dans la classe ** *JoueurVir* **: stratégie, fonctionnalités du joueurVir (déplacer, piocher une carte automatiquement) -> **Huu Khai etLouis [OK]**
 - Implémenter un patron de conception “Stratégie" comprend tous les algorithmes importants du jeu: 
     + Écrire un algorithme qui permet de déplacer la carte -> **Huu Khai [OK]**
     + Régler le niveau du joueur virtuel **[OK]**

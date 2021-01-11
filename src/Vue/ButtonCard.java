@@ -40,7 +40,7 @@ public class ButtonCard extends JButton {
 	
 	/**
 	 * Players click this type of button to draw one card
-	 * @param carteJouee : JButton
+	 * @param piocheCarte JButton
 	 */
 	public ButtonCard(JButton piocheCarte) {
 		piocheCarte.addActionListener(new ActionListener() {

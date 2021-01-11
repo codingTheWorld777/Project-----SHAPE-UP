@@ -501,22 +501,38 @@ public class ControleurTableDuJeu {
 		ControleurTableDuJeu.permettreDeDeplacer = bool;
 	}
 	
-	/** Set pouvoirPiocher */
+	/**
+	 * Set pouvoirPiocher
+	 * @param bool : boolean
+	 */
 	public static void setPouvoirPiocher(boolean bool) {
 		ControleurTableDuJeu.pouvoirPiocher = bool;
 	}
 	
-	/** Get the color joueur Backg */
+	/**
+	 * Get the color joueur Backg
+	 * @return Color of player's background
+	 */
 	public static Color getJoueurBackg() {
 		return ControleurTableDuJeu.joueurBackg;
 	}
 	
-	/** Check if a card is moveable */
+	/**
+	 * Check if a card is moveable
+	 * @param x : int
+	 * @param y : int
+	 * @return boolean
+	 */
 	public static boolean estDeplacable(int x, int y) {
 		return Plateau.estDeplacable(x, y);
 	}
 	
-	/** Check if a position chosen by player is moveable */
+	/**
+	 * Check if a new position chosen by player to move a card to is moveable
+	 * @param x : int
+	 * @param y : int
+	 * @return boolean
+	 */
 	public static boolean isInPositionDeDeplacer(int x, int y) {
 		return Plateau.isInPositionDeDeplacer(x, y);
 	}
