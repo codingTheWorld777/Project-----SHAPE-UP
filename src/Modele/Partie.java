@@ -40,7 +40,6 @@ public class Partie extends Observable {
 	
 	/** Constructor */
 	public Partie() {
-		boolean deplacerUneCarte;
 		
 		/**
 		 * Step 1:

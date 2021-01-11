@@ -6,7 +6,6 @@ import java.awt.Image;
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.net.URL;
 
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
@@ -35,8 +34,7 @@ import Vue.FenetreTableDuJeu;
  */
 
 public class ControleurTableDuJeu {
-	private static Thread threadCMD;
-	
+
 	private static FenetreTableDuJeu tableDuJeu;
 	
 	protected static InstallerJeu installerJeu;
@@ -48,7 +46,6 @@ public class ControleurTableDuJeu {
 	protected static boolean pouvoirPiocher = true;
 	protected static boolean permettreDeDeplacer;
 	
-	private static Color color = new Color(107, 142, 35);
 	private static Color joueurBackg = new Color(107, 142, 35);
 	private LineBorder lineBorder = new LineBorder(SystemColor.activeCaptionText, 1);
 	
@@ -57,7 +54,7 @@ public class ControleurTableDuJeu {
 	 * @param joueur Player
 	 * @param btnCarte Card button
 	 */
-	public void ControleurTableDuJeu(Joueur joueur, ButtonCard btnCarte) {
+	public void controleurTableDuJeu(Joueur joueur, ButtonCard btnCarte) {
 		btnCarte.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -74,7 +71,7 @@ public class ControleurTableDuJeu {
 						if (Partie.tour == 0 && joueur.getEnTour() == true) {
 							coord = btnCarte.getCoordonnees();
 							
-							if (installerJeu.getVarianteDuTapis().equals("P")) {
+							if (InstallerJeu.getVarianteDuTapis().equals("P")) {
 								if (coord.x == 0 || coord.x == 6) {
 									joueur.setCoordAPlacer(coord.x, coord.y);
 									
@@ -184,8 +181,7 @@ public class ControleurTableDuJeu {
 								if (permettreDeDeplacer && Plateau.getListeDeCartesJouees().get(i).getCoordonnees().x == x 
 									&& Plateau.getListeDeCartesJouees().get(i).getCoordonnees().y == y) {
 									
-									URL url = getClass().getResource("../images/" + Plateau.getListeDeCartesJouees().get(i).getCarteID() + ".png");
-									Image imgRecto = ImageIO.read(url);
+									Image imgRecto = ImageIO.read(this.getClass().getResource("/images/" + Plateau.getListeDeCartesJouees().get(i).getCarteID() + ".png"));
 									imgRecto = imgRecto.getScaledInstance(btnCarte.getWidth(), btnCarte.getHeight(), Image.SCALE_DEFAULT);
 									
 									cartesBtn[y1][x1].setIcon(new ImageIcon(imgRecto));
@@ -258,6 +254,8 @@ public class ControleurTableDuJeu {
 							FenetreTableDuJeu.point3.setText("Point: " + compteurPoint.getPointsJoueurs(Partie.joueursEnJeu[i].getId()));
 
 					}
+					
+					FenetreTableDuJeu.carteRestantLabel.setText("Carte restant : " + ControleurTableDuJeu.getNombreDeCartesRes());
 
 					pouvoirPiocher = true;		
 					joueur.coordChoisieADeplacer = null;
@@ -306,6 +304,8 @@ public class ControleurTableDuJeu {
 
 			}
 
+			FenetreTableDuJeu.carteRestantLabel.setText("Carte restant : " + ControleurTableDuJeu.getNombreDeCartesRes());
+			
 			pouvoirPiocher = true;		
 			joueur.coordChoisieADeplacer = null;
 			joueur.coordADeplacer = null;
@@ -323,7 +323,7 @@ public class ControleurTableDuJeu {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (Partie.nombreDeCartesJouables == 0 && ControleurTableDuJeu.tableDuJeu.round < 8) {
+				if (Partie.nombreDeCartesJouables == 0 && FenetreTableDuJeu.round < 8) {
 					FenetreTableDuJeu.round++;
 					
 					System.out.println("ROUND " + FenetreTableDuJeu.round);
@@ -446,7 +446,7 @@ public class ControleurTableDuJeu {
 	}
 	
 	public void setCartesBtn(ButtonCard[][] cartesBtn) {
-		this.cartesBtn = cartesBtn;
+		ControleurTableDuJeu.cartesBtn = cartesBtn;
 	}
 	
 	/**
@@ -537,4 +537,7 @@ public class ControleurTableDuJeu {
 		return Plateau.isInPositionDeDeplacer(x, y);
 	}
 	
+	public static int getNombreDeCartesRes() {
+		return PiocheCartes.getPiocheCartes().size();
+	}
 }

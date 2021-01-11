@@ -3,7 +3,6 @@ package Modele;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.net.URL;
 
 import javax.imageio.ImageIO;
 
@@ -77,14 +76,12 @@ public class Carte {
 
 		try {
 			//Load the image for the current file to render "face up" of card
-			URL url = getClass().getResource("../images/" + Carte.nombreDeCarte + ".png");
-			this.carteImageRecto = ImageIO.read(url);
+			this.carteImageRecto = ImageIO.read(this.getClass().getResource("/images/" + Carte.nombreDeCarte + ".png"));
 			
 			//Load the backup of card
-			url = getClass().getResource("../images/dos.png");
-			this.carteImageVerso = ImageIO.read(url);
+			this.carteImageVerso = ImageIO.read(this.getClass().getResource("/images/dos.png"));
 			
-		} catch (IOException e) {
+		} catch (IOException | IllegalArgumentException e) {
 			e.printStackTrace();
 		}
 	}

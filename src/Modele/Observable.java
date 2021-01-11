@@ -6,12 +6,10 @@ public class Observable {
 	public final static int MAX_OBSERVERS = 10;
 	
 	private ArrayList<Observer> observers;
-	private int numberOfObservers;
 	private boolean hasChanged;
 	
 	public Observable() {
 		observers = new ArrayList<Observer>();
-		numberOfObservers = 0;
 		hasChanged = false;
 	}
 	

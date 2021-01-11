@@ -26,6 +26,6 @@ public class JouerJeu {
 	}
 	
 	public static void main(String[] args) {
-		JouerJeu ShapeUp = new JouerJeu();
+		new JouerJeu();
 	}
 }

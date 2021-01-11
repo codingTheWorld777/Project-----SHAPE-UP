@@ -1,16 +1,11 @@
 package Vue;
 
 import java.awt.Color;
-
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridLayout;
 import java.awt.Image;
-import java.awt.Point;
 import java.awt.SystemColor;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -20,15 +15,11 @@ import javax.swing.JPanel;
 import javax.swing.UIManager;
 import javax.swing.border.LineBorder;
 
-import Controleur.ControleurParametre;
 import Controleur.ControleurTableDuJeu;
 import Modele.Coordonnees;
-import Modele.Partie;
-
+import Modele.InstallerJeu;
 import Modele.Observer;
-import Modele.Observable;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+import Modele.Partie;
 
 /**
  * @author Huu Khai NGUYEN (Alec)
@@ -37,8 +28,11 @@ import java.awt.event.ActionEvent;
  */
 
 public class FenetreTableDuJeu extends JFrame implements Observer {
+	private static final long serialVersionUID = 1L;
+	
 	public static int round = 1;
 	public static JLabel roundLabel;
+	public static JLabel carteRestantLabel;
 	private static JButton tourSuivantBtn;
 	
 	/** Sets of elements (includes container and component) of game's window */
@@ -58,18 +52,20 @@ public class FenetreTableDuJeu extends JFrame implements Observer {
 	 * Create the application.
 	 */
 	public FenetreTableDuJeu() {
+		getContentPane().setFont(new Font("Lucida Grande", Font.BOLD, 14));
+		getContentPane().setForeground(Color.RED);
 		initialize();
 		
-		if (ControleurParametre.getInstallerJeu().getConsoleOption()) {
-			for (int i = 0; i < ControleurTableDuJeu.getInstallerJeu().getNombreDeJoueurs(); i++) {
-				controleurJeu.getJoueur(i).addObserver(this);
+		if (InstallerJeu.getConsoleOption()) {
+			for (int i = 0; i < InstallerJeu.getNombreDeJoueurs(); i++) {
+				ControleurTableDuJeu.getJoueur(i).addObserver(this);
 			}
 			
 		} else {
-			if (controleurJeu.getJoueur(1).getNom().equals("Joueur Virtuel")) {
-				controleurJeu.getJoueur(1).addObserver(this);
-			} else if (ControleurTableDuJeu.paintJoueur3(controleurJeu.getInstallerJeu(), this) == true && controleurJeu.getJoueur(2).getNom().equals("Joueur Virtuel")) {
-				controleurJeu.getJoueur(2).addObserver(this);
+			if (ControleurTableDuJeu.getJoueur(1).getNom().equals("Joueur Virtuel")) {
+				ControleurTableDuJeu.getJoueur(1).addObserver(this);
+			} else if (ControleurTableDuJeu.paintJoueur3(ControleurTableDuJeu.getInstallerJeu(), this) == true && ControleurTableDuJeu.getJoueur(2).getNom().equals("Joueur Virtuel")) {
+				ControleurTableDuJeu.getJoueur(2).addObserver(this);
 			}
 		}
 
@@ -104,13 +100,8 @@ public class FenetreTableDuJeu extends JFrame implements Observer {
 		controleurJeu = new ControleurTableDuJeu();
 		
 		/** Set background for game's board */
-		try {
-			JLabel background = new JLabel(new ImageIcon(this.getClass().getResource("../images/background_of_desk.png")));
-			this.setContentPane(background);
-			
-		} catch (Exception e) {
-			System.out.println(e.toString());
-		}
+		JLabel background = new JLabel(new ImageIcon(this.getClass().getResource("/images/background_of_desk.png")));
+		this.setContentPane(background);
 		
 		this.setTitle("SHAPE UP!");
 		this.setSize(1200, 740);
@@ -134,7 +125,7 @@ public class FenetreTableDuJeu extends JFrame implements Observer {
 	            
 				cartesBtn[i][j] = carteBtn;
 				for (int k = 0; k < Partie.joueursEnJeu.length; k++) {
-					controleurJeu.ControleurTableDuJeu(Partie.joueursEnJeu[k], carteBtn);
+					controleurJeu.controleurTableDuJeu(Partie.joueursEnJeu[k], carteBtn);
 				}
 			}
 		}
@@ -174,7 +165,7 @@ public class FenetreTableDuJeu extends JFrame implements Observer {
 		ButtonCard carteVictoire1 = new ButtonCard(ControleurTableDuJeu.getJoueur(0).getCarteVictoire());
 		carteVictoire1.setBounds(41, 72, 81, 100);
 		try {
-			Image imgVerso = controleurJeu.getJoueur(0).getCarteVictoire().getCarteImageVerso();
+			Image imgVerso = ControleurTableDuJeu.getJoueur(0).getCarteVictoire().getCarteImageVerso();
 			imgVerso = imgVerso.getScaledInstance(carteVictoire1.getWidth(), carteVictoire1.getHeight(), Image.SCALE_DEFAULT);
 			carteVictoire1.setIcon(new ImageIcon(imgVerso));
 		} catch (NullPointerException e) {
@@ -187,7 +178,7 @@ public class FenetreTableDuJeu extends JFrame implements Observer {
 		finirMonTour1.setFont(new Font("Lucida Grande", Font.BOLD, 14));
 		finirMonTour1.setBounds(21, 180, 120, 34);
 		joueur1Panel.add(finirMonTour1);
-		controleurJeu.finirMonTour(finirMonTour1, Partie.joueur1, 1);
+		ControleurTableDuJeu.finirMonTour(finirMonTour1, Partie.joueur1, 1);
 		
 		
 		/** ******** Zone of hidden card ******** */
@@ -215,10 +206,10 @@ public class FenetreTableDuJeu extends JFrame implements Observer {
 		joueur2Label.setFont(new Font("Lucida Grande", Font.BOLD, 14));
 		
 		try {
-			if (controleurJeu.getJoueur(1).getNom().equals("Joueur Virtuel")) joueur2Label.setBounds(32, 6, 104, 21);
+			if (ControleurTableDuJeu.getJoueur(1).getNom().equals("Joueur Virtuel")) joueur2Label.setBounds(32, 6, 104, 21);
 			else joueur2Label.setBounds(52, 6, 63, 21);
 			
-			joueur2Label.setText(controleurJeu.getJoueur(1).getNom());
+			joueur2Label.setText(ControleurTableDuJeu.getJoueur(1).getNom());
 		} catch (NullPointerException e) {
 			System.out.println(e.toString());
 		}
@@ -230,11 +221,11 @@ public class FenetreTableDuJeu extends JFrame implements Observer {
 		joueur2Panel.add(point2);
 		
 		/** Set image for victory card (faceDown-verso) */
-		ButtonCard carteVictoire2 = new ButtonCard(controleurJeu.getJoueur(1).getCarteVictoire());
+		ButtonCard carteVictoire2 = new ButtonCard(ControleurTableDuJeu.getJoueur(1).getCarteVictoire());
 		carteVictoire2.setBounds(41, 72, 81, 100);
 		joueur2Panel.add(carteVictoire2);
 		try {
-			Image imgVerso = controleurJeu.getJoueur(1).getCarteVictoire().getCarteImageVerso();
+			Image imgVerso = ControleurTableDuJeu.getJoueur(1).getCarteVictoire().getCarteImageVerso();
 			imgVerso = imgVerso.getScaledInstance(carteVictoire2.getWidth(), carteVictoire2.getHeight(), Image.SCALE_DEFAULT);
 			carteVictoire2.setIcon(new ImageIcon(imgVerso));
 		} catch (NullPointerException e) {
@@ -245,14 +236,14 @@ public class FenetreTableDuJeu extends JFrame implements Observer {
 		finirMonTour2.setFont(new Font("Lucida Grande", Font.BOLD, 14));
 		finirMonTour2.setBounds(21, 180, 120, 34);
 		
-		if (!controleurJeu.getJoueur(1).getNom().equals("Joueur Virtuel"))
+		if (!ControleurTableDuJeu.getJoueur(1).getNom().equals("Joueur Virtuel"))
 			joueur2Panel.add(finirMonTour2);
 		
-		controleurJeu.finirMonTour(finirMonTour2, Partie.joueur2, 2);
+		ControleurTableDuJeu.finirMonTour(finirMonTour2, Partie.joueur2, 2);
 		
 		
 		/** ******** Player 3 ******** */
-		if (ControleurTableDuJeu.paintJoueur3(controleurJeu.getInstallerJeu(), this) == true) {
+		if (ControleurTableDuJeu.paintJoueur3(ControleurTableDuJeu.getInstallerJeu(), this) == true) {
 			joueur3Panel = new JPanel();
 			joueur3Panel.setBackground(UIManager.getColor("Button.select"));
 			joueur3Panel.setBounds(986, 38, 164, 229);
@@ -260,10 +251,10 @@ public class FenetreTableDuJeu extends JFrame implements Observer {
 			this.getContentPane().add(joueur3Panel);
 			
 			try {
-				JLabel joueur3Label = new JLabel(controleurJeu.getJoueur(2).getNom());
+				JLabel joueur3Label = new JLabel(ControleurTableDuJeu.getJoueur(2).getNom());
 				joueur3Label.setFont(new Font("Lucida Grande", Font.BOLD, 14));
 				
-				if (controleurJeu.getJoueur(2).getNom().equals("Joueur Virtuel")) joueur3Label.setBounds(32, 6, 104, 21);
+				if (ControleurTableDuJeu.getJoueur(2).getNom().equals("Joueur Virtuel")) joueur3Label.setBounds(32, 6, 104, 21);
 				else joueur3Label.setBounds(52, 6, 63, 21);
 				
 				joueur3Panel.add(joueur3Label);
@@ -278,11 +269,11 @@ public class FenetreTableDuJeu extends JFrame implements Observer {
 			joueur3Panel.add(point3);
 			
 			/** Set image for victory card (faceDown-verso) */
-			ButtonCard carteVictoire3 = new ButtonCard(controleurJeu.getJoueur(2).getCarteVictoire());
+			ButtonCard carteVictoire3 = new ButtonCard(ControleurTableDuJeu.getJoueur(2).getCarteVictoire());
 			carteVictoire3.setBounds(41, 72, 81, 100);
 			joueur3Panel.add(carteVictoire3);
 			try {
-				Image imgVerso = controleurJeu.getJoueur(2).getCarteVictoire().getCarteImageVerso();
+				Image imgVerso = ControleurTableDuJeu.getJoueur(2).getCarteVictoire().getCarteImageVerso();
 				imgVerso = imgVerso.getScaledInstance(carteVictoire3.getWidth(), carteVictoire3.getHeight(), Image.SCALE_DEFAULT);
 				carteVictoire3.setIcon(new ImageIcon(imgVerso));
 			} catch (NullPointerException e) {
@@ -293,10 +284,10 @@ public class FenetreTableDuJeu extends JFrame implements Observer {
 			finirMonTour3.setFont(new Font("Lucida Grande", Font.BOLD, 14));
 			finirMonTour3.setBounds(21, 180, 120, 34);
 			
-			if (!controleurJeu.getJoueur(2).getNom().equals("Joueur Virtuel")) 
+			if (!ControleurTableDuJeu.getJoueur(2).getNom().equals("Joueur Virtuel")) 
 				joueur3Panel.add(finirMonTour3);
 			
-			controleurJeu.finirMonTour(finirMonTour3, Partie.joueur3, 3);
+			ControleurTableDuJeu.finirMonTour(finirMonTour3, Partie.joueur3, 3);
 		}
 		
 		/** ******** Zone of card draw ******** */
@@ -310,7 +301,7 @@ public class FenetreTableDuJeu extends JFrame implements Observer {
 		piocheCarte.setBounds(41, 180, 81, 100);
 		
 		try {
-			Image imgVerso = controleurJeu.getCartePiochee().getCarteImageVerso();
+			Image imgVerso = ControleurTableDuJeu.getCartePiochee().getCarteImageVerso();
 			imgVerso = imgVerso.getScaledInstance(piocheCarte.getWidth(), piocheCarte.getHeight(), Image.SCALE_DEFAULT);
 			piocheCarte.setIcon(new ImageIcon(imgVerso));
 		} catch (NullPointerException e) {
@@ -335,6 +326,11 @@ public class FenetreTableDuJeu extends JFrame implements Observer {
 		roundLabel.setFont(new Font("Lucida Grande", Font.BOLD, 15));
 		roundLabel.setBounds(570, 28, 124, 36);
 		getContentPane().add(roundLabel);
+		
+		carteRestantLabel = new JLabel("Carte restant : " + ControleurTableDuJeu.getNombreDeCartesRes());
+		carteRestantLabel.setForeground(Color.RED);
+		carteRestantLabel.setBounds(554, 64, 124, 31);
+		getContentPane().add(carteRestantLabel);
 		
 		tourSuivantBtn = new JButton("Next round");
 		tourSuivantBtn.setFont(new Font("Lucida Grande", Font.BOLD, 15));

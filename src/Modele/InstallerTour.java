@@ -16,8 +16,8 @@ public class InstallerTour {
 	 * @param activerJoueurVir : boolean
 	 */
 	public InstallerTour(int nombreDeJoueurs, boolean activerJoueurVir) {
-		PiocheCartes piocheCartes = new PiocheCartes();
-		Carte carteCachee = this.retirerCarteCachee(piocheCartes.getPiocheCartes());
+		new PiocheCartes();
+		this.retirerCarteCachee(PiocheCartes.getPiocheCartes());
 		
 		/** Player 1 is always JoueurPhy */
 		JoueurPhy joueur1 = new JoueurPhy("Joueur 1", 1);
@@ -30,7 +30,7 @@ public class InstallerTour {
 			Partie.joueur2 = joueur2;
 			Partie.joueur2 = (JoueurPhy) joueur2;
 			
-			this.distribuerCarteVictoire(piocheCartes.getPiocheCartes(), Partie.joueur1, Partie.joueur2);
+			this.distribuerCarteVictoire(PiocheCartes.getPiocheCartes(), Partie.joueur1, Partie.joueur2);
 			
 			Partie.joueursEnJeu[1] = joueur2;
 			
@@ -40,7 +40,7 @@ public class InstallerTour {
 			Partie.joueur2 = (JoueurVir) joueur2;
 			joueur2.setStrategie(InstallerJeu.getNiveau());
 			
-			this.distribuerCarteVictoire(piocheCartes.getPiocheCartes(), Partie.joueur1, Partie.joueur2);
+			this.distribuerCarteVictoire(PiocheCartes.getPiocheCartes(), Partie.joueur1, Partie.joueur2);
 			
 			Partie.joueursEnJeu[1] = joueur2;
 			
@@ -53,7 +53,7 @@ public class InstallerTour {
 			Partie.joueur3 = joueur3;
 			Partie.joueur3 = (JoueurPhy) joueur3;
 
-			this.distribuerCarteVictoire(piocheCartes.getPiocheCartes(), Partie.joueur1, Partie.joueur2, Partie.joueur3);
+			this.distribuerCarteVictoire(PiocheCartes.getPiocheCartes(), Partie.joueur1, Partie.joueur2, Partie.joueur3);
 			
 			Partie.joueursEnJeu[1] = joueur2;
 			Partie.joueursEnJeu[2] = joueur3;
@@ -68,7 +68,7 @@ public class InstallerTour {
 			Partie.joueur3 = (JoueurVir) joueur3;
 			joueur3.setStrategie(InstallerJeu.getNiveau());
 			
-			this.distribuerCarteVictoire(piocheCartes.getPiocheCartes(), Partie.joueur1, Partie.joueur2, Partie.joueur3);
+			this.distribuerCarteVictoire(PiocheCartes.getPiocheCartes(), Partie.joueur1, Partie.joueur2, Partie.joueur3);
 			
 			Partie.joueursEnJeu[1] = joueur2;
 			Partie.joueursEnJeu[2] = joueur3;

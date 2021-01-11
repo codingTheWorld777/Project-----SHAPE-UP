@@ -36,7 +36,7 @@ public class ControleurParametre {
 	 * @param installerJeu : InstallerJeu variable
 	 * @param comboBox : component JComboBox
 	 */
-	public void controleurParametre(InstallerJeu installerJeu, JComboBox comboBox) {
+	public void controleurParametre(InstallerJeu installerJeu, JComboBox<?> comboBox) {
 		comboBox.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
 				String str = (String) comboBox.getSelectedItem();
@@ -136,13 +136,13 @@ public class ControleurParametre {
 	public void controleurParametre(InstallerJeu installerJeu, JButton button) {
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				boolean condition = (ControleurTableDuJeu.getInstallerJeu().getVarianteDuTapis() != "")
-						&& (ControleurTableDuJeu.getInstallerJeu().getNombreDeJoueurs() == 2 || ControleurTableDuJeu.getInstallerJeu().getNombreDeJoueurs() == 3)
-						&& (ControleurTableDuJeu.getInstallerJeu().activerJoueurVirValidation != 0);
+				boolean condition = (InstallerJeu.getVarianteDuTapis() != "")
+						&& (InstallerJeu.getNombreDeJoueurs() == 2 || InstallerJeu.getNombreDeJoueurs() == 3)
+						&& (InstallerJeu.activerJoueurVirValidation != 0);
 				
 				if (condition) {
-					if ((ControleurTableDuJeu.getInstallerJeu().getActiverJoueurVir() == true && ControleurTableDuJeu.getInstallerJeu().niveauValidation != 0)
-							|| ControleurTableDuJeu.getInstallerJeu().getActiverJoueurVir() == false) {
+					if ((InstallerJeu.getActiverJoueurVir() == true && InstallerJeu.niveauValidation != 0)
+							|| InstallerJeu.getActiverJoueurVir() == false) {
 						ControleurParametre.fenetreParametreFrame.dispose();
 						
 						/** Thread for game in CMD. Thread's name: Thread-0 */
@@ -160,8 +160,17 @@ public class ControleurParametre {
 						 * Run this thread of "FenetreTableDuJeu" after 2 seconds to wait for "InstallerTour" is finish
 						 * Thread's name: AWT-EventQueue-0
 						 */
+					
+						while (Partie.joueur2 == null) {
+							try {
+								Thread.sleep(1000);
+							} catch (InterruptedException e1) {
+								e1.printStackTrace();
+							}
+						}
+						
 						try {
-							Thread.sleep(1800);
+							Thread.sleep(1000);
 						} catch (InterruptedException er) {
 							System.out.println(er.toString());
 						}
@@ -182,8 +191,9 @@ public class ControleurParametre {
 						/** Thread of VueText */
 						if (InstallerJeu.getConsoleOption()) {
 							try {
+								Thread.sleep(700);
 								new VueText();
-							} catch (NullPointerException err) {
+							} catch (NullPointerException | InterruptedException err) {
 								System.out.println(err.toString());
 							}
 						}

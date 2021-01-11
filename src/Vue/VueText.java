@@ -1,22 +1,20 @@
 package Vue;
 
-import java.awt.Image;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-import javax.swing.ImageIcon;
 import javax.swing.UIManager;
 
 import Controleur.ControleurTableDuJeu;
 import Modele.Compteur;
 import Modele.Coordonnees;
+import Modele.InstallerJeu;
+import Modele.Joueur;
 import Modele.Observer;
 import Modele.Partie;
-import Modele.Joueur;
-import Modele.Observable;
 
 /** 
  * @author Huu Khai NGUYEN (Alec), Pierre-Louis DAMBRAINE
@@ -34,7 +32,8 @@ public class VueText extends Thread implements Observer, Runnable {
 	
 	/** Constructor */
 	public VueText() {
-		for (int i = 0; i < ControleurTableDuJeu.getInstallerJeu().getNombreDeJoueurs(); i++) {
+		
+		for (int i = 0; i < InstallerJeu.getNombreDeJoueurs(); i++) {
 			Partie.joueursEnJeu[i].addObserver(this);
 		}
 		
@@ -57,12 +56,13 @@ public class VueText extends Thread implements Observer, Runnable {
 		    	/** Player's round */
 		    	if (saisie.equals(VueText.ENTRERCOORDONNEES) == true) {
 		    		System.out.print("DEPLACER OU PLACER: >");
-		    		Scanner src = new Scanner(System.in);
+		    		@SuppressWarnings("resource")
+					Scanner src = new Scanner(System.in);
 		    		String option = src.nextLine();
 		    		
 		    		if (option.equals("PLACER")) {		/** Player want to place a card */
 		    			Coordonnees coord = this.entrerCoord();
-			    		for (int k = 0; k < ControleurTableDuJeu.getInstallerJeu().getNombreDeJoueurs(); k++) {
+			    		for (int k = 0; k < InstallerJeu.getNombreDeJoueurs(); k++) {
 			    			if (ControleurTableDuJeu.getJoueur(k).getEnTour() == true && ControleurTableDuJeu.getJoueur(k).aPiocheUneCarte == false) {
 			    				/** Set to run joueursEnJeu[k].jouerSonTour(...) in Partie.java */
 			    				ControleurTableDuJeu.getJoueur(k).setCoordAPlacer(coord.x, coord.y);
@@ -83,7 +83,7 @@ public class VueText extends Thread implements Observer, Runnable {
 		    			System.out.println("Choisir les coordonnees d'une carte que vous voulez deplacer: ");
 		    			
 		    			Coordonnees coord = this.entrerCoord();
-			    		for (int k = 0; k < ControleurTableDuJeu.getInstallerJeu().getNombreDeJoueurs(); k++) {
+			    		for (int k = 0; k < InstallerJeu.getNombreDeJoueurs(); k++) {
 			    			if (ControleurTableDuJeu.getJoueur(k).getEnTour() && ControleurTableDuJeu.estDeplacable(coord.x, coord.y)) {
 			    				ControleurTableDuJeu.getJoueur(k).setCoordChoisieADeplacer(coord.x, coord.y);
 			    				
@@ -109,7 +109,7 @@ public class VueText extends Thread implements Observer, Runnable {
 		    	
 		    	/** Finish a player round */
 		    	} else if (saisie.equals(VueText.FINIRTOUR) == true) {
-		    		for (int k = 0; k < ControleurTableDuJeu.getInstallerJeu().getNombreDeJoueurs(); k++) {
+		    		for (int k = 0; k < InstallerJeu.getNombreDeJoueurs(); k++) {
 		    			Joueur joueur = ControleurTableDuJeu.getJoueur(k);
 		    			
 		    		if (joueur.getId() == Partie.tourDeJoueur) {
@@ -125,7 +125,7 @@ public class VueText extends Thread implements Observer, Runnable {
 						Compteur compteurPoint = new Compteur();
 						compteurPoint.compter(Partie.getTableDuJeu());
 						
-						for (int i = 0; i < ControleurTableDuJeu.getInstallerJeu().getNombreDeJoueurs(); i++) {
+						for (int i = 0; i < InstallerJeu.getNombreDeJoueurs(); i++) {
 							//1)
 							if (ControleurTableDuJeu.getJoueur(i).getEnTour()) FenetreTableDuJeu.getJoueurPanel(i + 1).setBackground(ControleurTableDuJeu.getJoueurBackg());
 							else FenetreTableDuJeu.getJoueurPanel(i + 1).setBackground(UIManager.getColor("Button.select"));
@@ -137,7 +137,7 @@ public class VueText extends Thread implements Observer, Runnable {
 							if (i == 1) 
 								FenetreTableDuJeu.point2.setText("Point: " + compteurPoint.getPointsJoueurs(ControleurTableDuJeu.getJoueur(i).getId()));
 						
-							if (ControleurTableDuJeu.getInstallerJeu().getNombreDeJoueurs() == 3 && i == 2) 
+							if (InstallerJeu.getNombreDeJoueurs() == 3 && i == 2) 
 								FenetreTableDuJeu.point3.setText("Point: " + compteurPoint.getPointsJoueurs(ControleurTableDuJeu.getJoueur(i).getId()));
 
 						}
@@ -184,7 +184,8 @@ public class VueText extends Thread implements Observer, Runnable {
 	 * @return int
 	 */
 	public int saisirInt() {
-		 Scanner src = new Scanner(System.in);
+		 @SuppressWarnings("resource")
+		Scanner src = new Scanner(System.in);
 		 int num = 0;
 		 
 		 try {
@@ -203,6 +204,7 @@ public class VueText extends Thread implements Observer, Runnable {
 	 * @return boolean
 	 */
 	public boolean saisirBoolean() {
+		@SuppressWarnings("resource")
 		Scanner src = new Scanner(System.in);
 		boolean choix = false;
 		

@@ -1,7 +1,5 @@
 package Vue;
 
-import java.awt.EventQueue;
-
 import java.awt.Font;
 
 import javax.swing.ButtonGroup;
@@ -11,7 +9,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
-import javax.swing.JTextArea;
 
 import Controleur.ControleurParametre;
 
@@ -28,8 +25,8 @@ public class FenetreParametre {
 	 * Component of frame
 	 */
 	private static JPanel variantePanel;
-	private static JPanel nombreDeJoueursPanel;
-	private static JPanel activerJoueurVirPanel;
+//	private static JPanel nombreDeJoueursPanel;
+//	private static JPanel activerJoueurVirPanel;
 	private static JPanel niveauPanel;
 	private static JPanel activerLeJeuSurConsolePnl;
 	private static JButton valider;
@@ -149,8 +146,8 @@ public class FenetreParametre {
 		group1.add(facile);
 		group1.add(difficile);
 		//**Handling event** >>ControleurParametre
-		controleurParametre.controleurParametre(controleurParametre.getInstallerJeu(), facile);
-		controleurParametre.controleurParametre(controleurParametre.getInstallerJeu(), difficile);
+		controleurParametre.controleurParametre(ControleurParametre.getInstallerJeu(), facile);
+		controleurParametre.controleurParametre(ControleurParametre.getInstallerJeu(), difficile);
 		
 		
 		/** Activate the option "Play on the console" */
@@ -192,7 +189,7 @@ public class FenetreParametre {
 		frame.getContentPane().add(valider);
 		
 		/** **Handling event** >>ControleurParametre** */
-		controleurParametre.controleurParametre(controleurParametre.getInstallerJeu(), valider);
+		controleurParametre.controleurParametre(ControleurParametre.getInstallerJeu(), valider);
 	}
 	
 	/**

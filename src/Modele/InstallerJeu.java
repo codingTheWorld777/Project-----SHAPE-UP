@@ -1,7 +1,5 @@
 package Modele;
 
-import java.util.Scanner;
-
 /**
  * @author Huu Khai NGUYEN (Alec)
  * <br>
@@ -43,39 +41,35 @@ public class InstallerJeu {
 	
 	/** Get datas from player concerning the game (variation of game, number of player, etc...) */
 	public void getDonnees() {
-		Scanner src = new Scanner(System.in);
 		
 		/** Set form for game (Rectangle 5x3 / Square 4x4 /Pyramid) */
 		System.out.print("Entrer la forme du tapis de jeu (R/C/P): ");
-		if (this.varianteDuTapis == null) this.varianteDuTapis = src.nextLine();
-		else System.out.println(this.varianteDuTapis);
+		
+		System.out.println(varianteDuTapis);
 		
 		/** Set number of players */
 		System.out.print("Entrer le nombre de joueurs (2-3): ");
-		if (this.nombreDeJoueurs == 0) this.nombreDeJoueurs = Integer.parseInt(src.nextLine());
-		else System.out.println(this.nombreDeJoueurs);
+		System.out.println(nombreDeJoueurs);
 		
 		/** Activate virtual player: Yes or No */
 		System.out.print("Activer le joueur virtuel (true/false): ");
-		if (this.activerJoueurVirValidation == 0) this.activerJoueurVir = src.nextBoolean();	
-		else System.out.println(this.activerJoueurVir);
+		System.out.println(activerJoueurVir);
 		
 		/** Set level */ 
-		if (this.activerJoueurVir == true) {
+		if (activerJoueurVir == true) {
 			System.out.print("Choisir niveau du joueur virtuel (D/F): ");
-			if (this.niveauValidation == 0) this.niveau = src.next();
-			else System.out.println(this.niveau);
-		} else System.out.println(this.activerJoueurVir);
+			System.out.println(niveau);
+		} else System.out.println(activerJoueurVir);
 		
 		/** Set the game on console */
-		if (this.activerLeJeuSurConsole == true) {
+		if (activerLeJeuSurConsole == true) {
 			System.out.println("Vous pouvez jouer le jeu sur la console !");
 		} 
 		
 		System.out.println();
 		
-		Partie.nombreDeCartesJouables = 17 - this.nombreDeJoueurs;
-		Partie.joueursEnJeu = new Joueur[this.nombreDeJoueurs];
+		Partie.nombreDeCartesJouables = 17 - nombreDeJoueurs;
+		Partie.joueursEnJeu = new Joueur[nombreDeJoueurs];
 	}
 	
 	/**

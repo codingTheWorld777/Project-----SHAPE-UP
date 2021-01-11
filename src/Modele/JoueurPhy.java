@@ -2,8 +2,6 @@ package Modele;
 
 import java.util.Scanner;
 
-import Controleur.ControleurTableDuJeu;
-
 /**
  * @author Huu Khai NGUYEN (Alec)
  * <br>
@@ -17,7 +15,7 @@ import Controleur.ControleurTableDuJeu;
 
 public class JoueurPhy extends Joueur {
 	/** Controler that control the game */
-	private ControleurTableDuJeu controleurJeu =  new ControleurTableDuJeu();
+//	private ControleurTableDuJeu controleurJeu =  new ControleurTableDuJeu();
 	
 	/** Constructor JoueurPhy */
 	public JoueurPhy(String name, int id) {
@@ -40,7 +38,6 @@ public class JoueurPhy extends Joueur {
 		}
 		
 		System.out.print("Choisir l'abscisse x de carte sur la table du jeu: ");
-		Scanner src = new Scanner(System.in);
 		int x, y;
 		
 		while (this.coordAPlacer == null) {
@@ -51,28 +48,19 @@ public class JoueurPhy extends Joueur {
 			}
 		} 
 		
-		if (this.coordAPlacer == null) {
-			x = src.nextInt();
-		} else {
-			x = this.coordAPlacer.x;
-			System.out.println(x);
-		}
+		x = this.coordAPlacer.x;
+		System.out.println(x);
 
 		
 		while (tour == 0 && InstallerJeu.getVarianteDuTapis() == "P") {
 			if (x == 0 || x == 6) break;
 			System.out.println("Choisir l'abscisse x de carte parmis 0 et 6 pour la premiere fois (Pyramide): ");
-			x = src.nextInt();
 			if (x == 0 || x == 6) break;
 		}
 		
 		System.out.print("Choisir l'ordonnée y de carte sur le table du jeu: ");
-		if (this.coordAPlacer == null) {
-			y = src.nextInt();
-		} else {
-			y = this.coordAPlacer.y;
-			System.out.println(y);
-		}
+		y = this.coordAPlacer.y;
+		System.out.println(y);
 		
 		
 		/**
@@ -171,6 +159,7 @@ public class JoueurPhy extends Joueur {
 	public void deplacerCarte() {
 		Plateau.determinerFormeDuTapis(Plateau.cartesJouees);
 		
+		@SuppressWarnings("resource")
 		Scanner src = new Scanner(System.in);
 		
 		System.out.println(coordChoisieADeplacer.x + ", " + coordChoisieADeplacer.y);
@@ -217,18 +206,12 @@ public class JoueurPhy extends Joueur {
 					}
 				}
 				
-				if (this.coordADeplacer != null) {
-					x1 = this.coordADeplacer.x; 
-					System.out.println(x1);
-					
-				} else x1 = src.nextInt();
+				x1 = this.coordADeplacer.x; 
+				System.out.println(x1);
 				
 				System.out.print("Choisir l'ordonnée y de position que vous voulez déplacer carte à: ");
-				if (this.coordADeplacer != null) {
-					y1 = this.coordADeplacer.y;
-					System.out.println(y1);
-					
-				} else y1 = src.nextInt();
+				y1 = this.coordADeplacer.y;
+				System.out.println(y1);
 				
 				
 				for (Coordonnees positionDeDeplacer: Plateau.positionDeDeplacer) {
@@ -298,5 +281,4 @@ public class JoueurPhy extends Joueur {
 
 		}
 	}
-	
 }

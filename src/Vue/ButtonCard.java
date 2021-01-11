@@ -7,26 +7,23 @@ package Vue;
  */
 
 import java.awt.Color;
-import java.awt.GridBagConstraints;
-import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JPanel;
 
+import Controleur.ControleurTableDuJeu;
 import Modele.Carte;
 import Modele.Coordonnees;
-import Modele.Partie;
+import Modele.InstallerJeu;
 import Modele.Plateau;
-import Controleur.ControleurParametre;
-import Controleur.ControleurTableDuJeu;
 
 public class ButtonCard extends JButton {
+	private static final long serialVersionUID = 1L;
+	
 	private boolean recto = false;
 	private Coordonnees coordonnees;
 	private Image carteImage;
@@ -50,7 +47,7 @@ public class ButtonCard extends JButton {
 				
 				ControleurTableDuJeu.setBorderColorToOrg1();
 				
-				for (int i = 0; i < ControleurParametre.getInstallerJeu().getNombreDeJoueurs(); i++) {
+				for (int i = 0; i < InstallerJeu.getNombreDeJoueurs(); i++) {
 					if (ControleurTableDuJeu.getJoueur(i).getEnTour()) {
 						if (ControleurTableDuJeu.getJoueur(i).aPiocheUneCarte == false) 
 							ControleurTableDuJeu.setPouvoirPiocher(true);

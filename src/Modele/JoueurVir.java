@@ -204,7 +204,6 @@ public class JoueurVir extends Joueur implements Strategie {
 			/** 1) */
 			int X = -1, Y = -1;  		/** X, Y: original position */ 
 			int X1 = -1, Y1 = -1;		/** X1, Y1: position after moving */
-			Coordonnees pos1, pos2;		/** positions in case 2 options aren't sastified */
 			
 			ArrayList<Integer> setOfMaximumPoints = new ArrayList<Integer>();
 			ArrayList<Coordonnees> listPosDeCarteDeplacable = new ArrayList<Coordonnees>();

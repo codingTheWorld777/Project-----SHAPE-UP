@@ -367,7 +367,6 @@ public class Plateau {
 	public static boolean estDeplacable(int x, int y) {
 		int X, Y;
 		boolean estDeplacable = false;
-		boolean besoinAjouter = false;
 		byte[] nombreEspace = new byte[4];
 		
 		/**
