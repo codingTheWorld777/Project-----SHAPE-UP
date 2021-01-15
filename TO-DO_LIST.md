@@ -3,7 +3,8 @@
 See my repository at: [Huu Khai NGUYEN's Project-----SHAPE UP](https://github.com/codingTheWorld777/Project-----SHAPE-UP)
 
 ## Phase 1: UML  
-- Updating...
+- Updating... <br/>
+Voir sur : [Diagramme](https://github.com/codingTheWorld777/Project-----SHAPE-UP/tree/main/doc/Diagram)
 
 ## Phase 2: Jouer en Commande-line
 - Ecrire les classes en java	 **[OK]**

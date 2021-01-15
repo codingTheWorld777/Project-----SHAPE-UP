@@ -34,7 +34,7 @@ Clique sur le bouton **"Valider"** pour afficher l'interface graphique du jeu.
 
 Pour plus informations, voir @Vue/VueText.java .
 
-👉 Télecharger **project.jar** et profiter le jeu.
+👉 Télecharger [shapeUP.jar](https://github.com/codingTheWorld777/Project-----SHAPE-UP/blob/main/shapeUP.jar) et profiter le jeu.
 
 <h2>Remarque:</h2> 
 📛 Vous pouvez jouer le jeu sur l'interface graphique au même temps que sur la console. Pour le faire, vous devez avoir l'IDE qui peut compiler et exécuter un Java programme (Eclipse, NetBeans,...). Après avoir installé et paramétré Java environnement, vous devez cloner les codes sources en utilisant cette commande de git: </br>
@@ -50,7 +50,7 @@ Pour plus informations, voir @Vue/VueText.java .
 
 # Screenshots
 ![Screenshot-Window selection](https://i.imgur.com/VIdFaqf.png)
-![Screenshot-SHAPE UP game](https://i.imgur.com/ohEA6bd.png)
+![Screenshot-SHAPE UP game](https://i.imgur.com/l30nW2g.png)
 
 <details><summary><b>[EN-Description]</b></summary>
 <p>
@@ -77,7 +77,7 @@ If the game is over, click on the "Next round" button to move on to the new roun
 - When you click the select button in the **"Draw Card"** area but there are maybe some places where the possible position(s) does not turn green, please click this button at least once to update the GUI.
 - When you are unable to place a card after moving one (although the spaces turn green), click your **"End my turn"** button if you are currently on your turn.
 
-👉 Download **project.jar** to enjoy the game
+👉 Download [shapeUP.jar](https://github.com/codingTheWorld777/Project-----SHAPE-UP/blob/main/shapeUP.jar) and enjoy the game
 
 <h2>Remark:</h2> 
 📛 You can play this game in the GUI at the same time in the console. To do it, firstly you need an IDE that can compile and run a Java program. After installing the IDE and its environment, to play this game, you need to clone the source codes from my repository into one of your folder's directory: </br>
