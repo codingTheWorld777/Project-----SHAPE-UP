@@ -2,7 +2,7 @@
 
 See my repository at: [Huu Khai NGUYEN's Project-----SHAPE UP](https://github.com/codingTheWorld777/Project-----SHAPE-UP)
 
-See API's document of this project at [SHAPE UP-API's document](https://codingtheworld777.github.io/shapeUP_doc)
+See API's document of this project at [SHAPE UP-API's document](https://codingtheworld777.github.io/shapeUP_doc/index.html)
 
 ## --[FR-Description]--
 ### 1) Introduction
